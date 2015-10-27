@@ -10,11 +10,11 @@ namespace eUni.DataAccess.Domain
     public class Question
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int QuestionId { get; set; }
         public string Text { get; set; }
         public int Score { get; set; }
-        public Module Module { get; set; }
-        public ICollection<Answer> Answers { get; set; }
+        public virtual Module Module { get; set; }
+        public virtual ICollection<Answer> Answers { get; set; }
 
 
     }

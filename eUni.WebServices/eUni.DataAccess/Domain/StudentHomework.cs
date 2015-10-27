@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace eUni.DataAccess.Domain
 {
-    public class StudentQuestion
+    public class StudentHomework
     {
         public int UserId { get; set; }
-        public int QuestionId { get; set; }
+        public int HomeworkId { get; set; } 
         public virtual User User { get; set; }
-        public virtual Question Question { get; set; }
-        public virtual Answer Answer { get; set; }
-        public virtual Test Test { get; set; }
-
+        public virtual Homework Homework { get; set; }
+        public virtual ICollection<File> Files { get; set; }
+        public int Grade { get; set; }
     }
 }

@@ -43,6 +43,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.JScript" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -56,6 +57,13 @@
   <ItemGroup>
     <Compile Include="Domain\Answer.cs" />
     <Compile Include="Domain\Content.cs" />
+    <Compile Include="Domain\File.cs" />
+    <Compile Include="Domain\Homework.cs" />
+    <Compile Include="Domain\StudentHomework.cs" />
+    <Compile Include="Domain\Test.cs" />
+    <Compile Include="Domain\StudentTest.cs" />
+    <Compile Include="Domain\WikiPage.cs" />
+    <Compile Include="Enums\FileType.cs" />
     <Compile Include="Domain\Question.cs" />
     <Compile Include="Domain\StudentQuestion.cs" />
     <Compile Include="eUniDbContext\DateTime2Convention.cs" />

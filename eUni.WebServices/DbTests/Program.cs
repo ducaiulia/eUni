@@ -13,7 +13,7 @@ namespace DbTests
         static void Main(string[] args)
         {
             EUniDbContext context = new EUniDbContext();
-            context.Courses.Add(new Course() {Id = 1});
+            context.Courses.Add(new Course() {CourseId = 1});
             context.SaveChanges();
             Console.ReadLine();
         }

@@ -10,7 +10,7 @@ namespace eUni.DataAccess.Domain
     public class Answer
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int AnswerId { get; set; }
         public string Text { get; set; }
         public bool IsCorrect { get; set; }
     }

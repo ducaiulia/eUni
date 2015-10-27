@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace eUni.DataAccess.Domain
 {
-    public class Module
+    public class Homework
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ModuleId { get; set; }
-        public string Name { get; set; }
-        public virtual Course Course { get; set; }
-        public virtual ICollection<Content> Contents { get; set; }
+        public int HomeworkId { get; set; }
 
+        public string Text { get; set; }
+        public int Score { get; set; }
+        public virtual Module Module { get; set; }
     }
 }

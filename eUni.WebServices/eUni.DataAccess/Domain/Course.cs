@@ -11,13 +11,13 @@ namespace eUni.DataAccess.Domain
     public class Course
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int CourseId { get; set; }
         public string Name { get; set; }
         public string CourseCode { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate  { get; set; }
-        public User Teacher { get; set; }
-        public ICollection<Module> Modules { get; set; }
+        public virtual User Teacher { get; set; }
+        public virtual ICollection<Module> Modules { get; set; }
 
     }
 }
