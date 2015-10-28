@@ -12,6 +12,7 @@ namespace eUni.DataAccess.Repository
     public class Repository<T> : IRepository<T> where T : class
     {
         protected EUniDbContext Context = null;
+
         protected DbSet<T> DbSet
         {
             get
