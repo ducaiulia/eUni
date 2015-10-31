@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 
 namespace eUni.WebServices.Controllers
 {
-    [Authorize]
     public class ValuesController : ApiController
     {
         // GET api/values
+//        [WebServices.Authorize("student")]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
         // GET api/values/5
+//        [WebServices.Authorize("teacher")]
         public string Get(int id)
         {
             return "value";

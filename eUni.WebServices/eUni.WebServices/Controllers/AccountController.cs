@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
+using eUni.WebServices.Helpers;
+using eUni.WebServices.Models;
+using eUni.WebServices.Providers;
+using eUni.WebServices.Results;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using eUni.WebServices.Models;
-using eUni.WebServices.Providers;
-using eUni.WebServices.Results;
 
 namespace eUni.WebServices.Controllers
 {
-    [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
@@ -125,7 +126,7 @@ namespace eUni.WebServices.Controllers
 
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
                 model.NewPassword);
-            
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -258,9 +259,9 @@ namespace eUni.WebServices.Controllers
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    OAuthDefaults.AuthenticationType);
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                   OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
@@ -368,10 +369,37 @@ namespace eUni.WebServices.Controllers
             result = await UserManager.AddLoginAsync(user.Id, info.Login);
             if (!result.Succeeded)
             {
-                return GetErrorResult(result); 
+                return GetErrorResult(result);
             }
             return Ok();
         }
+
+        [Route("Login")]
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> Login(string username, string password)
+        {
+            ApplicationUser user = await UserManager.FindByNameAsync(username);
+            if (user == null) return Content(HttpStatusCode.BadRequest, "Username does not exist");
+            var temp = UserManager.PasswordHasher.HashPassword(password);
+            if (UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash,password)==PasswordVerificationResult.Success)//user.PasswordHash.Equals(UserManager.PasswordHasher.HashPassword(password)))
+            {
+                string roleName = string.Empty;
+                var identityUserRole = user.Roles.FirstOrDefault();
+                if (identityUserRole != null)
+                {
+                    string roleId = identityUserRole.RoleId;
+                    using (var db = new ApplicationDbContext())
+                    {
+                        roleName = (from role in db.Roles
+                                    where role.Id.Equals(roleId)
+                                    select role.Name).FirstOrDefault();
+                    }
+                }
+                return Content(HttpStatusCode.OK, TokenHelper.GenerateToken(username, roleName));
+            }
+            return Content(HttpStatusCode.BadRequest, "Invalid password");
+        }
+
 
         protected override void Dispose(bool disposing)
         {
