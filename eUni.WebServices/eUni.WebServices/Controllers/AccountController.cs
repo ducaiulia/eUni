@@ -374,14 +374,15 @@ namespace eUni.WebServices.Controllers
             return Ok();
         }
 
+        //POST api/Account/Login
         [Route("Login")]
         [AllowAnonymous]
         public async Task<IHttpActionResult> Login(string username, string password)
         {
             ApplicationUser user = await UserManager.FindByNameAsync(username);
             if (user == null) return Content(HttpStatusCode.BadRequest, "Username does not exist");
-            var temp = UserManager.PasswordHasher.HashPassword(password);
-            if (UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash,password)==PasswordVerificationResult.Success)//user.PasswordHash.Equals(UserManager.PasswordHasher.HashPassword(password)))
+
+            if (UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, password) == PasswordVerificationResult.Success)
             {
                 string roleName = string.Empty;
                 var identityUserRole = user.Roles.FirstOrDefault();
@@ -391,13 +392,24 @@ namespace eUni.WebServices.Controllers
                     using (var db = new ApplicationDbContext())
                     {
                         roleName = (from role in db.Roles
-                                    where role.Id.Equals(roleId)
-                                    select role.Name).FirstOrDefault();
+                            where role.Id.Equals(roleId)
+                            select role.Name).FirstOrDefault();
                     }
                 }
                 return Content(HttpStatusCode.OK, TokenHelper.GenerateToken(username, roleName));
             }
             return Content(HttpStatusCode.BadRequest, "Invalid password");
+        }
+
+        // POST api/Account/RefreshToken
+        [Route("RefreshToken")]
+        [AllowAnonymous]
+        public IHttpActionResult RefreshToken(string expiredToken)
+        {
+            var username = TokenHelper.GetFromToken(expiredToken, "username");
+            var role = TokenHelper.GetFromToken(expiredToken, "role");
+
+            return Content(HttpStatusCode.OK, TokenHelper.GenerateToken(username, role));
         }
 
 
