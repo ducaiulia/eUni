@@ -7,7 +7,7 @@ using eUni.DataAccess.Domain;
 
 namespace eUni.DataAccess.Repository
 {
-    public interface IUserRepository:IRepository<User>
+    public interface IUserRepository:IRepository<DomainUser>
     {
 
     }

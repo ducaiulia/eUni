@@ -8,6 +8,8 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using eUni.DataAccess.Domain;
+using eUni.DataAccess.eUniDbContext;
 using eUni.WebServices.Helpers;
 using eUni.WebServices.Models;
 using eUni.WebServices.Providers;
@@ -329,7 +331,12 @@ namespace eUni.WebServices.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser()
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                DomainUser = new DomainUser()
+            };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -358,7 +365,12 @@ namespace eUni.WebServices.Controllers
                 return InternalServerError();
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser()
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                DomainUser = new DomainUser()
+            };
 
             IdentityResult result = await UserManager.CreateAsync(user);
             if (!result.Succeeded)
@@ -392,8 +404,8 @@ namespace eUni.WebServices.Controllers
                     using (var db = new ApplicationDbContext())
                     {
                         roleName = (from role in db.Roles
-                            where role.Id.Equals(roleId)
-                            select role.Name).FirstOrDefault();
+                                    where role.Id.Equals(roleId)
+                                    select role.Name).FirstOrDefault();
                     }
                 }
                 return Content(HttpStatusCode.OK, TokenHelper.GenerateToken(username, roleName));

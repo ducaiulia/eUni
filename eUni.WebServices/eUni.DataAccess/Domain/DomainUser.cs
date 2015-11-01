@@ -9,12 +9,10 @@ using System.Threading.Tasks;
 
 namespace eUni.DataAccess.Domain
 {
-    public class User
+    public class DomainUser
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public int DomainUserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [RegularExpression(@"[a-z][a-z]*@[a-z][a-z]*.[a-z][a-z]*.+[a-z]*")]

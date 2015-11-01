@@ -7,13 +7,13 @@ namespace eUni.DataAccess.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class InitialCreate : IMigrationMetadata
+    public sealed partial class Map_Users : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Map_Users));
         
         string IMigrationMetadata.Id
         {
-            get { return "201510271044332_InitialCreate"; }
+            get { return "201511011639543_Map_Users"; }
         }
         
         string IMigrationMetadata.Source

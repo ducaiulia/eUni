@@ -8,9 +8,10 @@ using eUni.DataAccess.eUniDbContext;
 
 namespace eUni.DataAccess.Repository
 {
-    public class UserRepository : Repository<User>, IUserRepository
+    public class UserRepository : Repository<DomainUser>, IUserRepository
     {
-        public UserRepository(EUniDbContext context) : base(context) {}
+        public UserRepository(ApplicationDbContext context) : base(context) {}
+
 
     }
 }

@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using eUni.DataAccess.Domain;
-using eUni.DataAccess.eUniDbContext;
 using eUni.DataAccess.Repository;
 
 namespace DbTests
 {
-    class Program
+    public class Test
     {
-        static void Main(string[] args)
+        public IUserRepository Repo;
+        public Test(IUserRepository repo)
         {
-            
-            Console.ReadLine();
+            Repo = repo;
         }
+
     }
 }

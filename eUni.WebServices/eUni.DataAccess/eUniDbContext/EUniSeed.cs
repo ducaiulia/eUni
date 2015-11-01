@@ -10,46 +10,46 @@ namespace eUni.DataAccess.eUniDbContext
 {
     public class EUniSeed
     {
-        private readonly EUniDbContext _context;
-        public EUniSeed(EUniDbContext context)
+        private readonly ApplicationDbContext _context;
+        public EUniSeed(ApplicationDbContext context)
         {
             _context = context;
         }
 
         public void SeedUsers()
         {
-            var user1 = new User
+            var user1 = new DomainUser
             {
                 FirstName = "Adela",
                 LastName = "Berindean",
                 MatriculationNumber = "adbe01",
-                Username = "adela.berindean",
+                //Username = "adela.berindean",
                 Email = "adela@yahoo.com",
-                Password = "aaa",
+                //Password = "aaa",
             };
-            _context.Users.AddOrUpdate(user1);
+            _context.DomainUsers.AddOrUpdate(user1);
 
-            var user2 = new User
+            var user2 = new DomainUser
             {
                 FirstName = "Iuliana",
                 LastName = "Duca",
                 MatriculationNumber = "iudu02",
-                Username = "iulia.duca",
+                //Username = "iulia.duca",
                 Email = "iulia@yahoo.com",
-                Password = "aaa",
+                //Password = "aaa",
             };
-            _context.Users.AddOrUpdate(user2);
+            _context.DomainUsers.AddOrUpdate(user2);
 
-            var user3 = new User
+            var user3 = new DomainUser
             {
                 FirstName = "Adina",
                 LastName = "Duma",
                 MatriculationNumber = "addu03",
-                Username = "adina.duma",
+                //Username = "adina.duma",
                 Email = "adina@yahoo.com",
-                Password = "aaa",
+                //Password = "aaa",
             };
-            _context.Users.AddOrUpdate(user3);
+            _context.DomainUsers.AddOrUpdate(user3);
 
         }
 

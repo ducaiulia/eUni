@@ -48,10 +48,10 @@ namespace eUni.DataAccess.Repository
         /// </summary>
         void Remove(Expression<Func<T, bool>> predicate);
 
-        /// <summary>
-        /// Update object changes and save to database.
-        /// </summary>
-        void Update(T t);
+        ///// <summary>
+        ///// Update object changes and save to database.
+        ///// </summary>
+        //void Update(T t);
 
         /// <summary>
         /// Get the total objects count.

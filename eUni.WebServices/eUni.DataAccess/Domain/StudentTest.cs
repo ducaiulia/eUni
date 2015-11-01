@@ -9,10 +9,10 @@ namespace eUni.DataAccess.Domain
 {
     public class StudentTest
     {
-        public int UserId { get; set; }
+        public int DomainUserId { get; set; }
         public int TestId { get; set; }
         public virtual Test Test { get; set; }
-        public virtual User User { get; set; }
+        public virtual DomainUser DomainUser { get; set; }
         public int Grade { get; set; }  
 
     }

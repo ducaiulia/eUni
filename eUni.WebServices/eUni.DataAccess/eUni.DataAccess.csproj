@@ -34,6 +34,10 @@
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Autofac.Integration.WebApi, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.WebApi.3.1.0\lib\net40\Autofac.Integration.WebApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -41,6 +45,12 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.JScript" />
     <Reference Include="Microsoft.VisualBasic" />
@@ -66,15 +76,20 @@
     <Compile Include="Enums\FileType.cs" />
     <Compile Include="Domain\Question.cs" />
     <Compile Include="Domain\StudentQuestion.cs" />
-    <Compile Include="eUniDbContext\DateTime2Convention.cs" />
-    <Compile Include="eUniDbContext\EUniDbContext.cs" />
     <Compile Include="Domain\Course.cs" />
     <Compile Include="Domain\Module.cs" />
-    <Compile Include="Domain\User.cs" />
+    <Compile Include="Domain\DomainUser.cs" />
+    <Compile Include="eUniDbContext\ApplicationDbContext.cs" />
+    <Compile Include="eUniDbContext\ApplicationUser.cs" />
+    <Compile Include="eUniDbContext\DateTime2Convention.cs" />
     <Compile Include="eUniDbContext\EUniSeed.cs" />
-    <Compile Include="Migrations\201510271044332_InitialCreate.cs" />
-    <Compile Include="Migrations\201510271044332_InitialCreate.Designer.cs">
-      <DependentUpon>201510271044332_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201511011634236_Initial.cs" />
+    <Compile Include="Migrations\201511011634236_Initial.Designer.cs">
+      <DependentUpon>201511011634236_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511011639543_Map_Users.cs" />
+    <Compile Include="Migrations\201511011639543_Map_Users.Designer.cs">
+      <DependentUpon>201511011639543_Map_Users.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,8 +103,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201510271044332_InitialCreate.resx">
-      <DependentUpon>201510271044332_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511011634236_Initial.resx">
+      <DependentUpon>201511011634236_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511011639543_Map_Users.resx">
+      <DependentUpon>201511011639543_Map_Users.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

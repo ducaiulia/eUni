@@ -1,5 +1,3 @@
-using eUni.DataAccess.eUniDbContext;
-
 namespace eUni.DataAccess.Migrations
 {
     using System;
@@ -7,18 +5,15 @@ namespace eUni.DataAccess.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<eUni.DataAccess.eUniDbContext.EUniDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<eUni.DataAccess.eUniDbContext.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "eUni.DataAccess.eUniDbContext.EUniDbContext";
         }
 
-        protected override void Seed(eUni.DataAccess.eUniDbContext.EUniDbContext context)
+        protected override void Seed(eUni.DataAccess.eUniDbContext.ApplicationDbContext context)
         {
-            var seed = new EUniSeed(context);
-            seed.SeedUsers();
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 

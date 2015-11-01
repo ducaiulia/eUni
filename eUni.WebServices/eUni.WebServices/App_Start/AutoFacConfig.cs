@@ -14,8 +14,8 @@ namespace eUni.WebServices.App_Start
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<EUniDbContext>()
-                .As<EUniDbContext>()
+            builder.RegisterType<ApplicationDbContext>()
+                .As<ApplicationDbContext>()
                 .InstancePerRequest();
 
             builder.RegisterType<IUserRepository>()

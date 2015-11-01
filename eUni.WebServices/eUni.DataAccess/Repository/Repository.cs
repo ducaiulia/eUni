@@ -11,7 +11,7 @@ namespace eUni.DataAccess.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        protected EUniDbContext Context = null;
+        protected ApplicationDbContext Context = null;
 
         protected DbSet<T> DbSet
         {
@@ -25,7 +25,7 @@ namespace eUni.DataAccess.Repository
         {
         }
 
-        public Repository(EUniDbContext context)
+        public Repository(ApplicationDbContext context)
         {
             Context = context;
         }
@@ -73,11 +73,6 @@ namespace eUni.DataAccess.Repository
             {
                 return DbSet.Count();
             }
-        }
-
-        public virtual void Update(T T)
-        {
-            //todo
         }
 
 

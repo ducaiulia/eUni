@@ -1,23 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.Entity;
 using eUni.DataAccess.Domain;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace eUni.DataAccess.eUniDbContext
 {
-    public class EUniDbContext : DbContext
+
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public EUniDbContext()
-            : base("EUniDatabase")
+        public ApplicationDbContext()
+            : base("EUniDatabase", throwIfV1Schema: false)
         {
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<EUniDbContext>());
         }
 
+        public static ApplicationDbContext Create()
+        {
+            return new ApplicationDbContext();
+        }
+
+
         public DbSet<Course> Courses { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<DomainUser> DomainUsers { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
@@ -26,36 +33,39 @@ namespace eUni.DataAccess.eUniDbContext
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Add(new DateTime2Convention());
 
-           // modelBuilder.Entity<User>().HasKey(q => q.UserId);
+            // modelBuilder.Entity<DomainUser>().HasKey(q => q.UserId);
             //modelBuilder.Entity<Test>().HasKey(q => q.TestId);
             modelBuilder.Entity<StudentTest>().HasKey(q =>
                 new {
-                    q.UserId,
+                    q.DomainUserId,
                     q.TestId
                 });
             modelBuilder.Entity<StudentQuestion>().HasKey(q =>
                 new {
-                    q.UserId,
+                    q.DomainUserId,
                     q.QuestionId
                 });
             modelBuilder.Entity<StudentHomework>().HasKey(q =>
                 new {
-                    q.UserId,
+                    q.DomainUserId,
                     q.HomeworkId
                 });
 
             // Relationships
+            modelBuilder.Entity<ApplicationUser>().HasRequired(au => au.DomainUser).WithRequiredPrincipal();
+
             modelBuilder.Entity<StudentTest>()
                 .HasRequired(t => t.Test)
                 .WithMany()
                 .HasForeignKey(t => t.TestId);
 
             modelBuilder.Entity<StudentTest>()
-                .HasRequired(t => t.User)
+                .HasRequired(t => t.DomainUser)
                 .WithMany()
-                .HasForeignKey(t => t.UserId);
+                .HasForeignKey(t => t.DomainUserId);
         }
     }
 }
