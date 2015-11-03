@@ -55,6 +55,8 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\DataTransferObjects\DomainUserDTO.cs" />
+    <Compile Include="Providers\UserProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\eUni.DataAccess\eUni.DataAccess.csproj">
