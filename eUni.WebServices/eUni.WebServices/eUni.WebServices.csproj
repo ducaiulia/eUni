@@ -181,6 +181,7 @@
   <ItemGroup>
     <Compile Include="App_Start\Authorize.cs" />
     <Compile Include="App_Start\AutoFacConfig.cs" />
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -339,7 +340,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\WebApiTestClient.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -367,6 +370,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\eUni.BusinessLogic\eUni.BusinessLogic.csproj">
+      <Project>{e736f7a6-653f-41e1-a65b-967765113bb0}</Project>
+      <Name>eUni.BusinessLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\eUni.DataAccess\eUni.DataAccess.csproj">
       <Project>{0BDACA9A-CF24-4DD0-9C09-2DA21F83DA69}</Project>
       <Name>eUni.DataAccess</Name>

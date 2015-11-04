@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Net;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using System.Web.UI.WebControls;
 
 namespace eUni.WebServices
 {
@@ -19,6 +17,8 @@ namespace eUni.WebServices
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutoFacConfig.RegisterDependencies();
+            AutoMapperConfig.Configure();
+
         }
 
         public void Application_Error(object sender, EventArgs e)
