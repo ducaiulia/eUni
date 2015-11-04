@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Autofac;
+﻿using Autofac;
 using eUni.DataAccess.eUniDbContext;
 using eUni.DataAccess.Repository;
 
-namespace eUni.WebServices.App_Start
+namespace eUni.WebServices
 {
     public class AutoFacConfig
     {
@@ -18,8 +14,8 @@ namespace eUni.WebServices.App_Start
                 .As<ApplicationDbContext>()
                 .InstancePerRequest();
 
-            builder.RegisterType<IUserRepository>()
-                .As<UserRepository>();
+            builder.RegisterType<UserRepository>()
+                .As<IUserRepository>();
 
             // add more dependencies here
 

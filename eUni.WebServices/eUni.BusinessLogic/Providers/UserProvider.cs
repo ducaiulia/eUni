@@ -12,11 +12,11 @@ namespace eUni.BusinessLogic.Providers
 {
     public class UserProvider
     {
-        private IUserRepository userRepo = new UserRepository(new ApplicationDbContext()); 
+        private readonly IUserRepository _userRepo = new UserRepository(new ApplicationDbContext()); 
 
         public List<DomainUserDTO> GetAllUsers()
         {
-            IEnumerable<DomainUser> enumerableAllUsers = userRepo.GetAll();
+            IEnumerable<DomainUser> enumerableAllUsers = _userRepo.GetAll();
             List<DomainUserDTO> allUsers = new List<DomainUserDTO>();
             foreach(var currentUser in enumerableAllUsers)
             {
