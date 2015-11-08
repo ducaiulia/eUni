@@ -4,6 +4,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Autofac;
 
 namespace eUni.WebServices
 {
@@ -18,7 +19,6 @@ namespace eUni.WebServices
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutoFacConfig.RegisterDependencies();
             AutoMapperConfig.Configure();
-
         }
 
         public void Application_Error(object sender, EventArgs e)

@@ -33,31 +33,7 @@ namespace DbTests
             });
             context.SaveChanges();
 
-
-
-            //    _context.SaveChanges();
-
-            //    var a = _context.Users.FirstOrDefault();
-            //    Console.WriteLine(a.DomainUser.FirstName);
-            //    Console.ReadLine();
-            //}
-            ApplicationDbContext context = new ApplicationDbContext();
-            foreach (var user in context.Users.ToList())
-            {
-                Console.WriteLine(user.UserName);
-                Console.WriteLine(user.DomainUser.FirstName);
-            }
-            UserRepository ur = new UserRepository(context);
-
-            DomainUser d = ur.Get(x => x.DomainUserId == 1);
-
-            context.Courses.AddOrUpdate(new Course
-            {
-                Name = "c1",
-                Teacher = d
-            });
-            context.SaveChanges();
-
+            
 
 
 
