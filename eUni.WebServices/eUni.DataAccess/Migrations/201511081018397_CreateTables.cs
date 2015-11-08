@@ -3,7 +3,7 @@ namespace eUni.DataAccess.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class CreateTables : DbMigration
     {
         public override void Up()
         {
@@ -67,78 +67,11 @@ namespace eUni.DataAccess.Migrations
                         LastName = c.String(),
                         Email = c.String(),
                         MatriculationNumber = c.String(),
+                        ApplicationUser_Id = c.String(nullable: false, maxLength: 128),
                     })
-                .PrimaryKey(t => t.DomainUserId);
-            
-            CreateTable(
-                "dbo.Questions",
-                c => new
-                    {
-                        QuestionId = c.Int(nullable: false, identity: true),
-                        Text = c.String(),
-                        Score = c.Int(nullable: false),
-                        Module_ModuleId = c.Int(),
-                        Test_TestId = c.Int(),
-                    })
-                .PrimaryKey(t => t.QuestionId)
-                .ForeignKey("dbo.Modules", t => t.Module_ModuleId)
-                .ForeignKey("dbo.Tests", t => t.Test_TestId)
-                .Index(t => t.Module_ModuleId)
-                .Index(t => t.Test_TestId);
-            
-            CreateTable(
-                "dbo.AspNetRoles",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        Name = c.String(nullable: false, maxLength: 256),
-                    })
-                .PrimaryKey(t => t.Id)
-                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
-            
-            CreateTable(
-                "dbo.AspNetUserRoles",
-                c => new
-                    {
-                        UserId = c.String(nullable: false, maxLength: 128),
-                        RoleId = c.String(nullable: false, maxLength: 128),
-                    })
-                .PrimaryKey(t => new { t.UserId, t.RoleId })
-                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
-                .Index(t => t.UserId)
-                .Index(t => t.RoleId);
-            
-            CreateTable(
-                "dbo.StudentQuestions",
-                c => new
-                    {
-                        DomainUserId = c.Int(nullable: false),
-                        QuestionId = c.Int(nullable: false),
-                        Answer_AnswerId = c.Int(),
-                        Test_TestId = c.Int(),
-                    })
-                .PrimaryKey(t => new { t.DomainUserId, t.QuestionId })
-                .ForeignKey("dbo.Answers", t => t.Answer_AnswerId)
-                .ForeignKey("dbo.DomainUsers", t => t.DomainUserId, cascadeDelete: true)
-                .ForeignKey("dbo.Questions", t => t.QuestionId, cascadeDelete: true)
-                .ForeignKey("dbo.Tests", t => t.Test_TestId)
-                .Index(t => t.DomainUserId)
-                .Index(t => t.QuestionId)
-                .Index(t => t.Answer_AnswerId)
-                .Index(t => t.Test_TestId);
-            
-            CreateTable(
-                "dbo.Tests",
-                c => new
-                    {
-                        TestId = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        Module_ModuleId = c.Int(),
-                    })
-                .PrimaryKey(t => t.TestId)
-                .ForeignKey("dbo.Modules", t => t.Module_ModuleId)
-                .Index(t => t.Module_ModuleId);
+                .PrimaryKey(t => t.DomainUserId)
+                .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUser_Id)
+                .Index(t => t.ApplicationUser_Id);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -184,6 +117,76 @@ namespace eUni.DataAccess.Migrations
                 .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
+            
+            CreateTable(
+                "dbo.AspNetUserRoles",
+                c => new
+                    {
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        RoleId = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
+            
+            CreateTable(
+                "dbo.Questions",
+                c => new
+                    {
+                        QuestionId = c.Int(nullable: false, identity: true),
+                        Text = c.String(),
+                        Score = c.Int(nullable: false),
+                        Module_ModuleId = c.Int(),
+                        Test_TestId = c.Int(),
+                    })
+                .PrimaryKey(t => t.QuestionId)
+                .ForeignKey("dbo.Modules", t => t.Module_ModuleId)
+                .ForeignKey("dbo.Tests", t => t.Test_TestId)
+                .Index(t => t.Module_ModuleId)
+                .Index(t => t.Test_TestId);
+            
+            CreateTable(
+                "dbo.AspNetRoles",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Name = c.String(nullable: false, maxLength: 256),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+            
+            CreateTable(
+                "dbo.StudentQuestions",
+                c => new
+                    {
+                        DomainUserId = c.Int(nullable: false),
+                        QuestionId = c.Int(nullable: false),
+                        Answer_AnswerId = c.Int(),
+                        Test_TestId = c.Int(),
+                    })
+                .PrimaryKey(t => new { t.DomainUserId, t.QuestionId })
+                .ForeignKey("dbo.Answers", t => t.Answer_AnswerId)
+                .ForeignKey("dbo.DomainUsers", t => t.DomainUserId, cascadeDelete: true)
+                .ForeignKey("dbo.Questions", t => t.QuestionId, cascadeDelete: true)
+                .ForeignKey("dbo.Tests", t => t.Test_TestId)
+                .Index(t => t.DomainUserId)
+                .Index(t => t.QuestionId)
+                .Index(t => t.Answer_AnswerId)
+                .Index(t => t.Test_TestId);
+            
+            CreateTable(
+                "dbo.Tests",
+                c => new
+                    {
+                        TestId = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        Module_ModuleId = c.Int(),
+                    })
+                .PrimaryKey(t => t.TestId)
+                .ForeignKey("dbo.Modules", t => t.Module_ModuleId)
+                .Index(t => t.Module_ModuleId);
             
             CreateTable(
                 "dbo.StudentTests",
@@ -252,9 +255,6 @@ namespace eUni.DataAccess.Migrations
             DropForeignKey("dbo.StudentHomeworks", "DomainUserId", "dbo.DomainUsers");
             DropForeignKey("dbo.StudentTests", "TestId", "dbo.Tests");
             DropForeignKey("dbo.StudentTests", "DomainUserId", "dbo.DomainUsers");
-            DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.StudentQuestions", "Test_TestId", "dbo.Tests");
             DropForeignKey("dbo.Questions", "Test_TestId", "dbo.Tests");
             DropForeignKey("dbo.Tests", "Module_ModuleId", "dbo.Modules");
@@ -265,6 +265,10 @@ namespace eUni.DataAccess.Migrations
             DropForeignKey("dbo.Questions", "Module_ModuleId", "dbo.Modules");
             DropForeignKey("dbo.Answers", "Question_QuestionId", "dbo.Questions");
             DropForeignKey("dbo.Courses", "Teacher_DomainUserId", "dbo.DomainUsers");
+            DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.DomainUsers", "ApplicationUser_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Modules", "Course_CourseId", "dbo.Courses");
             DropForeignKey("dbo.Contents", "Module_ModuleId", "dbo.Modules");
             DropIndex("dbo.Homework", new[] { "Module_ModuleId" });
@@ -273,19 +277,20 @@ namespace eUni.DataAccess.Migrations
             DropIndex("dbo.StudentHomeworks", new[] { "DomainUserId" });
             DropIndex("dbo.StudentTests", new[] { "TestId" });
             DropIndex("dbo.StudentTests", new[] { "DomainUserId" });
-            DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
-            DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
-            DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.Tests", new[] { "Module_ModuleId" });
             DropIndex("dbo.StudentQuestions", new[] { "Test_TestId" });
             DropIndex("dbo.StudentQuestions", new[] { "Answer_AnswerId" });
             DropIndex("dbo.StudentQuestions", new[] { "QuestionId" });
             DropIndex("dbo.StudentQuestions", new[] { "DomainUserId" });
-            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
-            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.Questions", new[] { "Test_TestId" });
             DropIndex("dbo.Questions", new[] { "Module_ModuleId" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
+            DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
+            DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
+            DropIndex("dbo.AspNetUsers", "UserNameIndex");
+            DropIndex("dbo.DomainUsers", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.Modules", new[] { "Course_CourseId" });
             DropIndex("dbo.Courses", new[] { "Teacher_DomainUserId" });
             DropIndex("dbo.Contents", new[] { "Module_ModuleId" });
@@ -294,14 +299,14 @@ namespace eUni.DataAccess.Migrations
             DropTable("dbo.Files");
             DropTable("dbo.StudentHomeworks");
             DropTable("dbo.StudentTests");
+            DropTable("dbo.Tests");
+            DropTable("dbo.StudentQuestions");
+            DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Questions");
+            DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.Tests");
-            DropTable("dbo.StudentQuestions");
-            DropTable("dbo.AspNetUserRoles");
-            DropTable("dbo.AspNetRoles");
-            DropTable("dbo.Questions");
             DropTable("dbo.DomainUsers");
             DropTable("dbo.Modules");
             DropTable("dbo.Courses");

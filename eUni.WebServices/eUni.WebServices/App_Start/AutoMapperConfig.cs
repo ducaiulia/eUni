@@ -14,7 +14,11 @@ namespace eUni.WebServices
         public static void Configure()
         {
             BusinessLogicMapper.UserMappings();
+            BusinessLogicMapper.CourseMappings();
+            BusinessLogicMapper.ModuleMappings();
+            BusinessLogicMapper.ContentMappings();
             UserDTOToViewModel();
+            CourseDTOToViewModel();
         }
 
         public static void UserDTOToViewModel()
@@ -25,6 +29,20 @@ namespace eUni.WebServices
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
                 .ForMember(dest => dest.MatriculationNumber, opt => opt.MapFrom(src => src.MatriculationNumber));
+        }
+        public static void CourseDTOToViewModel()
+        {
+            Mapper.CreateMap<CourseDTO, CourseViewModel>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
+                .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
+                .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(src => src.CourseCode)).ReverseMap();
+            Mapper.CreateMap<CourseViewModel, CourseDTO>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
+                .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
+                .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(src => src.CourseCode));
+
         }
     }
 }

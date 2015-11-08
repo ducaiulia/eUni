@@ -87,16 +87,16 @@
     <Compile Include="eUniDbContext\ApplicationUser.cs" />
     <Compile Include="eUniDbContext\DateTime2Convention.cs" />
     <Compile Include="eUniDbContext\EUniSeed.cs" />
-    <Compile Include="Migrations\201511011634236_Initial.cs" />
-    <Compile Include="Migrations\201511011634236_Initial.Designer.cs">
-      <DependentUpon>201511011634236_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511011639543_Map_Users.cs" />
-    <Compile Include="Migrations\201511011639543_Map_Users.Designer.cs">
-      <DependentUpon>201511011639543_Map_Users.cs</DependentUpon>
+    <Compile Include="Migrations\201511081018397_CreateTables.cs" />
+    <Compile Include="Migrations\201511081018397_CreateTables.Designer.cs">
+      <DependentUpon>201511081018397_CreateTables.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AspNetUserRepository.cs" />
+    <Compile Include="Repository\CourseRepository.cs" />
+    <Compile Include="Repository\IAspNetUserRepository.cs" />
+    <Compile Include="Repository\ICourseRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
@@ -107,11 +107,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201511011634236_Initial.resx">
-      <DependentUpon>201511011634236_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511011639543_Map_Users.resx">
-      <DependentUpon>201511011639543_Map_Users.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511081018397_CreateTables.resx">
+      <DependentUpon>201511081018397_CreateTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

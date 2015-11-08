@@ -55,7 +55,7 @@ namespace eUni.DataAccess.eUniDbContext
                 });
 
             // Relationships
-            modelBuilder.Entity<ApplicationUser>().HasRequired(au => au.DomainUser).WithRequiredPrincipal();
+            modelBuilder.Entity<ApplicationUser>().HasOptional(au => au.DomainUser).WithRequired(x => x.ApplicationUser);
 
             modelBuilder.Entity<StudentTest>()
                 .HasRequired(t => t.Test)

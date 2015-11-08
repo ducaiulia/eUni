@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using eUni.DataAccess.eUniDbContext;
+using eUni.DataAccess.Domain;
 
 namespace eUni.DataAccess.Repository
 {

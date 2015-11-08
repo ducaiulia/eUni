@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using eUni.BusinessLogic.Providers.DataTransferObjects;
@@ -8,9 +9,10 @@ using eUni.DataAccess.Repository;
 
 namespace eUni.BusinessLogic.Providers
 {
-    public class UserProvider
+    public class UserProvider:AbstractProvider
     {
-        private readonly IUserRepository _userRepo = new UserRepository(new ApplicationDbContext()); 
+        private readonly IUserRepository _userRepo = new UserRepository(context);
+        private readonly IAspNetUserRepository _aspNetUserRepo = new AspNetUserRepository(context);
 
         public List<DomainUserDTO> GetAllUsers()
         {
@@ -19,5 +21,11 @@ namespace eUni.BusinessLogic.Providers
 
             return allUsers.ToList();
         }
+        public DomainUserDTO GetByUserName(string userName)
+        {
+            var user = _aspNetUserRepo.Get(u => u.UserName.Trim().Equals(userName));
+            return Mapper.Map<DomainUserDTO>(user.DomainUser);
+        }
+        
     }
 }
