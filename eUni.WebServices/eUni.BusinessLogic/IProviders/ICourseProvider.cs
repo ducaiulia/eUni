@@ -9,7 +9,8 @@ namespace eUni.BusinessLogic.IProviders
 {
     public interface ICourseProvider
     {
-        void CreateCourse(CourseDTO dtoCourse); 
-
+        void CreateCourse(CourseDTO dtoCourse);
+        CourseDTO GetByCourseCode(string courseCode);
+        void UpdateCourse(CourseDTO course);
     }
 }

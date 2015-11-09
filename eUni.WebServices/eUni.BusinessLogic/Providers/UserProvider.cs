@@ -34,5 +34,11 @@ namespace eUni.BusinessLogic.Providers
             return Mapper.Map<DomainUserDTO>(user.DomainUser);
         }
 
+        public DomainUserDTO GetByName(string lastName,string firstName)
+        {
+            var user = _userRepo.Get(u => u.FirstName.Trim().Equals(firstName) && u.LastName.Trim().Equals(lastName));
+            return Mapper.Map<DomainUserDTO>(user);
+        }
+
     }
 }

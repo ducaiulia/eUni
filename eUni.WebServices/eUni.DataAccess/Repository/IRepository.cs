@@ -52,7 +52,7 @@ namespace eUni.DataAccess.Repository
         ///// Update object changes and save to database.
         ///// </summary>
         //void Update(T t);
-
+        void SaveChanges();
         /// <summary>
         /// Get the total objects count.
         /// </summary>

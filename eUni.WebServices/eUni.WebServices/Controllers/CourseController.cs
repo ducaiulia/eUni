@@ -35,5 +35,14 @@ namespace eUni.WebServices.Controllers
             _courseProvider.CreateCourse(dtoCourse);
             return Content(HttpStatusCode.OK, "Created successfully");
         }
+
+        [Route("AssignTeacher")]
+        public async Task<IHttpActionResult> AssignTeacher(string lastName, string firstName, string courseCode)
+        {
+            CourseDTO course=_courseProvider.GetByCourseCode(courseCode);
+            course.Teacher = _userProvider.GetByName(lastName,firstName);
+            _courseProvider.UpdateCourse(course);
+            return Content(HttpStatusCode.OK, "Assigned successfully");
+        }
     }
 }

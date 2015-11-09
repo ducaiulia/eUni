@@ -62,7 +62,10 @@ namespace eUni.DataAccess.Repository
             DbSet.Add(T);
             Context.SaveChanges();
         }
-
+        public virtual void SaveChanges()
+        {
+            Context.SaveChanges();
+        }
         public void Remove(Expression<Func<T, bool>> predicate)
         {
             throw new NotImplementedException();

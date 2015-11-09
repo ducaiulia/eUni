@@ -11,6 +11,6 @@ namespace eUni.BusinessLogic.IProviders
     {
         DomainUserDTO GetByUserName(string getFromToken);
         List<DomainUserDTO> GetAllUsers();
-
+        DomainUserDTO GetByName(string lastName, string firstName);
     }
 }

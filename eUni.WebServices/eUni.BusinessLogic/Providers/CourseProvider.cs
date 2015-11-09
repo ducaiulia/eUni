@@ -29,5 +29,18 @@ namespace eUni.BusinessLogic.Providers
             c.Teacher = _userRepo.Get(u => u.DomainUserId == course.Teacher.DomainUserId);
             _courseRepo.Add(c);
         }
+
+        public CourseDTO GetByCourseCode(string courseCode)
+        {
+            var course = _courseRepo.Get(u => u.CourseCode == courseCode);
+            return Mapper.Map<CourseDTO>(course);
+        }
+
+        public void UpdateCourse(CourseDTO course)
+        {
+            var cou = _courseRepo.Get(c=>c.CourseId == course.CourseId);
+            cou.Teacher = _userRepo.Get(u => u.DomainUserId == course.Teacher.DomainUserId);
+            _courseRepo.SaveChanges();
+        }
     }
 }
