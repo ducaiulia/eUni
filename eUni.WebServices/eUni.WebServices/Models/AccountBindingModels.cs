@@ -81,4 +81,17 @@ namespace eUni.WebServices.Models
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
+
+    public class LoginBindingModel
+    {
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name="Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name ="Password")]
+        public string Password { get; set; }
+    }
 }

@@ -233,6 +233,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\LoggerHelper.cs" />
     <Compile Include="Helpers\TokenHelper.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />

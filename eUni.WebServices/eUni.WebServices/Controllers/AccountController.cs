@@ -79,12 +79,12 @@ namespace eUni.WebServices.Controllers
         //POST api/Account/Login
         [Route("Login")]
         [AllowAnonymous]
-        public async Task<IHttpActionResult> Login(string username, string password)
+        public async Task<IHttpActionResult> Login([FromBody]LoginBindingModel model)
         {
-            ApplicationUser user = await UserManager.FindByNameAsync(username);
+            ApplicationUser user = await UserManager.FindByNameAsync(model.Email);
             if (user == null) return Content(HttpStatusCode.BadRequest, "Username does not exist");
 
-            if (UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, password) == PasswordVerificationResult.Success)
+            if (UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, model.Password) == PasswordVerificationResult.Success)
             {
                 string roleName = string.Empty;
                 var identityUserRole = user.Roles.FirstOrDefault();
@@ -98,7 +98,7 @@ namespace eUni.WebServices.Controllers
                                     select role.Name).FirstOrDefault();
                     }
                 }
-                return Content(HttpStatusCode.OK, TokenHelper.GenerateToken(username, roleName));
+                return Content(HttpStatusCode.OK, TokenHelper.GenerateToken(model.Email, roleName));
             }
             return Content(HttpStatusCode.BadRequest, "Invalid password");
         }

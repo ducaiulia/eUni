@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Web.Mvc;
 using eUni.WebServices.Models;
 
@@ -8,7 +9,7 @@ namespace eUni.WebServices.Controllers
     {
         public ActionResult Index()
         {
-            Response.StatusCode = 500;
+            Response.StatusCode = (int) HttpStatusCode.InternalServerError;
             return View("Error");
         }
     }
