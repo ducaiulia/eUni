@@ -35,7 +35,7 @@ namespace eUni.WebServices.Controllers
             dtoCourse.Teacher = _userProvider.GetByUserName(Helpers.TokenHelper.GetFromToken(token, "username"));
             _courseProvider.CreateCourse(dtoCourse);
 
-            Logger.Logger.Instance.LogAction("Course created");
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"),"Course created"));
             return Content(HttpStatusCode.OK, "Created successfully");
         }
 
@@ -45,8 +45,9 @@ namespace eUni.WebServices.Controllers
             CourseDTO course=_courseProvider.GetByCourseCode(courseCode);
             course.Teacher = _userProvider.GetByName(lastName,firstName);
             _courseProvider.UpdateCourse(course);
-            
-            Logger.Logger.Instance.LogAction("Teacher assigned to course");
+
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"),"Teacher assigned to course"));
             return Content(HttpStatusCode.OK, "Assigned successfully");
         }
     }
