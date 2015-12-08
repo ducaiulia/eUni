@@ -34,6 +34,7 @@ namespace eUni.WebServices.Controllers
             List<DomainUserDTO> users = _userProvider.GetAllUsers();
             var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
 
+            Logger.Logger.Instance.LogAction("Get all users");
             return Content(HttpStatusCode.OK, allUsers);
         }
     }

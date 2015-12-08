@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using eUni.BusinessLogic.IProviders;
+using eUni.WebServices.Helpers;
 
 namespace eUni.WebServices.Controllers
 {
@@ -33,6 +34,8 @@ namespace eUni.WebServices.Controllers
             CourseDTO dtoCourse = Mapper.Map<CourseDTO>(course);
             dtoCourse.Teacher = _userProvider.GetByUserName(Helpers.TokenHelper.GetFromToken(token, "username"));
             _courseProvider.CreateCourse(dtoCourse);
+
+            Logger.Logger.Instance.LogAction("Course created");
             return Content(HttpStatusCode.OK, "Created successfully");
         }
 
@@ -42,6 +45,8 @@ namespace eUni.WebServices.Controllers
             CourseDTO course=_courseProvider.GetByCourseCode(courseCode);
             course.Teacher = _userProvider.GetByName(lastName,firstName);
             _courseProvider.UpdateCourse(course);
+            
+            Logger.Logger.Instance.LogAction("Teacher assigned to course");
             return Content(HttpStatusCode.OK, "Assigned successfully");
         }
     }
