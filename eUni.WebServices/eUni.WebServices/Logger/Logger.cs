@@ -11,7 +11,7 @@ namespace eUni.WebServices.Logger
 
         Logger()
         {
-            _log = LogManager.GetLogger(typeof (Logger));
+            _log = LogManager.GetLogger(typeof(Logger));
             XmlConfigurator.Configure();
         }
 
