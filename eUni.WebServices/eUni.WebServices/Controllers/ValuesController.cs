@@ -4,40 +4,18 @@ using eUni.WebServices.Helpers;
 
 namespace eUni.WebServices.Controllers
 {
+    [RoutePrefix("api/Values")]
     public class ValuesController : ApiController
     {
-        // GET api/values
-//        [WebServices.Authorize("student")]
-        public IEnumerable<string> Get()
+        public string GetFromToken([FromBody]TokenIdentifierViewModel tokenIdentifierViewModel)
         {
-            return new string[] { "value1", "value2" };
+            return TokenHelper.GetFromToken(tokenIdentifierViewModel.Token, tokenIdentifierViewModel.Identifier);
         }
 
-        // GET api/values/5
-//        [WebServices.Authorize("teacher")]
-        public string Get(int id)
+        public class TokenIdentifierViewModel
         {
-            return "value";
-        }
-
-        // POST api/values
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
-        }
-
-        public string GetFromToken([FromBody]string token, [FromBody]string identifier)
-        {
-            return TokenHelper.GetFromToken(token, identifier);
+            public string Token { get; set; }
+            public string Identifier { get; set; }
         }
     }
 }
