@@ -50,5 +50,28 @@ namespace eUni.BusinessLogic.AutoMapper
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
         }
 
+        public static void AnswerMappings()
+        {
+            Mapper.CreateMap<Answer, AnswerDTO>()
+                .ForMember(dest => dest.AnswerId, opt => opt.MapFrom(src => src.AnswerId))
+                .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
+                .ForMember(dest => dest.IsCorrect, opt => opt.MapFrom(src => src.IsCorrect)).ReverseMap();
+        }
+
+        public static void QuestionMappings()
+        {
+            Mapper.CreateMap<Question, QuestionDTO>()
+                .ForMember(dest => dest.QuestionId, opt => opt.MapFrom(src => src.QuestionId))
+                .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
+                .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score)).ReverseMap();
+        }
+
+        public static void TestMappings()
+        {
+            Mapper.CreateMap<Test, TestDTO>()
+                .ForMember(dest => dest.TestId, opt => opt.MapFrom(src => src.TestId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name)).ReverseMap();
+        }
+
     }
 }

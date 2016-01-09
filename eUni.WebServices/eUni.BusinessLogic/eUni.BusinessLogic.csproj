@@ -99,6 +99,8 @@
     <Compile Include="IProviders\ICourseProvider.cs" />
     <Compile Include="IProviders\IHomeworkProvider.cs" />
     <Compile Include="IProviders\IModuleProvider.cs" />
+    <Compile Include="IProviders\IQuestionProvider.cs" />
+    <Compile Include="IProviders\ITestProvider.cs" />
     <Compile Include="IProviders\IUserProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CourseProvider.cs" />
@@ -112,6 +114,8 @@
     <Compile Include="Providers\DataTransferObjects\TestDTO.cs" />
     <Compile Include="Providers\HomeworkProvider.cs" />
     <Compile Include="Providers\ModuleProvider.cs" />
+    <Compile Include="Providers\QuestionProvider.cs" />
+    <Compile Include="Providers\TestProvider.cs" />
     <Compile Include="Providers\UserProvider.cs" />
   </ItemGroup>
   <ItemGroup>
