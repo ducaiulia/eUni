@@ -4,6 +4,8 @@ using eUni.DataAccess.Domain;
 using eUni.DataAccess.Repository;
 using eUni.BusinessLogic.IProviders;
 using System;
+using System.Linq;
+using eUni.DataAccess.Enums;
 
 namespace eUni.BusinessLogic.Providers
 {
@@ -11,6 +13,7 @@ namespace eUni.BusinessLogic.Providers
     {
         private readonly ICourseRepository _courseRepo;
         private readonly IUserRepository _userRepo;
+        
 
         public CourseProvider(ICourseRepository courseRepo, IUserRepository userRepo)
         {
@@ -36,11 +39,6 @@ namespace eUni.BusinessLogic.Providers
             var cou = _courseRepo.Get(c=>c.CourseId == course.CourseId);
             cou.Teacher = _userRepo.Get(u => u.DomainUserId == course.Teacher.DomainUserId);
             _courseRepo.SaveChanges();
-        }
-
-        public void SaveUploadedFilePath(string path)
-        {
-            throw new NotImplementedException();
         }
     }
 }

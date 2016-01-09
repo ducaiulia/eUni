@@ -97,7 +97,9 @@
   <ItemGroup>
     <Compile Include="AutoMapper\BusinessLogicMapper.cs" />
     <Compile Include="IProviders\ICourseProvider.cs" />
+    <Compile Include="IProviders\IFileProvider.cs" />
     <Compile Include="IProviders\IHomeworkProvider.cs" />
+    <Compile Include="IProviders\ILogProvider.cs" />
     <Compile Include="IProviders\IModuleProvider.cs" />
     <Compile Include="IProviders\IQuestionProvider.cs" />
     <Compile Include="IProviders\ITestProvider.cs" />
@@ -109,13 +111,17 @@
     <Compile Include="Providers\DataTransferObjects\ContentDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\CourseDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\DomainUserDTO.cs" />
+    <Compile Include="Providers\DataTransferObjects\FileDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\HomeworkDTO.cs" />
+    <Compile Include="Providers\DataTransferObjects\LogDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\ModuleDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\WikiPageDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\QuestionDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\ResultActionDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\TestDTO.cs" />
+    <Compile Include="Providers\FileProvider.cs" />
     <Compile Include="Providers\HomeworkProvider.cs" />
+    <Compile Include="Providers\LogProvider.cs" />
     <Compile Include="Providers\ModuleProvider.cs" />
     <Compile Include="Providers\QuestionProvider.cs" />
     <Compile Include="Providers\TestProvider.cs" />

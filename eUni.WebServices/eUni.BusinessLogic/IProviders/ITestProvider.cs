@@ -7,7 +7,7 @@ using eUni.BusinessLogic.Providers.DataTransferObjects;
 
 namespace eUni.BusinessLogic.IProviders
 {
-    interface ITestProvider
+    public interface ITestProvider
     {
         void CreateTest(TestDTO dtoTest);
         TestDTO GetByTestId(int testId);

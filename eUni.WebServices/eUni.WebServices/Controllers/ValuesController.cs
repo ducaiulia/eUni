@@ -7,6 +7,7 @@ namespace eUni.WebServices.Controllers
     [RoutePrefix("api/Values")]
     public class ValuesController : ApiController
     {
+        [HttpPost]
         public string GetFromToken([FromBody]TokenIdentifierViewModel tokenIdentifierViewModel)
         {
             return TokenHelper.GetFromToken(tokenIdentifierViewModel.Token, tokenIdentifierViewModel.Identifier);

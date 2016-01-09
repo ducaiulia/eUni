@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace eUni.BusinessLogic.Providers.DataTransferObjects
 {
-    public class AnswerDTO
+    public class LogDTO
     {
-        public int AnswerId { get; set; }
-        public string Text { get; set; }
-        public bool IsCorrect { get; set; }
+        public string User { get; set; }
+        public string Action { get; set; }
+        public string Date { get; set; }
     }
 }

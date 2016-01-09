@@ -52,7 +52,13 @@ namespace eUni.BusinessLogic.AutoMapper
                 .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score)).ReverseMap();
         }
 
-
+        public static void FileMappings()
+        {
+            Mapper.CreateMap<FileDTO, File>()
+                .ForMember(dest => dest.FileType, opt => opt.MapFrom(src => src.FileType))
+                .ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Path))
+                .ForMember(dest => dest.Size, opt => opt.MapFrom(src => src.Size));
+        }
 
         public static void ContentMappings()
         {
@@ -79,7 +85,7 @@ namespace eUni.BusinessLogic.AutoMapper
         public static void TestMappings()
         {
             Mapper.CreateMap<Test, TestDTO>()
-                .ForMember(dest => dest.TestId, opt => opt.MapFrom(src => src.TestId))
+                .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.Module.ModuleId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name)).ReverseMap();
         }
 
