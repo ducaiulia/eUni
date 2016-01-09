@@ -14,6 +14,7 @@ using System.Web.Http;
 using Dropbox.Api;
 using Dropbox.Api.Files;
 using eUni.BusinessLogic.IProviders;
+using eUni.DataAccess.Enums;
 using eUni.WebServices.Helpers;
 
 namespace eUni.WebServices.Controllers
@@ -24,11 +25,13 @@ namespace eUni.WebServices.Controllers
     {
         private IUserProvider _userProvider;
         private ICourseProvider _courseProvider;
+        private IFileProvider _fileProvider;
 
-        public CourseController(IUserProvider userProvider, ICourseProvider courseProvider)
+        public CourseController(IUserProvider userProvider, ICourseProvider courseProvider, IFileProvider fileProvider)
         {
             _userProvider = userProvider;
             _courseProvider = courseProvider;
+            _fileProvider = fileProvider;
         }
 
         [Route("Add")]
@@ -57,7 +60,7 @@ namespace eUni.WebServices.Controllers
 
         [HttpPost]
         [Route("UploadFile")]
-        public async Task<IHttpActionResult> UploadFile(string filename, [FromBody]byte[] contentFile)
+        public async Task<IHttpActionResult> UploadFile(string filename, [FromBody]byte[] contentFile, int courseId, int moduleId)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
             var key = WebConfigurationManager.AppSettings["DropboxToken"];
@@ -68,16 +71,34 @@ namespace eUni.WebServices.Controllers
 
             string path = "/" + role + "/" + username + "/" + filename;
 
-            using (var memoryStream = new MemoryStream(contentFile))
-            {
-                var uploaded = await dbx.Files.UploadAsync(
-                    path,
-                    WriteMode.Add.Instance,
-                    body: memoryStream);
-            }
+            FileType fileType;
+            var lastOrDefault = filename.Split('.').LastOrDefault();
+            if (lastOrDefault != null)
+                if (Enum.TryParse(lastOrDefault, out fileType))
+                {
+                    using (var memoryStream = new MemoryStream(contentFile))
+                    {
+                        var uploaded = await dbx.Files.UploadAsync(
+                            path,
+                            WriteMode.Add.Instance,
+                            body: memoryStream);
 
-            return null;
+                        if (_fileProvider.SaveUploadedFilePath(new FileDTO
+                        {
+                            ModuleId = moduleId,Path = path, FileType = fileType,
+                            Size = (int) uploaded.Size, Description = filename
+                        
+                        }))
+                            return Ok(path);
+                        else
+                            return BadRequest("Course or module doesn't exist.");
+                    }
+                }
+                else
+                {
+                    return BadRequest("File type not supported.");
+                }
+            return BadRequest("Not a file type.");
         }
-
     }
 }

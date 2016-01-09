@@ -11,7 +11,7 @@ using eUni.DataAccess.Repository;
 
 namespace eUni.BusinessLogic.Providers
 {
-    class QuestionProvider : IQuestionProvider
+    public class QuestionProvider : IQuestionProvider
     {
         private readonly IQuestionRepository _questionRepository;
         private readonly IModuleRepository _moduleRepository;

@@ -8,8 +8,8 @@ using eUni.DataAccess.eUniDbContext;
 
 namespace eUni.DataAccess.Repository
 {
-    public class AnswerRepository : Repository<Answer>, IAnswerRepository
+    public class FileRepository: Repository<File>, IFileRepository
     {
-        public AnswerRepository(ApplicationDbContext context) : base(context) { }
+        public FileRepository(ApplicationDbContext context) : base(context) { }
     }
 }

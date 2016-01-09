@@ -19,12 +19,40 @@ namespace eUni.WebServices
             BusinessLogicMapper.ContentMappings();
             BusinessLogicMapper.HomeworkMappings();
             BusinessLogicMapper.WikiPageMapping();
+            BusinessLogicMapper.TestMappings();
+            BusinessLogicMapper.FileMappings();
             UserDTOToViewModel();
             CourseDTOToViewModel();
             HomeworkDTOToViewModel();
             ModuleDTOToViewModel();
             WikiPageDTOToViewModel();
+            TestDTOToViewModel();
+            QuestionDTOToViewModel();
+            FileDTOToViewModel();
+            
 
+        }
+
+        private static void FileDTOToViewModel()
+        {
+            Mapper.CreateMap<FileDTO, FileViewModel>()
+                .ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Path))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
+        }
+
+        private static void QuestionDTOToViewModel()
+        {
+            Mapper.CreateMap<QuestionDTO, QuestionViewModel>()
+                 .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.Module.ModuleId))
+                 .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
+                 .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score)).ReverseMap();
+        }
+
+        private static void TestDTOToViewModel()
+        {
+            Mapper.CreateMap<TestDTO, TestViewModel>()
+                 .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.ModuleId))
+                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name)).ReverseMap();
         }
 
         private static void ModuleDTOToViewModel()

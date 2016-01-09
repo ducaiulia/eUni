@@ -11,7 +11,7 @@ using eUni.DataAccess.Repository;
 
 namespace eUni.BusinessLogic.Providers
 {
-    class TestProvider : ITestProvider
+    public class TestProvider : ITestProvider
     {
         private readonly IModuleRepository _moduleRepository;
         private readonly IQuestionRepository _questionProvider;
@@ -27,7 +27,7 @@ namespace eUni.BusinessLogic.Providers
         public void CreateTest(TestDTO dtoTest)
         {
             var test = Mapper.Map<Test>(dtoTest);
-            test.Module = _moduleRepository.Get(u => u.ModuleId == dtoTest.Module.ModuleId);
+            test.Module = _moduleRepository.Get(u => u.ModuleId == dtoTest.ModuleId);
             _testRepository.Add(test);
         }
 
@@ -40,7 +40,6 @@ namespace eUni.BusinessLogic.Providers
         public void UpdateTest(TestDTO dtoTest)
         {
             var test = Mapper.Map<Test>(dtoTest);
-            test.Module = _moduleRepository.Get(u => u.ModuleId == dtoTest.Module.ModuleId);
             _testRepository.SaveChanges();
         }
     }

@@ -33,6 +33,7 @@ namespace eUni.DataAccess.eUniDbContext
         public DbSet<StudentQuestion> StudentQuestions { get; set; }
         public DbSet<Content> Contents { get; set; }
         public DbSet<WikiPage> WikiPages { get; set; }
+        public DbSet<File> Files { get; set; }
 
 
 

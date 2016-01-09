@@ -19,11 +19,13 @@ namespace eUni.WebServices.Controllers
     {
         private IModuleProvider _moduleProvider;
         private ICourseProvider _courseProvider;
-        
-        public ModuleController(IModuleProvider moduleProvider, ICourseProvider courseProvider)
+        private IFileProvider _fileProvider;
+
+        public ModuleController(IModuleProvider moduleProvider, ICourseProvider courseProvider, IFileProvider fileProvider)
         {
             _moduleProvider = moduleProvider;
             _courseProvider = courseProvider;
+            _fileProvider = fileProvider;
         }
 
         [Route("Add")]
@@ -36,6 +38,18 @@ namespace eUni.WebServices.Controllers
 
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Module created"));
             return Content(HttpStatusCode.OK, "Created successfully");
+        }
+
+        [Route("GetFiles")]
+        public async Task<IHttpActionResult> GetFiles(int modId)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            
+            var filesDTO = _fileProvider.GetFiles(modId);
+            List<FileViewModel> res = new List<FileViewModel>();
+            filesDTO.ForEach(f => res.Add(Mapper.Map<FileViewModel>(f)));
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Module created"));
+            return Ok(res);
         }
     }
 }

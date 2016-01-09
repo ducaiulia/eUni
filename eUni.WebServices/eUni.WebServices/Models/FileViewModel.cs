@@ -5,9 +5,9 @@ using System.Web;
 
 namespace eUni.WebServices.Models
 {
-    public class TestViewModel
+    public class FileViewModel
     {
-        public string Name { get; set; }
-        public int ModuleId { get; set; }
+        public string Path { get; set; }
+        public string Description { get; set; }
     }
 }

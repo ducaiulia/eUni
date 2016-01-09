@@ -20,8 +20,6 @@ namespace eUni.WebServices
                 .As<ApplicationDbContext>()
                 .InstancePerRequest();
 
-            builder.RegisterType<AspNetUserRepository>()
-                .As<IAspNetUserRepository>();
             builder.RegisterType<UserRepository>()
                 .As<IUserRepository>();
             builder.RegisterType<CourseRepository>()
@@ -30,12 +28,20 @@ namespace eUni.WebServices
                 .As<IHomeworkRepository>();
             builder.RegisterType<ModuleRepository>()
                 .As<IModuleRepository>();
+            builder.RegisterType<LogsRepository>()
+                .As<ILogsRepository>();
+            builder.RegisterType<QuestionRepository>()
+                .As<IQuestionRepository>();
+            builder.RegisterType<TestRepository>()
+                .As<ITestRepository>();
+            builder.RegisterType<AnswerRepository>()
+                .As<IAnswerRepository>();
             builder.RegisterType<WikiPageRepository>()
                 .As<IWikiPageRepository>();
-            builder.RegisterType<Repository<Module>>()
-                .As<Repository<Module>>();
             builder.RegisterType<AspNetUserRepository>()
                 .As<IAspNetUserRepository>();
+            builder.RegisterType<FileRepository>()
+                .As<IFileRepository>();
 
 
 
@@ -43,12 +49,20 @@ namespace eUni.WebServices
                 .As<IUserProvider>();
             builder.RegisterType<CourseProvider>()
                 .As<ICourseProvider>();
+            builder.RegisterType<LogProvider>()
+                .As<ILogProvider>();
             builder.RegisterType<ModuleProvider>()
                 .As<IModuleProvider>();
             builder.RegisterType<WikiPageProvider>()
                 .As<IWikiPageProvider>();
             builder.RegisterType<HomeworkProvider>()
                 .As<IHomeworkProvider>();
+            builder.RegisterType<QuestionProvider>()
+                .As<IQuestionProvider>();
+            builder.RegisterType<TestProvider>()
+                .As<ITestProvider>();
+            builder.RegisterType<FileProvider>()
+                .As<IFileProvider>();
 
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 

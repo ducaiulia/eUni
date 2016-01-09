@@ -255,6 +255,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HomeworkController.cs" />
+    <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -270,6 +271,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AnswerViewModel.cs" />
     <Compile Include="Models\CourseViewModel.cs" />
+    <Compile Include="Models\FileViewModel.cs" />
     <Compile Include="Models\HomeworkViewModel.cs" />
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />

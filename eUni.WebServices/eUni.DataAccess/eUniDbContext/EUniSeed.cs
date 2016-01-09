@@ -20,25 +20,17 @@ namespace eUni.DataAccess.eUniDbContext
 
         public void SeedRoles()
         {
-            _context.Roles.AddOrUpdate(u => u.Name,
-                new IdentityRole
-                {
-                    Name = "Admin"
-                    
-                });
 
-            _context.Roles.AddOrUpdate(u => u.Name,
-                new IdentityRole
-                {
-                    Name = "Teacher"
-                });
+            var store = new RoleStore<IdentityRole>(_context);
+            var manager = new RoleManager<IdentityRole>(store);
+            var adminRole = new IdentityRole { Name = "Admin" };
+            var teacherRole = new IdentityRole { Name = "Teacher" };
+            var studentRole = new IdentityRole { Name = "Student" };
 
-            _context.Roles.AddOrUpdate(u => u.Name,
-                new IdentityRole
-                {
-                    Name = "Student"
-                });
-
+            manager.Create(adminRole);
+            manager.Create(teacherRole);
+            manager.Create(studentRole);
+            
         }
 
         public void SeedUsers()
@@ -46,87 +38,91 @@ namespace eUni.DataAccess.eUniDbContext
             var passwordHash = new PasswordHasher();
             string password = passwordHash.HashPassword("aaa");
 
-            var studentRole = _context.Roles.FirstOrDefault(x => x.Name == "Student");
-            var teacherRole = _context.Roles.FirstOrDefault(x => x.Name == "Teacher");
-            var adminRole = _context.Roles.FirstOrDefault(x => x.Name == "Admin");
+            var store = new UserStore<ApplicationUser>(_context);
+            var manager = new UserManager<ApplicationUser>(store);
 
-            _context.Users.AddOrUpdate(u => u.UserName,
-                new ApplicationUser
+
+            var user1 = new ApplicationUser
+            {
+                UserName = "ana@euni.com",
+                PasswordHash = password,
+                DomainUser = new DomainUser
                 {
-                    UserName = "ana@euni.com",
-                    PasswordHash = password,
-                    DomainUser = new DomainUser
-                    {
-                        FirstName = "Ana",
-                        LastName = "Pop",
-                        MatriculationNumber = "AnPo01",
-                        Email = "ana@euni.com"
-                    }
-                    //Roles = { new IdentityUserRole
-                    //{
-                    //    RoleId = studentRole.Id
-                    //} }
-                    
-                });
-            
+                    FirstName = "Ana",
+                    LastName = "Pop",
+                    MatriculationNumber = "AnPo01",
+                    Email = "ana@euni.com"
+                }
+            };
 
-            _context.Users.AddOrUpdate(u => u.UserName,
-                new ApplicationUser
+            manager.Create(user1);
+            manager.AddToRole(user1.Id, "Student");
+
+            var user2 = new ApplicationUser
+            {
+                UserName = "marius@euni.com",
+                PasswordHash = password,
+                DomainUser = new DomainUser
                 {
-                    UserName = "marius@euni.com",
-                    PasswordHash = password,
-                    DomainUser = new DomainUser
-                    {
-                        FirstName = "Marius",
-                        LastName = "Muresan",
-                        MatriculationNumber = "MaMu01",
-                        Email = "marius@euni.com",
-                    }
-                });
+                    FirstName = "Marius",
+                    LastName = "Muresan",
+                    MatriculationNumber = "MaMu01",
+                    Email = "marius@euni.com",
+                }
+            };
+            manager.Create(user2);
+            manager.AddToRole(user2.Id, "Student");
 
-            _context.Users.AddOrUpdate(u => u.UserName,
-                new ApplicationUser
+
+            var user3 = new ApplicationUser
+            {
+                UserName = "adela@euni.com",
+                PasswordHash = password,
+                DomainUser = new DomainUser
                 {
-                    UserName = "adela@euni.com",
-                    PasswordHash = password,
-                    DomainUser = new DomainUser
-                    {
-                        FirstName = "Adela",
-                        LastName = "Berindean",
-                        MatriculationNumber = "AdBe01",
-                        Email = "adela@euni.com",
-                    }
-                    
+                    FirstName = "Adela",
+                    LastName = "Berindean",
+                    MatriculationNumber = "AdBe01",
+                    Email = "adela@euni.com",
+                }
 
-                });
+            };
+            manager.Create(user3);
+            manager.AddToRole(user3.Id, "Student");
 
-            _context.Users.AddOrUpdate(u => u.UserName,
-                new ApplicationUser
+
+            var user4 = new ApplicationUser
+            {
+                UserName = "adina@euni.com",
+                PasswordHash = password,
+                DomainUser = new DomainUser
                 {
-                    UserName = "adina@euni.com",
-                    PasswordHash = password,
-                    DomainUser = new DomainUser
-                    {
-                        FirstName = "Adina",
-                        LastName = "Duma",
-                        MatriculationNumber = "AdDu01",
-                        Email = "adina@euni.com",
-                    }
-                });
+                    FirstName = "Adina",
+                    LastName = "Duma",
+                    MatriculationNumber = "AdDu01",
+                    Email = "adina@euni.com",
+                }
+            };
 
-            _context.Users.AddOrUpdate(u => u.UserName,
-                new ApplicationUser
+            manager.Create(user4);
+            manager.AddToRole(user4.Id, "Teacher");
+
+            var user5 = new ApplicationUser
+            {
+                UserName = "iulia@euni.com",
+                PasswordHash = password,
+                DomainUser = new DomainUser
                 {
-                    UserName = "iulia@euni.com",
-                    PasswordHash = password,
-                    DomainUser = new DomainUser
-                    {
-                        FirstName = "Iulia",
-                        LastName = "Duca",
-                        MatriculationNumber = "IuDu01",
-                        Email = "iulia@euni.com",
-                    }
-                });
+                    FirstName = "Iulia",
+                    LastName = "Duca",
+                    MatriculationNumber = "IuDu01",
+                    Email = "iulia@euni.com",
+                }
+            };
+
+            manager.Create(user5);
+            manager.AddToRole(user5.Id, "Admin");
+
 
             _context.SaveChanges();
 
