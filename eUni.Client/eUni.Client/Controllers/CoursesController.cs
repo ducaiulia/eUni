@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace EUni_Client.Controllers
@@ -11,6 +8,28 @@ namespace EUni_Client.Controllers
         // GET: Courses
         public ActionResult Index()
         {
+            ViewBag.Courses = new List<string>
+            {
+                "Course1", "Course2", "Course3", "Course4", "Course5"
+            };
+            return View();
+        }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        public ActionResult AssignTeacher()
+        {
+            ViewBag.Teachers = new List<string>
+            {
+                "Teacher1", "Teacher2", "Teacher3", "Teacher4", "Teacher5"
+            };
+            ViewBag.Courses = new List<string>
+            {
+                "Course1", "Course2", "Course3", "Course4", "Course5"
+            };
             return View();
         }
     }
