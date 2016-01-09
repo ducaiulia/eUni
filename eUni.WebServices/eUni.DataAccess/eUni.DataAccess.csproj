@@ -120,8 +120,10 @@
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\ModuleRepository.cs" />
+    <Compile Include="Repository\IWikiPageRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="Repository\WikiPageRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

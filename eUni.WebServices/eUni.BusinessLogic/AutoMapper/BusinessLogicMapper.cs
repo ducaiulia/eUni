@@ -26,11 +26,25 @@ namespace eUni.BusinessLogic.AutoMapper
                 .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate)).ReverseMap();
         }
 
+        public static void WikiPageMapping()
+        {
+            Mapper.CreateMap<WikiPage, WikiPageDTO>();
+            Mapper.CreateMap<WikiPageDTO, WikiPage>()
+                .ForMember(dest => dest.Module, opt => opt.MapFrom(src => src.Module))
+                .ForMember(dest => dest.WikiPageId, opt => opt.Ignore());
+        }
+
         public static void ModuleMappings()
         {
-            Mapper.CreateMap<Module,ModuleDTO>()
+            Mapper.CreateMap<Module, ModuleDTO>()
                 .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.ModuleId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name)).ReverseMap();
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Course, opt => opt.MapFrom(src => Mapper.Map<CourseDTO>(src.Course)))
+                .ForMember(dest => dest.Contents, opt => opt.MapFrom(src => src.Contents)).ReverseMap();
+
+            Mapper.CreateMap<ModuleDTO, Module>()
+                .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.ModuleId));
         }
 
         public static void HomeworkMappings()
@@ -41,9 +55,11 @@ namespace eUni.BusinessLogic.AutoMapper
                 .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score)).ReverseMap();
         }
 
+
+
         public static void ContentMappings()
         {
-            Mapper.CreateMap<Content,ContentDTO>()
+            Mapper.CreateMap<Content, ContentDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
         }
 

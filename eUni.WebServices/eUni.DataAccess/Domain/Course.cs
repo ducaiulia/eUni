@@ -20,5 +20,7 @@ namespace eUni.DataAccess.Domain
         public virtual ICollection<Module> Modules { get; set; }
         public virtual List<DomainUser> Students { get; set; }
 
+        public virtual List<DomainUser> Students { get; set; }
+
     }
 }

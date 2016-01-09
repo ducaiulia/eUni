@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using eUni.DataAccess.Domain;
+using eUni.DataAccess.Repository;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace eUni.DataAccess.eUniDbContext
@@ -25,11 +26,16 @@ namespace eUni.DataAccess.eUniDbContext
         public DbSet<Log> Logs { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<DomainUser> DomainUsers { get; set; }
+        public DbSet<IdentityRole> IdentityRoles { get; set; }
+        public DbSet<IdentityUserRole> IdentityUserRoles { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<StudentQuestion> StudentQuestions { get; set; }
         public DbSet<Content> Contents { get; set; }
+        public DbSet<WikiPage> WikiPages { get; set; }
+
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

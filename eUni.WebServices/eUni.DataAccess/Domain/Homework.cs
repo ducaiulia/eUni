@@ -11,7 +11,6 @@ namespace eUni.DataAccess.Domain
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int HomeworkId { get; set; }
-
         public string Text { get; set; }
         public int Score { get; set; }
         public virtual Module Module { get; set; }
