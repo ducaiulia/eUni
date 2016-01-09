@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
+using eUni.WebServices.Helpers;
 
 namespace eUni.WebServices.Controllers
 {
@@ -32,6 +33,11 @@ namespace eUni.WebServices.Controllers
         // DELETE api/values/5
         public void Delete(int id)
         {
+        }
+
+        public string GetFromToken(string token, string identifier)
+        {
+            return TokenHelper.GetFromToken(token, identifier);
         }
     }
 }
