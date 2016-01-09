@@ -100,6 +100,10 @@
     <Compile Include="Migrations\201512061728173_Added_Log4Net_Save_To_DB.Designer.cs">
       <DependentUpon>201512061728173_Added_Log4Net_Save_To_DB.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601091659003_Add connection between File and Module.cs" />
+    <Compile Include="Migrations\201601091659003_Add connection between File and Module.Designer.cs">
+      <DependentUpon>201601091659003_Add connection between File and Module.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AspNetUserRepository.cs" />
@@ -129,6 +133,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512061728173_Added_Log4Net_Save_To_DB.resx">
       <DependentUpon>201512061728173_Added_Log4Net_Save_To_DB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601091659003_Add connection between File and Module.resx">
+      <DependentUpon>201601091659003_Add connection between File and Module.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
