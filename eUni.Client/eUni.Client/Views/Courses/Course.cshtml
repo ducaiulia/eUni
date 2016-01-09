@@ -1,0 +1,10 @@
+﻿
+<h3>Course</h3>
+<ul class="list-unstyled">
+    @foreach (var module in ViewBag.Modules)
+    {
+        <li>
+            @Html.ActionLink((((string)module)), "Index", "Module", new { area = "" }, new { @class = "" })
+        </li>
+    }
+</ul>
