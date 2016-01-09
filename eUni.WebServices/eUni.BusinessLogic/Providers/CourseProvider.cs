@@ -36,5 +36,10 @@ namespace eUni.BusinessLogic.Providers
             cou.Teacher = _userRepo.Get(u => u.DomainUserId == course.Teacher.DomainUserId);
             _courseRepo.SaveChanges();
         }
+
+        public void SaveUploadedFilePath(string path)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

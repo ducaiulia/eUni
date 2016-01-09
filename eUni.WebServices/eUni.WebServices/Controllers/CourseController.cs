@@ -4,11 +4,15 @@ using eUni.BusinessLogic.Providers.DataTransferObjects;
 using eUni.WebServices.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using System.Web.Http;
+using Dropbox.Api;
+using Dropbox.Api.Files;
 using eUni.BusinessLogic.IProviders;
 using eUni.WebServices.Helpers;
 
@@ -50,5 +54,30 @@ namespace eUni.WebServices.Controllers
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"),"Teacher assigned to course"));
             return Content(HttpStatusCode.OK, "Assigned successfully");
         }
+
+        [HttpPost]
+        [Route("UploadFile")]
+        public async Task<IHttpActionResult> UploadFile(string filename, [FromBody]byte[] contentFile)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var key = WebConfigurationManager.AppSettings["DropboxToken"];
+            var dbx = new DropboxClient(key);
+
+            string username = TokenHelper.GetFromToken(token, "username");
+            string role = TokenHelper.GetFromToken(token, "role");
+
+            string path = "/" + role + "/" + username + "/" + filename;
+
+            using (var memoryStream = new MemoryStream(contentFile))
+            {
+                var uploaded = await dbx.Files.UploadAsync(
+                    path,
+                    WriteMode.Add.Instance,
+                    body: memoryStream);
+            }
+
+            return null;
+        }
+
     }
 }
