@@ -23,6 +23,8 @@ namespace eUni.WebServices
             CourseDTOToViewModel();
             HomeworkDTOToViewModel();
             ModuleDTOToViewModel();
+            WikiPageDTOToViewModel();
+
         }
 
         private static void ModuleDTOToViewModel()
@@ -31,8 +33,7 @@ namespace eUni.WebServices
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(src => src.Course.CourseCode)).ReverseMap();
         }
-            WikiPageDTOToViewModel();
-        }
+
 
         private static void WikiPageDTOToViewModel()
         {
@@ -40,7 +41,7 @@ namespace eUni.WebServices
                 .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.Module.ModuleId));
 
             Mapper.CreateMap<WikiPageViewModel, WikiPageDTO>();
-
+        }
 
         private static void HomeworkDTOToViewModel()
         {

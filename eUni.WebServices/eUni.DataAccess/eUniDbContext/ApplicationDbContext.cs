@@ -26,8 +26,7 @@ namespace eUni.DataAccess.eUniDbContext
         public DbSet<Log> Logs { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<DomainUser> DomainUsers { get; set; }
-        public DbSet<IdentityRole> IdentityRoles { get; set; }
-        public DbSet<IdentityUserRole> IdentityUserRoles { get; set; }
+        //public DbSet<IdentityRole> IdentityRoles { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }

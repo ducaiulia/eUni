@@ -39,9 +39,6 @@ namespace eUni.BusinessLogic.AutoMapper
             Mapper.CreateMap<Module, ModuleDTO>()
                 .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.ModuleId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name)).ReverseMap();
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Course, opt => opt.MapFrom(src => Mapper.Map<CourseDTO>(src.Course)))
-                .ForMember(dest => dest.Contents, opt => opt.MapFrom(src => src.Contents)).ReverseMap();
 
             Mapper.CreateMap<ModuleDTO, Module>()
                 .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.ModuleId));

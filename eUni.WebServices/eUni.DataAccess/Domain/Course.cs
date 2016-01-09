@@ -17,9 +17,7 @@ namespace eUni.DataAccess.Domain
         public DateTime StartDate { get; set; }
         public DateTime EndDate  { get; set; }
         public virtual DomainUser Teacher { get; set; }
-        public virtual ICollection<Module> Modules { get; set; }
-        public virtual List<DomainUser> Students { get; set; }
-
+        public virtual List<Module> Modules { get; set; }
         public virtual List<DomainUser> Students { get; set; }
 
     }
