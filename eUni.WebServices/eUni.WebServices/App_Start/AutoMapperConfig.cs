@@ -28,7 +28,16 @@ namespace eUni.WebServices
             WikiPageDTOToViewModel();
             TestDTOToViewModel();
             QuestionDTOToViewModel();
+            FileDTOToViewModel();
+            
 
+        }
+
+        private static void FileDTOToViewModel()
+        {
+            Mapper.CreateMap<FileDTO, FileViewModel>()
+                .ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Path))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
         }
 
         private static void QuestionDTOToViewModel()

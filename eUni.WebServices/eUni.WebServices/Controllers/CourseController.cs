@@ -83,7 +83,12 @@ namespace eUni.WebServices.Controllers
                             WriteMode.Add.Instance,
                             body: memoryStream);
 
-                        if (_fileProvider.SaveUploadedFilePath(new FileDTO {ModuleId = moduleId,Path = path, FileType = fileType, Size = (int) uploaded.Size}))
+                        if (_fileProvider.SaveUploadedFilePath(new FileDTO
+                        {
+                            ModuleId = moduleId,Path = path, FileType = fileType,
+                            Size = (int) uploaded.Size, Description = filename
+                        
+                        }))
                             return Ok(path);
                         else
                             return BadRequest("Course or module doesn't exist.");

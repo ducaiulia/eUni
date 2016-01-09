@@ -271,6 +271,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AnswerViewModel.cs" />
     <Compile Include="Models\CourseViewModel.cs" />
+    <Compile Include="Models\FileViewModel.cs" />
     <Compile Include="Models\HomeworkViewModel.cs" />
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
