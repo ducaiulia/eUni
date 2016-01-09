@@ -1,4 +1,8 @@
 ﻿@using EUni_Client.Services
+@if (Session[ServiceNames.ApiService] == null && (!Request.Url.AbsolutePath.Equals("/") && !Request.Url.AbsolutePath.Equals("/Login") && !Request.Url.AbsolutePath.Equals("/Login/Register")))
+{
+    Response.Redirect("~/");
+}
 <!DOCTYPE html>
 <html>
 <head>
