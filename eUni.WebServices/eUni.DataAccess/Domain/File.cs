@@ -16,5 +16,6 @@ namespace eUni.DataAccess.Domain
         public string Path { get; set; }
         public int Size { get; set; }
         public FileType FileType { get; set; }
+        public virtual Module Module { get; set; }
     }
 }
