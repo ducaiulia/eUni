@@ -1,13 +1,7 @@
 ﻿using AutoMapper;
 using eUni.BusinessLogic.Providers.DataTransferObjects;
 using eUni.DataAccess.Domain;
-using eUni.DataAccess.eUniDbContext;
 using eUni.DataAccess.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using eUni.BusinessLogic.IProviders;
 
 namespace eUni.BusinessLogic.Providers

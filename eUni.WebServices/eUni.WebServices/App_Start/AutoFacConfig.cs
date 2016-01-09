@@ -24,6 +24,10 @@ namespace eUni.WebServices
                 .As<IUserRepository>();
             builder.RegisterType<CourseRepository>()
                 .As<ICourseRepository>();
+            builder.RegisterType<HomeworkRepository>()
+                .As<IHomeworkRepository>();
+            builder.RegisterType<ModuleRepository>()
+                .As<IModuleRepository>();
             builder.RegisterType<AspNetUserRepository>()
                 .As<IAspNetUserRepository>();
 
@@ -33,6 +37,10 @@ namespace eUni.WebServices
                 .As<IUserProvider>();
             builder.RegisterType<CourseProvider>()
                 .As<ICourseProvider>();
+            builder.RegisterType<ModuleProvider>()
+                .As<IModuleProvider>();
+            builder.RegisterType<HomeworkProvider>()
+                .As<IHomeworkProvider>();
 
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 

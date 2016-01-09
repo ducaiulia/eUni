@@ -17,8 +17,26 @@ namespace eUni.WebServices
             BusinessLogicMapper.CourseMappings();
             BusinessLogicMapper.ModuleMappings();
             BusinessLogicMapper.ContentMappings();
+            BusinessLogicMapper.HomeworkMappings();
             UserDTOToViewModel();
             CourseDTOToViewModel();
+            HomeworkDTOToViewModel();
+            ModuleDTOToViewModel();
+        }
+
+        private static void ModuleDTOToViewModel()
+        {
+            Mapper.CreateMap<ModuleDTO, ModuleViewModel>()
+                .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.ModuleId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name)).ReverseMap();
+        }
+
+        private static void HomeworkDTOToViewModel()
+        {
+            Mapper.CreateMap<HomeworkDTO, HomeworkViewModel>()
+                .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.Module.ModuleId))
+                .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
+                .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score)).ReverseMap();
         }
 
         public static void UserDTOToViewModel()
