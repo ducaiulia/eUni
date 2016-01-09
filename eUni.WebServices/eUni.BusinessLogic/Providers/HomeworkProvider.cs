@@ -32,7 +32,9 @@ namespace eUni.BusinessLogic.Providers
         public HomeworkDTO GetById(int hwId)
         {
             var hw = _homeworkRepo.Get(u => u.HomeworkId == hwId);
-            return Mapper.Map<HomeworkDTO>(hw);
+            var res = Mapper.Map<HomeworkDTO>(hw);
+            res.Module = Mapper.Map<ModuleDTO>(hw.Module);
+            return res;
         }
 
         public void UpdateHomework(HomeworkDTO hw)

@@ -27,8 +27,8 @@ namespace eUni.WebServices
         private static void ModuleDTOToViewModel()
         {
             Mapper.CreateMap<ModuleDTO, ModuleViewModel>()
-                .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.ModuleId))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name)).ReverseMap();
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(src => src.Course.CourseCode)).ReverseMap();
         }
 
         private static void HomeworkDTOToViewModel()
