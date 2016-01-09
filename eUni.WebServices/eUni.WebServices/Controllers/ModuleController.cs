@@ -14,7 +14,7 @@ using System.Web.Http;
 namespace eUni.WebServices.Controllers
 {
 
-    [RoutePrefix("api/Homework")]
+    [RoutePrefix("api/Module")]
     public class ModuleController : ApiController
     {
         private IModuleProvider _moduleProvider;
@@ -29,12 +29,12 @@ namespace eUni.WebServices.Controllers
         [Route("Add")]
         public async Task<IHttpActionResult> Add(ModuleViewModel mod)
         {
-            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+           // string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
             ModuleDTO dtoMod = Mapper.Map<ModuleDTO>(mod);
             dtoMod.Course = _courseProvider.GetByCourseCode(mod.Course.CourseCode);
             _moduleProvider.CreateModule(dtoMod);
 
-            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Module created"));
+            //Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Module created"));
             return Content(HttpStatusCode.OK, "Created successfully");
         }
     }
