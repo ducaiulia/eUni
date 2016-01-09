@@ -18,36 +18,37 @@ namespace eUni.DataAccess.eUniDbContext
             _context = context;
         }
 
-        //public void SeedRoles()
-        //{
-        //    _context.IdentityRoles.AddOrUpdate(u=>u.Name,
-        //        new IdentityRole
-        //        {
-        //            Name = "Admin"
-        //        });
+        public void SeedRoles()
+        {
+            _context.Roles.AddOrUpdate(u => u.Name,
+                new IdentityRole
+                {
+                    Name = "Admin"
+                    
+                });
 
-        //    _context.IdentityRoles.AddOrUpdate(u => u.Name,
-        //        new IdentityRole
-        //        {
-        //            Name = "Teacher"
-        //        });
+            _context.Roles.AddOrUpdate(u => u.Name,
+                new IdentityRole
+                {
+                    Name = "Teacher"
+                });
 
-        //    _context.IdentityRoles.AddOrUpdate(u => u.Name,
-        //        new IdentityRole
-        //        {
-        //            Name = "Student"
-        //        });
-            
-        //}
+            _context.Roles.AddOrUpdate(u => u.Name,
+                new IdentityRole
+                {
+                    Name = "Student"
+                });
+
+        }
 
         public void SeedUsers()
         {
             var passwordHash = new PasswordHasher();
             string password = passwordHash.HashPassword("aaa");
 
-            //var studentRole = _context.IdentityRoles.FirstOrDefault(x => x.Name == "Student");
-            //var teacherRole = _context.IdentityRoles.FirstOrDefault(x => x.Name == "Teacher");
-            //var adminRole = _context.IdentityRoles.FirstOrDefault(x => x.Name == "Admin");
+            var studentRole = _context.Roles.FirstOrDefault(x => x.Name == "Student");
+            var teacherRole = _context.Roles.FirstOrDefault(x => x.Name == "Teacher");
+            var adminRole = _context.Roles.FirstOrDefault(x => x.Name == "Admin");
 
             _context.Users.AddOrUpdate(u => u.UserName,
                 new ApplicationUser
@@ -59,9 +60,15 @@ namespace eUni.DataAccess.eUniDbContext
                         FirstName = "Ana",
                         LastName = "Pop",
                         MatriculationNumber = "AnPo01",
-                        Email = "ana@euni.com",
+                        Email = "ana@euni.com"
                     }
+                    //Roles = { new IdentityUserRole
+                    //{
+                    //    RoleId = studentRole.Id
+                    //} }
+                    
                 });
+            
 
             _context.Users.AddOrUpdate(u => u.UserName,
                 new ApplicationUser

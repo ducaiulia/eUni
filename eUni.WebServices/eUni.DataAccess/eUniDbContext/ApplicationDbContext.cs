@@ -44,17 +44,20 @@ namespace eUni.DataAccess.eUniDbContext
             // modelBuilder.Entity<DomainUser>().HasKey(q => q.UserId);
             //modelBuilder.Entity<Test>().HasKey(q => q.TestId);
             modelBuilder.Entity<StudentTest>().HasKey(q =>
-                new {
+                new
+                {
                     q.DomainUserId,
                     q.TestId
                 });
             modelBuilder.Entity<StudentQuestion>().HasKey(q =>
-                new {
+                new
+                {
                     q.DomainUserId,
                     q.QuestionId
                 });
             modelBuilder.Entity<StudentHomework>().HasKey(q =>
-                new {
+                new
+                {
                     q.DomainUserId,
                     q.HomeworkId
                 });
