@@ -9,6 +9,7 @@ namespace EUni_Client
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                      "~/Scripts/Datepicker/bootstrap-datepicker.min.js",
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -27,7 +28,7 @@ namespace EUni_Client
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/summernote.css",
-                      "~/Content/site.css"));
+                      "~/Content/Site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                      "~/Scripts/angular.min.js"));

@@ -261,6 +261,8 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Business\Api\ApiService.js" />
     <Content Include="Scripts\Business\Login\LoginService.js" />
+    <Content Include="Scripts\Datepicker\bootstrap-datepicker.js" />
+    <Content Include="Scripts\Datepicker\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-touch.min.js.map" />
