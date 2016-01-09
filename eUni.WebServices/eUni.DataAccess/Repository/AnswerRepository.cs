@@ -8,7 +8,7 @@ using eUni.DataAccess.eUniDbContext;
 
 namespace eUni.DataAccess.Repository
 {
-    class AnswerRepository : Repository<Answer>, IAnswerRepository
+    public class AnswerRepository : Repository<Answer>, IAnswerRepository
     {
         public AnswerRepository(ApplicationDbContext context) : base(context) { }
     }
