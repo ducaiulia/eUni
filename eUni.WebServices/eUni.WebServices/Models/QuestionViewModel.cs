@@ -7,10 +7,9 @@ namespace eUni.WebServices.Models
 {
     public class QuestionViewModel
     {
-        public int QuestionId { get; set; }
         public string Text { get; set; }
         public int Score { get; set; }
-        public ModuleViewModel Module { get; set; }
+        public string ModuleId { get; set; }
         public List<AnswerViewModel> Answers { get; set; }
     }
 }

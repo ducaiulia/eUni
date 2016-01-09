@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eUni.BusinessLogic.Providers.DataTransferObjects
 {
-    class AnswerDTO
+    public class AnswerDTO
     {
         public int AnswerId { get; set; }
         public string Text { get; set; }

@@ -30,12 +30,14 @@ namespace eUni.WebServices
                 .As<IHomeworkRepository>();
             builder.RegisterType<ModuleRepository>()
                 .As<IModuleRepository>();
+            builder.RegisterType<QuestionRepository>()
+                .As<IQuestionRepository>();
+            builder.RegisterType<TestRepository>()
+                .As<ITestRepository>();
+            builder.RegisterType<AnswerRepository>()
+                .As<IAnswerRepository>();
             builder.RegisterType<WikiPageRepository>()
                 .As<IWikiPageRepository>();
-            builder.RegisterType<Repository<Module>>()
-                .As<Repository<Module>>();
-            builder.RegisterType<AspNetUserRepository>()
-                .As<IAspNetUserRepository>();
 
 
 
@@ -49,6 +51,10 @@ namespace eUni.WebServices
                 .As<IWikiPageProvider>();
             builder.RegisterType<HomeworkProvider>()
                 .As<IHomeworkProvider>();
+            builder.RegisterType<QuestionProvider>()
+                .As<IQuestionProvider>();
+            builder.RegisterType<TestProvider>()
+                .As<ITestProvider>();
 
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
