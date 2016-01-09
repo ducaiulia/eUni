@@ -30,6 +30,7 @@ namespace eUni.DataAccess.eUniDbContext
         public DbSet<Answer> Answers { get; set; }
         public DbSet<StudentQuestion> StudentQuestions { get; set; }
         public DbSet<Content> Contents { get; set; }
+        public DbSet<File> Files { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

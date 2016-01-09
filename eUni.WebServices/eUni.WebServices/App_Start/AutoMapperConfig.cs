@@ -18,6 +18,7 @@ namespace eUni.WebServices
             BusinessLogicMapper.ModuleMappings();
             BusinessLogicMapper.ContentMappings();
             BusinessLogicMapper.HomeworkMappings();
+            BusinessLogicMapper.FileMappings();
             UserDTOToViewModel();
             CourseDTOToViewModel();
             HomeworkDTOToViewModel();

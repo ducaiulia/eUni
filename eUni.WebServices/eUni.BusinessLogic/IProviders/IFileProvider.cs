@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using eUni.BusinessLogic.Providers.DataTransferObjects;
+using eUni.DataAccess.Domain;
+using eUni.DataAccess.Enums;
 
 namespace eUni.BusinessLogic.IProviders
 {
-    public interface ICourseProvider
+    public interface IFileProvider
     {
-        void CreateCourse(CourseDTO dtoCourse);
-        CourseDTO GetByCourseCode(string courseCode);
-        void UpdateCourse(CourseDTO course);
+        bool SaveUploadedFilePath(FileDTO fileDTO);
     }
 }

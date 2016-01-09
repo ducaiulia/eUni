@@ -44,6 +44,14 @@ namespace eUni.BusinessLogic.AutoMapper
                 .ForMember(dest => dest.Module, opt => opt.MapFrom(src => Mapper.Map<CourseDTO>(src.Module))).ReverseMap();
         }
 
+        public static void FileMappings()
+        {
+            Mapper.CreateMap<FileDTO, File>()
+                .ForMember(dest => dest.FileType, opt => opt.MapFrom(src => src.FileType))
+                .ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Path))
+                .ForMember(dest => dest.Size, opt => opt.MapFrom(src => src.Size));
+        }
+
         public static void ContentMappings()
         {
             Mapper.CreateMap<Content,ContentDTO>()

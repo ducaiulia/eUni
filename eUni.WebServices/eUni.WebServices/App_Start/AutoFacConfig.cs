@@ -30,6 +30,8 @@ namespace eUni.WebServices
                 .As<IModuleRepository>();
             builder.RegisterType<AspNetUserRepository>()
                 .As<IAspNetUserRepository>();
+            builder.RegisterType<FileRepository>()
+                .As<IFileRepository>();
 
 
 
@@ -41,6 +43,8 @@ namespace eUni.WebServices
                 .As<IModuleProvider>();
             builder.RegisterType<HomeworkProvider>()
                 .As<IHomeworkProvider>();
+            builder.RegisterType<FileProvider>()
+                .As<IFileProvider>();
 
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 

@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="AutoMapper\BusinessLogicMapper.cs" />
     <Compile Include="IProviders\ICourseProvider.cs" />
+    <Compile Include="IProviders\IFileProvider.cs" />
     <Compile Include="IProviders\IHomeworkProvider.cs" />
     <Compile Include="IProviders\IModuleProvider.cs" />
     <Compile Include="IProviders\IUserProvider.cs" />
@@ -106,10 +107,12 @@
     <Compile Include="Providers\DataTransferObjects\ContentDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\CourseDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\DomainUserDTO.cs" />
+    <Compile Include="Providers\DataTransferObjects\FileDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\HomeworkDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\ModuleDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\QuestionDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\TestDTO.cs" />
+    <Compile Include="Providers\FileProvider.cs" />
     <Compile Include="Providers\HomeworkProvider.cs" />
     <Compile Include="Providers\ModuleProvider.cs" />
     <Compile Include="Providers\UserProvider.cs" />

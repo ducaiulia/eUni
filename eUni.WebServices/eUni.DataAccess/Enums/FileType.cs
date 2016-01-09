@@ -8,11 +8,11 @@ namespace eUni.DataAccess.Enums
 {
     public enum FileType
     {
-        Pdf = 1,
-        Txt = 2,
-        Zip = 3,
-        Rar = 4,
-        Jpg = 5,
-        Gif = 6
+        pdf = 1,
+        txt = 2,
+        zip = 3,
+        rar = 4,
+        jpg = 5,
+        gif = 6
     }
 }

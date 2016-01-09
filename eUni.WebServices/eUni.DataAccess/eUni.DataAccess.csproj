@@ -108,9 +108,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AspNetUserRepository.cs" />
     <Compile Include="Repository\CourseRepository.cs" />
+    <Compile Include="Repository\FileRepository.cs" />
     <Compile Include="Repository\HomeworkRepository.cs" />
     <Compile Include="Repository\IAspNetUserRepository.cs" />
     <Compile Include="Repository\ICourseRepository.cs" />
+    <Compile Include="Repository\IFileRepository.cs" />
     <Compile Include="Repository\IHomeworkRepository.cs" />
     <Compile Include="Repository\IModuleRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />

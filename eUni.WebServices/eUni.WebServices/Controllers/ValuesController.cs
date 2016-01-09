@@ -35,6 +35,7 @@ namespace eUni.WebServices.Controllers
         {
         }
 
+        [HttpPost]
         public string GetFromToken([FromBody]string token, [FromBody]string identifier)
         {
             return TokenHelper.GetFromToken(token, identifier);
