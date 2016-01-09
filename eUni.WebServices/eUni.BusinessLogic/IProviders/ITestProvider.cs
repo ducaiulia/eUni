@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using eUni.BusinessLogic.Providers.DataTransferObjects;
+
+namespace eUni.BusinessLogic.IProviders
+{
+    interface ITestProvider
+    {
+        void CreateTest(TestDTO dtoTest);
+        TestDTO GetByTestId(int testId);
+        void UpdateTest(TestDTO dtoTest);
+    }
+}
