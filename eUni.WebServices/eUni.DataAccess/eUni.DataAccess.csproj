@@ -104,6 +104,10 @@
     <Compile Include="Migrations\201601091659003_Add connection between File and Module.Designer.cs">
       <DependentUpon>201601091659003_Add connection between File and Module.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601091911006_Add link between course and students.cs" />
+    <Compile Include="Migrations\201601091911006_Add link between course and students.Designer.cs">
+      <DependentUpon>201601091911006_Add link between course and students.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AspNetUserRepository.cs" />
@@ -136,6 +140,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601091659003_Add connection between File and Module.resx">
       <DependentUpon>201601091659003_Add connection between File and Module.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601091911006_Add link between course and students.resx">
+      <DependentUpon>201601091911006_Add link between course and students.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
