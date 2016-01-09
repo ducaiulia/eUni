@@ -22,6 +22,7 @@ namespace eUni.DataAccess.Migrations
             mySeed.SeedRoles();
             mySeed.SeedUsers();
             mySeed.SeedCourses();
+            mySeed.SeedModules();
           
         }
     }
