@@ -20,19 +20,28 @@ namespace eUni.BusinessLogic.AutoMapper
             Mapper.CreateMap<Course, CourseDTO>()
                 .ForMember(dest => dest.CourseId, opt => opt.MapFrom(src => src.CourseId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Teacher, opt=>opt.Ignore())//MapFrom(src=>src.Teacher))
+                .ForMember(dest => dest.Teacher, opt=>opt.Ignore())
                 .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(src => src.CourseCode))
                 .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
                 .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate)).ReverseMap();
         }
 
+        public static void WikiPageMapping()
+        {
+            Mapper.CreateMap<WikiPage, WikiPageDTO>();
+            Mapper.CreateMap<WikiPageDTO, WikiPage>()
+                .ForMember(dest => dest.Module, opt => opt.MapFrom(src => src.Module))
+                .ForMember(dest => dest.WikiPageId, opt => opt.Ignore());
+        }
+
         public static void ModuleMappings()
         {
-            Mapper.CreateMap<Module,ModuleDTO>()
+            Mapper.CreateMap<Module, ModuleDTO>()
                 .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.ModuleId))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Course, opt => opt.MapFrom(src => Mapper.Map<CourseDTO>(src.Course)))
-                .ForMember(dest => dest.Contents, opt => opt.MapFrom(src => src.Contents)).ReverseMap();
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name)).ReverseMap();
+
+            Mapper.CreateMap<ModuleDTO, Module>()
+                .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.ModuleId));
         }
 
         public static void HomeworkMappings()
@@ -40,8 +49,7 @@ namespace eUni.BusinessLogic.AutoMapper
             Mapper.CreateMap<Homework, HomeworkDTO>()
                 .ForMember(dest => dest.HomeworkId, opt => opt.MapFrom(src => src.HomeworkId))
                 .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
-                .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score))
-                .ForMember(dest => dest.Module, opt => opt.MapFrom(src => Mapper.Map<CourseDTO>(src.Module))).ReverseMap();
+                .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score)).ReverseMap();
         }
 
         public static void FileMappings()
@@ -54,8 +62,31 @@ namespace eUni.BusinessLogic.AutoMapper
 
         public static void ContentMappings()
         {
-            Mapper.CreateMap<Content,ContentDTO>()
+            Mapper.CreateMap<Content, ContentDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
+        }
+
+        public static void AnswerMappings()
+        {
+            Mapper.CreateMap<Answer, AnswerDTO>()
+                .ForMember(dest => dest.AnswerId, opt => opt.MapFrom(src => src.AnswerId))
+                .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
+                .ForMember(dest => dest.IsCorrect, opt => opt.MapFrom(src => src.IsCorrect)).ReverseMap();
+        }
+
+        public static void QuestionMappings()
+        {
+            Mapper.CreateMap<Question, QuestionDTO>()
+                .ForMember(dest => dest.QuestionId, opt => opt.MapFrom(src => src.QuestionId))
+                .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
+                .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score)).ReverseMap();
+        }
+
+        public static void TestMappings()
+        {
+            Mapper.CreateMap<Test, TestDTO>()
+                .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.Module.ModuleId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name)).ReverseMap();
         }
 
     }

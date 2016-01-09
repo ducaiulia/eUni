@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace eUni.BusinessLogic.Providers.DataTransferObjects
 {
-    class TestDTO
+    public class TestDTO
     {
-        public int TestId { get; set; }
         public string Name { get; set; }
-        public ModuleDTO Module { get; set; }
-        public List<QuestionDTO> Questions { get; set; }
+        public int ModuleId { get; set; }
     }
 }

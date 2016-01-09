@@ -13,6 +13,7 @@ using eUni.DataAccess.eUniDbContext;
 using eUni.WebServices.Helpers;
 using eUni.WebServices.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 
@@ -64,7 +65,7 @@ namespace eUni.WebServices.Controllers
             {
                 UserName = model.Email,
                 Email = model.Email,
-                DomainUser = new DomainUser()
+                DomainUser = new DomainUser(),
             };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);

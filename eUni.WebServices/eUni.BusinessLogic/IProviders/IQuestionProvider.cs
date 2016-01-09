@@ -7,7 +7,7 @@ using eUni.BusinessLogic.Providers.DataTransferObjects;
 
 namespace eUni.BusinessLogic.IProviders
 {
-    interface IQuestionProvider
+    public interface IQuestionProvider
     {
         void CreateQuestion(QuestionDTO dtoQuestion);
         void UpdateQuestion(QuestionDTO dtoQuestion);

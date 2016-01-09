@@ -32,7 +32,9 @@ namespace eUni.BusinessLogic.Providers
         public ModuleDTO GetById(int modId)
         {
             var module = _moduleRepo.Get(u => u.ModuleId == modId);
-            return Mapper.Map<ModuleDTO>(module);
+            var res = Mapper.Map<ModuleDTO>(module);
+            res.Course = Mapper.Map<CourseDTO>(module.Course);
+            return res;
         }
 
         public void UpdateModule(ModuleDTO mod)
