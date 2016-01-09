@@ -30,6 +30,8 @@ namespace eUni.WebServices
                 .As<IHomeworkRepository>();
             builder.RegisterType<ModuleRepository>()
                 .As<IModuleRepository>();
+            builder.RegisterType<LogsRepository>()
+                .As<ILogsRepository>();
             builder.RegisterType<WikiPageRepository>()
                 .As<IWikiPageRepository>();
             builder.RegisterType<Repository<Module>>()
@@ -43,6 +45,8 @@ namespace eUni.WebServices
                 .As<IUserProvider>();
             builder.RegisterType<CourseProvider>()
                 .As<ICourseProvider>();
+            builder.RegisterType<LogProvider>()
+                .As<ILogProvider>();
             builder.RegisterType<ModuleProvider>()
                 .As<IModuleProvider>();
             builder.RegisterType<WikiPageProvider>()
