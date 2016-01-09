@@ -36,13 +36,26 @@ namespace EUni_Client.Controllers
 
         public ActionResult Register()
         {
+            var error = TempData["ErrorMessage"];
+            if (error != null)
+            {
+                ViewBag.ErrorMessage = error;
+            }
             return View();
         }
 
         public async Task<RedirectToRouteResult> RegisterUser(RegisterViewModel registerViewModel)
         {
-            var response = await LoginService.Register(registerViewModel.Email, registerViewModel.ConfirmPassword);
-            return RedirectToAction("Index");
+            try
+            {
+                var response = await LoginService.Register(registerViewModel.Email, registerViewModel.ConfirmPassword);
+                return RedirectToAction("Index");
+            }
+            catch (ApiException)
+            {
+                TempData["ErrorMessage"] = "The user already exists!";
+                return RedirectToAction("Register");
+            }
         }
 
         public ActionResult ResetPassword()
