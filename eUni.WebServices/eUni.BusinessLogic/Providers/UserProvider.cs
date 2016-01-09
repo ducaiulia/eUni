@@ -14,11 +14,12 @@ namespace eUni.BusinessLogic.Providers
     {
         private readonly IUserRepository _userRepo;
         private readonly IAspNetUserRepository _aspNetUserRepo;
-
-        public UserProvider(IUserRepository userRepo, IAspNetUserRepository aspNetUserRepo)
+        private readonly ICourseRepository _courseRepo;
+        public UserProvider(IUserRepository userRepo, IAspNetUserRepository aspNetUserRepo, ICourseRepository courseRepo)
         {
             _userRepo = userRepo;
             _aspNetUserRepo = aspNetUserRepo;
+            _courseRepo = courseRepo;
         }
 
         public List<DomainUserDTO> GetAllUsers()
@@ -38,6 +39,34 @@ namespace eUni.BusinessLogic.Providers
         {
             var user = _userRepo.Get(u => u.FirstName.Trim().Equals(firstName) && u.LastName.Trim().Equals(lastName));
             return Mapper.Map<DomainUserDTO>(user);
+        }
+
+        /// <summary>
+        /// Enroll the user to a course.
+        /// </summary>
+        /// <param name="courseCode">the course code to match the course.</param>
+        /// <returns></returns>
+        public ResultActionDTO EnrollUserToCourse(string courseCode, int domainUserId)
+        {
+            var course = _courseRepo.Get(u => u.CourseCode == courseCode);
+            var user = _userRepo.Get(x => x.DomainUserId == domainUserId);
+            if (course == null)
+            {
+                return new ResultActionDTO() { Succeeded = false, ErrorMessage = "Course not found!" };
+            }
+            if (user == null)
+            {
+                return new ResultActionDTO() { Succeeded = false, ErrorMessage = "User not found!" };
+            }
+            course.Students.Add(user);
+            _courseRepo.SaveChanges();
+
+            return new ResultActionDTO()
+            {
+                Succeeded = true,
+                ErrorMessage = "User enrolled to course"
+            };
+
         }
 
     }

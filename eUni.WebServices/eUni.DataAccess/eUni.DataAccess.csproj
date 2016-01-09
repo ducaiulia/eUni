@@ -58,10 +58,6 @@
     </Reference>
     <Reference Include="Microsoft.JScript" />
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -104,6 +100,14 @@
     <Compile Include="Migrations\201601091659003_Add connection between File and Module.Designer.cs">
       <DependentUpon>201601091659003_Add connection between File and Module.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601091911006_Add link between course and students.cs" />
+    <Compile Include="Migrations\201601091911006_Add link between course and students.Designer.cs">
+      <DependentUpon>201601091911006_Add link between course and students.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601091958267_Added_WikiPages.cs" />
+    <Compile Include="Migrations\201601091958267_Added_WikiPages.Designer.cs">
+      <DependentUpon>201601091958267_Added_WikiPages.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AnswerRepository.cs" />
@@ -119,19 +123,19 @@
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\ITestRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
+    <Compile Include="Repository\IWikiPageRepository.cs" />
     <Compile Include="Repository\ModuleRepository.cs" />
     <Compile Include="Repository\QuestionRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\TestRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="Repository\WikiPageRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201511081018397_CreateTables.resx">
@@ -142,6 +146,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601091659003_Add connection between File and Module.resx">
       <DependentUpon>201601091659003_Add connection between File and Module.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601091911006_Add link between course and students.resx">
+      <DependentUpon>201601091911006_Add link between course and students.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601091958267_Added_WikiPages.resx">
+      <DependentUpon>201601091958267_Added_WikiPages.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

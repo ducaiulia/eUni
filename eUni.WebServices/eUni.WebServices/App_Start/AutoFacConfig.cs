@@ -1,12 +1,12 @@
 ﻿using System.Reflection;
 using System.Web.Http;
-using System.Web.Http.Dependencies;
 using Autofac;
 using Autofac.Integration.WebApi;
 using eUni.BusinessLogic.IProviders;
 using eUni.BusinessLogic.Providers;
 using eUni.DataAccess.eUniDbContext;
 using eUni.DataAccess.Repository;
+using Module = eUni.DataAccess.Domain.Module;
 
 namespace eUni.WebServices
 {
@@ -20,6 +20,8 @@ namespace eUni.WebServices
                 .As<ApplicationDbContext>()
                 .InstancePerRequest();
 
+            builder.RegisterType<AspNetUserRepository>()
+                .As<IAspNetUserRepository>();
             builder.RegisterType<UserRepository>()
                 .As<IUserRepository>();
             builder.RegisterType<CourseRepository>()
@@ -28,6 +30,10 @@ namespace eUni.WebServices
                 .As<IHomeworkRepository>();
             builder.RegisterType<ModuleRepository>()
                 .As<IModuleRepository>();
+            builder.RegisterType<WikiPageRepository>()
+                .As<IWikiPageRepository>();
+            builder.RegisterType<Repository<Module>>()
+                .As<Repository<Module>>();
             builder.RegisterType<AspNetUserRepository>()
                 .As<IAspNetUserRepository>();
 
@@ -39,6 +45,8 @@ namespace eUni.WebServices
                 .As<ICourseProvider>();
             builder.RegisterType<ModuleProvider>()
                 .As<IModuleProvider>();
+            builder.RegisterType<WikiPageProvider>()
+                .As<IWikiPageProvider>();
             builder.RegisterType<HomeworkProvider>()
                 .As<IHomeworkProvider>();
 

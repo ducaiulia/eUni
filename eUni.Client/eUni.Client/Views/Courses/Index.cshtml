@@ -1,1 +1,59 @@
-﻿<h2>title</h2>
+﻿<h2>Courses</h2>
+<br>
+
+<table class="table table-striped table-hover">
+    <tr>
+        <th>#</th>
+        <th>Course</th>
+        <th>Code</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>@((string)ViewBag.Courses[0])</td>
+        <td>code</td>
+        <td>date</td>
+        <td>date</td>
+    <tr>
+    <tr>
+        <td>2</td>
+        <td>@((string)ViewBag.Courses[1])</td>
+        <td>code</td>
+        <td>date</td>
+        <td>date</td>
+
+    <tr>
+    <tr>
+        <td>3</td>
+        <td>@((string)ViewBag.Courses[2])</td>
+        <td>code</td>
+        <td>date</td>
+        <td>date</td>
+
+    <tr>
+    <tr>
+        <td>4</td>
+        <td>@((string)ViewBag.Courses[3])</td>
+        <td>code</td>
+        <td>date</td>
+        <td>date</td>
+
+    <tr>
+    <tr>
+        <td>5</td>
+        <td>@((string)ViewBag.Courses[4])</td>
+        <td>code</td>
+        <td>date</td>
+        <td>date</td>
+
+    <tr>
+</table>
+
+
+
+<br>
+<footer>
+    @Html.ActionLink("Create course", "Create", "Courses", new { area = "" }, new { @class = "btn btn-default" })
+    @Html.ActionLink("Assign teacher", "AssignTeacher", "Courses", new { area = "" }, new { @class = "btn btn-default" })
+</footer>

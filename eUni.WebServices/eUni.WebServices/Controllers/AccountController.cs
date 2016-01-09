@@ -64,7 +64,7 @@ namespace eUni.WebServices.Controllers
             {
                 UserName = model.Email,
                 Email = model.Email,
-                DomainUser = new DomainUser()
+                DomainUser = new DomainUser(),
             };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
