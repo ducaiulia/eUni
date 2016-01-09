@@ -65,8 +65,9 @@ namespace eUni.WebServices.Controllers
             {
                 UserName = model.Email,
                 Email = model.Email,
-                DomainUser = new DomainUser(),
+                DomainUser = new DomainUser()
             };
+
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -76,6 +77,7 @@ namespace eUni.WebServices.Controllers
                 return GetErrorResult(result);
             }
 
+            result = await UserManager.AddToRoleAsync(user.Id, "Student");
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(model.Email, "Registered user"));
             return Ok();
         }
