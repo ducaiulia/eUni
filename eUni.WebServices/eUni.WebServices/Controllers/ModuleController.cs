@@ -28,6 +28,23 @@ namespace eUni.WebServices.Controllers
             _fileProvider = fileProvider;
         }
 
+
+
+        [Route("GetByCourse")]
+        public async Task<IHttpActionResult> GetByCourse(int? courseId)
+        {
+            if (courseId == null)
+            {
+                return BadRequest("Course Id Not Found");
+            }
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var moduleDtos = _moduleProvider.GetByCourse(courseId.Value);
+            var moduleViewModels = Mapper.Map<List<ModuleViewModel>>(moduleDtos);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get Modules By Course"));
+            return Content(HttpStatusCode.OK, moduleViewModels);
+        }
+
         [Route("Add")]
         public async Task<IHttpActionResult> Add(ModuleViewModel mod)
         {

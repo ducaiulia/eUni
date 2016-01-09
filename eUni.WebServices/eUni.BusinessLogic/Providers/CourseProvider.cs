@@ -4,6 +4,7 @@ using eUni.DataAccess.Domain;
 using eUni.DataAccess.Repository;
 using eUni.BusinessLogic.IProviders;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using eUni.DataAccess.Enums;
 
@@ -39,6 +40,13 @@ namespace eUni.BusinessLogic.Providers
             var cou = _courseRepo.Get(c=>c.CourseId == course.CourseId);
             cou.Teacher = _userRepo.Get(u => u.DomainUserId == course.Teacher.DomainUserId);
             _courseRepo.SaveChanges();
+        }
+
+        public List<CourseDTO> GetAll()
+        {
+            var courses = _courseRepo.GetAll();
+            var coursesDto = Mapper.Map<List<CourseDTO>>(courses);
+            return coursesDto;
         }
     }
 }

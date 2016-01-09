@@ -43,5 +43,12 @@ namespace eUni.BusinessLogic.Providers
             module.Course = _courseRepo.Get(u => u.CourseId == mod.Course.CourseId);
             _moduleRepo.SaveChanges();
         }
+
+        public List<ModuleDTO> GetByCourse(int courseId)
+        {
+            var modules = _moduleRepo.GetAll().Where(x => x.Course.CourseId == courseId);
+            var moduleDtos = Mapper.Map<List<ModuleDTO>>(modules);
+            return moduleDtos;
+        }
     }
 }
