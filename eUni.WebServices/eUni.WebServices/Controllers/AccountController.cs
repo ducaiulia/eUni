@@ -56,6 +56,7 @@ namespace eUni.WebServices.Controllers
         {
             if (!ModelState.IsValid)
             {
+                Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(model.Email, "Register failed - Bad Request"));
                 return BadRequest(ModelState);
             }
 
@@ -70,9 +71,11 @@ namespace eUni.WebServices.Controllers
 
             if (!result.Succeeded)
             {
+                Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(model.Email, "Register failed"));
                 return GetErrorResult(result);
             }
 
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(model.Email, "Registered user"));
             return Ok();
         }
 
@@ -82,7 +85,11 @@ namespace eUni.WebServices.Controllers
         public async Task<IHttpActionResult> Login([FromBody]LoginBindingModel model)
         {
             ApplicationUser user = await UserManager.FindByNameAsync(model.Email);
-            if (user == null) return Content(HttpStatusCode.BadRequest, "Username does not exist");
+            if (user == null)
+            {
+                Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(model.Email, "Login failed - Username does not exist"));
+                return Content(HttpStatusCode.BadRequest, "Username does not exist");
+            }
 
             if (UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, model.Password) == PasswordVerificationResult.Success)
             {
@@ -98,8 +105,10 @@ namespace eUni.WebServices.Controllers
                                     select role.Name).FirstOrDefault();
                     }
                 }
+                Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(model.Email, "Logged in"));
                 return Content(HttpStatusCode.OK, TokenHelper.GenerateToken(model.Email, roleName));
             }
+            Logger.Logger.Instance.LogAction("Login failed - Invalid password");
             return Content(HttpStatusCode.BadRequest, "Invalid password");
         }
 
@@ -111,6 +120,7 @@ namespace eUni.WebServices.Controllers
             var username = TokenHelper.GetFromToken(expiredToken, "username");
             var role = TokenHelper.GetFromToken(expiredToken, "role");
 
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(username, "Token refreshed"));
             return Content(HttpStatusCode.OK, TokenHelper.GenerateToken(username, role));
         }
 

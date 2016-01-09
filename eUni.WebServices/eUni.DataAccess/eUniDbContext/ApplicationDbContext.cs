@@ -22,7 +22,7 @@ namespace eUni.DataAccess.eUniDbContext
             return new ApplicationDbContext();
         }
 
-
+        public DbSet<Log> Logs { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<DomainUser> DomainUsers { get; set; }
         public DbSet<Module> Modules { get; set; }

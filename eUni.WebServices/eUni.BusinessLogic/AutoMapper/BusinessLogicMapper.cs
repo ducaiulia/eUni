@@ -32,7 +32,16 @@ namespace eUni.BusinessLogic.AutoMapper
                 .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.ModuleId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Course, opt => opt.MapFrom(src => Mapper.Map<CourseDTO>(src.Course)))
-                .ForMember(dest => dest.Contents, opt => opt.MapFrom(src => src.Contents));
+                .ForMember(dest => dest.Contents, opt => opt.MapFrom(src => src.Contents)).ReverseMap();
+        }
+
+        public static void HomeworkMappings()
+        {
+            Mapper.CreateMap<Homework, HomeworkDTO>()
+                .ForMember(dest => dest.HomeworkId, opt => opt.MapFrom(src => src.HomeworkId))
+                .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
+                .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score))
+                .ForMember(dest => dest.Module, opt => opt.MapFrom(src => Mapper.Map<CourseDTO>(src.Module))).ReverseMap();
         }
 
         public static void ContentMappings()

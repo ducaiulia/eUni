@@ -9,6 +9,7 @@ using AutoMapper;
 using eUni.BusinessLogic.IProviders;
 using eUni.BusinessLogic.Providers;
 using eUni.BusinessLogic.Providers.DataTransferObjects;
+using eUni.WebServices.Helpers;
 using eUni.WebServices.Models;
 
 namespace eUni.WebServices.Controllers
@@ -31,9 +32,12 @@ namespace eUni.WebServices.Controllers
         [Route("AllUsers")]
         public async Task<IHttpActionResult> GetAllUsers()
         {
+
             List<DomainUserDTO> users = _userProvider.GetAllUsers();
             var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
 
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all users"));
             return Content(HttpStatusCode.OK, allUsers);
         }
     }
