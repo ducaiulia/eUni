@@ -109,6 +109,7 @@
     <Compile Include="Providers\DataTransferObjects\HomeworkDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\ModuleDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\QuestionDTO.cs" />
+    <Compile Include="Providers\DataTransferObjects\ResultActionDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\TestDTO.cs" />
     <Compile Include="Providers\HomeworkProvider.cs" />
     <Compile Include="Providers\ModuleProvider.cs" />

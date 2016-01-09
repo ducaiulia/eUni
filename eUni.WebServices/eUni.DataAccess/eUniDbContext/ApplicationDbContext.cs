@@ -66,6 +66,10 @@ namespace eUni.DataAccess.eUniDbContext
                 .HasRequired(t => t.DomainUser)
                 .WithMany()
                 .HasForeignKey(t => t.DomainUserId);
+
+            modelBuilder.Entity<Course>()
+                .HasMany(x => x.Students)
+                .WithOptional();
         }
     }
 }

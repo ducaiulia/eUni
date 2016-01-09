@@ -40,5 +40,17 @@ namespace eUni.WebServices.Controllers
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all users"));
             return Content(HttpStatusCode.OK, allUsers);
         }
+
+
+        [Route("EnrollUserToCourse")]
+        public async Task<IHttpActionResult> EnrollUserToCourse(CourseViewModel course, UserViewModel user)
+        {
+            var result = _userProvider.EnrollUserToCourse(course.CourseCode, user.DomainUserId);
+
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Enroll user to course"));
+
+            return Content(HttpStatusCode.OK, new ResultViewModel() { Succeeded = result.Succeeded, ErrorMessage = result.ErrorMessage });
+        }
     }
 }
