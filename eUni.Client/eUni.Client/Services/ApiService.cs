@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Web;
 using Newtonsoft.Json;
 
 namespace EUni_Client.Services
@@ -27,7 +28,7 @@ namespace EUni_Client.Services
         {
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authToken);
                 var result = await client.GetAsync(RequestBuilder.Build(action));
 
                 string json = await result.Content.ReadAsStringAsync();
@@ -40,11 +41,33 @@ namespace EUni_Client.Services
             }
         }
 
+        public async Task<TU> GetAsync<TU,T>(string action, string objectName, T data)
+        {
+            var builder = new UriBuilder(RequestBuilder.Build(action));
+            var query = HttpUtility.ParseQueryString(builder.Query);
+            query[objectName] = JsonConvert.SerializeObject(data);
+            builder.Query = query.ToString();
+            var url = builder.ToString();
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authToken);
+                var result = await client.GetAsync(url);
+
+                string json = await result.Content.ReadAsStringAsync();
+                if (result.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<TU>(json);
+                }
+
+                throw new ApiException(result.StatusCode, json);
+            }
+        }
+
         public async Task DeleteAsync(string action, int id)
         {
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authToken);
                 var result = await client.DeleteAsync(RequestBuilder.Build(action + "/" + id));
                 if (!result.IsSuccessStatusCode)
                 {
@@ -57,7 +80,7 @@ namespace EUni_Client.Services
         {
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authToken);
                 var serializedData = JsonConvert.SerializeObject(data);
                 var content = new StringContent(serializedData);
                 content.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
@@ -77,7 +100,7 @@ namespace EUni_Client.Services
         {
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authToken);
                 var result = await client.PutAsync(RequestBuilder.Build(action), data, typeFormatter);
                 if (result.IsSuccessStatusCode)
                 {
@@ -93,7 +116,7 @@ namespace EUni_Client.Services
         {
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authToken);
                 var result = await client.PutAsync(RequestBuilder.Build(action), data, typeFormatter);
                 if (result.IsSuccessStatusCode)
                 {
@@ -111,7 +134,7 @@ namespace EUni_Client.Services
         {
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authToken);
                 var result = await client.PostAsync(RequestBuilder.Build(action), data, typeFormatter);
                 if (result.IsSuccessStatusCode)
                 {
@@ -127,7 +150,7 @@ namespace EUni_Client.Services
         {
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authToken);
                 var result = await client.PostAsync(RequestBuilder.Build(action), data, typeFormatter);
                 string json = await result.Content.ReadAsStringAsync();
                 if (result.IsSuccessStatusCode)
@@ -140,11 +163,11 @@ namespace EUni_Client.Services
             }
         }
 
-        public async Task<TU> PostAsyncWithReturn<T, TU>(string action, T data)
+        public async Task<TU> PostAsyncWithReturn<TU, T>(string action, T data)
         {
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authToken);
                 var result = await client.PostAsync(RequestBuilder.Build(action), data, typeFormatter);
                 string json = await result.Content.ReadAsStringAsync();
                 if (result.IsSuccessStatusCode)
