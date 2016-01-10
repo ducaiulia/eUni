@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using eUni.DataAccess.Domain;
 using eUni.DataAccess.Enums;
 using Microsoft.AspNet.Identity;
@@ -27,6 +24,52 @@ namespace eUni.DataAccess.eUniDbContext
             SeedModules();
             SeedWikiPages();
             SeedFiles();
+            SeedMesages();
+        }
+
+        private void SeedMesages()
+        {
+            _context.Messages.AddOrUpdate(
+                  new Message
+                  {
+                      From = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1),
+                      To = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 2),
+                      Text = "Message 1",
+                      DateTime = DateTime.Now
+                  });
+            _context.Messages.AddOrUpdate(
+                  new Message
+                  {
+                      From = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 2),
+                      To = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1),
+                      Text = "Message 2",
+                      DateTime = DateTime.Now
+                  });
+            _context.Messages.AddOrUpdate(
+                  new Message
+                  {
+                      From = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1),
+                      To = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 2),
+                      Text = "Message 3",
+                      DateTime = DateTime.Now
+                  });
+            _context.Messages.AddOrUpdate(
+                  new Message
+                  {
+                      From = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 2),
+                      To = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1),
+                      Text = "Message 4",
+                      DateTime = DateTime.Now
+                  });
+
+            _context.Messages.AddOrUpdate(
+                  new Message
+                  {
+                      From = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1),
+                      To = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 3),
+                      Text = "Message 5",
+                      DateTime = DateTime.Now
+                  });
         }
 
         private void SeedFiles()

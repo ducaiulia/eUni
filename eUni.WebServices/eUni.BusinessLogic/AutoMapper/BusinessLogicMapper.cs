@@ -106,5 +106,11 @@ namespace eUni.BusinessLogic.AutoMapper
                .ForMember(dest => dest.TestId, opt => opt.MapFrom(src => src.TestId))
                .ForMember(dest => dest.Grade, opt => opt.MapFrom(src => src.Grade)).ReverseMap();
         }
+
+        public static void MessageMapping()
+        {
+            Mapper.CreateMap<MessageDTO, Message>();
+
+        }
     }
 }
