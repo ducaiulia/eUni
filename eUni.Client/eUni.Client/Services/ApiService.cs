@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
@@ -46,6 +47,31 @@ namespace EUni_Client.Services
             var builder = new UriBuilder(RequestBuilder.Build(action));
             var query = HttpUtility.ParseQueryString(builder.Query);
             query[objectName] = JsonConvert.SerializeObject(data);
+            builder.Query = query.ToString();
+            var url = builder.ToString();
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authToken);
+                var result = await client.GetAsync(url);
+
+                string json = await result.Content.ReadAsStringAsync();
+                if (result.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<TU>(json);
+                }
+
+                throw new ApiException(result.StatusCode, json);
+            }
+        }
+
+        public async Task<TU> GetAsync<TU, T>(string action, Dictionary<string, object> parameters)
+        {
+            var builder = new UriBuilder(RequestBuilder.Build(action));
+            var query = HttpUtility.ParseQueryString(builder.Query);
+            foreach (var parameter in parameters)
+            {
+                query[parameter.Key] = JsonConvert.SerializeObject(parameter.Value);
+            }
             builder.Query = query.ToString();
             var url = builder.ToString();
             using (var client = new HttpClient())

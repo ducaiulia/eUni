@@ -50,6 +50,19 @@ namespace eUni.WebServices.Controllers
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
+        [Route("ModifyRole")]
+        public async Task<IHttpActionResult> ModifyRole(string role)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var user = await UserManager.FindByNameAsync(TokenHelper.GetFromToken(token, "username"));
+
+            var removeRoleResult = await UserManager.RemoveFromRoleAsync(user.Id, TokenHelper.GetFromToken(token, "role"));
+
+            var result = await UserManager.AddToRoleAsync(user.Id, role);
+            return Ok();
+
+        }
+
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
@@ -77,7 +90,7 @@ namespace eUni.WebServices.Controllers
                 return GetErrorResult(result);
             }
 
-            result = await UserManager.AddToRoleAsync(user.Id, "Student");
+            result = await UserManager.AddToRoleAsync(user.Id, "student");
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(model.Email, "Registered user"));
             return Ok();
         }

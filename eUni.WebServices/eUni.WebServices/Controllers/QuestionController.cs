@@ -47,15 +47,21 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("GetAllQuestionsByModule")]
-        public async Task<IHttpActionResult> GetAllByModule(int? moduleId)
+        public async Task<IHttpActionResult> GetAllByModule(int? moduleId, int? pageNumber, int? pageSize)
         {
             if (moduleId == null)
             {
                 return BadRequest("Module Id not found");
             }
 
+            var filter = new PaginationFilter
+            {
+                PageNumber = pageNumber ?? 1,
+                PageSize = pageSize ?? 20
+            };
+
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
-            var questionDtos = _questionProvider.GetByModule(moduleId.Value);
+            var questionDtos = _questionProvider.GetByModule(moduleId.Value, filter);
             var questionModels = Mapper.Map<List<QuestionViewModel>>(questionDtos);
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Questions for Module "));
             return Content(HttpStatusCode.OK, questionModels);
