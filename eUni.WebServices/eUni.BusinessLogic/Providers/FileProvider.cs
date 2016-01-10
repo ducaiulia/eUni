@@ -70,7 +70,8 @@ namespace eUni.BusinessLogic.Providers
         {
             var file = _fileRepo.Get(f => f.Id.Equals(fileId));
             var temp = Mapper.Map<FileDTO>(file);
-            temp.ModuleId = file.Module.ModuleId;
+            if(temp != null && file.Module != null)
+                temp.ModuleId = file.Module.ModuleId;
             return temp;
         }
 
