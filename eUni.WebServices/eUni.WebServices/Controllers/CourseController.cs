@@ -54,6 +54,16 @@ namespace eUni.WebServices.Controllers
             return Content(HttpStatusCode.OK, "Created successfully");
         }
 
+        [Route("Remove")]
+        public async Task<IHttpActionResult> Remove(int courseId)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            _courseProvider.DeleteCourseWithId(courseId);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Course deleted"));
+            return Content(HttpStatusCode.OK, "Deleted successfully");
+        }
+
         [Route("AssignTeacher")]
         public async Task<IHttpActionResult> AssignTeacher(string lastName, string firstName, string courseCode)
         {
@@ -86,10 +96,20 @@ namespace eUni.WebServices.Controllers
                 {
                     using (var memoryStream = new MemoryStream(contentFile))
                     {
-                        var uploaded = await dbx.Files.UploadAsync(
+                        FileMetadata uploaded;
+                        try
+                        {
+                            uploaded = await dbx.Files.UploadAsync(
                             path,
                             WriteMode.Add.Instance,
                             body: memoryStream);
+                            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(username, "Upload File"));
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Logger.Instance.LogError(ex);
+                            return InternalServerError(ex);
+                        }
 
                         if (_fileProvider.SaveUploadedFilePath(new FileDTO
                         {
@@ -103,12 +123,42 @@ namespace eUni.WebServices.Controllers
                     }
                 }
                 else
-                {
                     return BadRequest("File type not supported.");
-                }
+
             return BadRequest("Not a file type.");
         }
 
+        [HttpGet]
+        [Route("DownloadLink")]
+        public async Task<IHttpActionResult> DownloadLink(int moduleId)
+        {
+            var key = WebConfigurationManager.AppSettings["DropboxToken"];
+            var dbx = new DropboxClient(key);
 
+            var files = _fileProvider.GetFiles(moduleId);
+
+            var model = new List<FileViewModel>();
+
+            foreach (var file in files)
+            {
+                try
+                {
+                    var downloadLink = await dbx.Sharing.CreateSharedLinkAsync(file.Path, false);
+
+                    var viewModel = new FileViewModel
+                    {
+                        Filename = file.Description,
+                        Path = downloadLink.Url.Remove(downloadLink.Url.Length - 1) + "1"
+                    };
+                    model.Add(viewModel);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Logger.Instance.LogError(ex);
+                    return InternalServerError(ex);
+                }
+                }
+            return Ok(model);
+        }
     }
 }

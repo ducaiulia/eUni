@@ -31,6 +31,12 @@ namespace eUni.BusinessLogic.Providers
             _testRepository.Add(test);
         }
 
+        public void DeleteTestWithId(int testId)
+        {
+            var test = _testRepository.Get(t => t.TestId == testId);
+            _testRepository.Remove(test);
+        }
+
         public TestDTO GetByTestId(int testId)
         {
             var test = _testRepository.Get(u => u.TestId == testId);
@@ -42,5 +48,7 @@ namespace eUni.BusinessLogic.Providers
             var test = Mapper.Map<Test>(dtoTest);
             _testRepository.SaveChanges();
         }
+
+        
     }
 }

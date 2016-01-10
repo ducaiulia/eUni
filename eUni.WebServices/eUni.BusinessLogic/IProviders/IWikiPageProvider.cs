@@ -10,6 +10,7 @@ namespace eUni.BusinessLogic.IProviders
     public interface IWikiPageProvider
     {
         void CreateWikiPage(WikiPageDTO dtoWikiPage);
+        void DeleteWikiPageWithId(int wikiId);
 
     }
 }

@@ -8,6 +8,6 @@ namespace eUni.WebServices.Models
     public class FileViewModel
     {
         public string Path { get; set; }
-        public string Description { get; set; }
+        public string Filename { get; set; }
     }
 }

@@ -29,6 +29,12 @@ namespace eUni.BusinessLogic.Providers
             _courseRepo.Add(c);
         }
 
+        public void DeleteCourseWithId(int courseId)
+        {
+            var course = _courseRepo.Get(c => c.CourseId == courseId);
+            _courseRepo.Remove(course);
+        }
+
         public CourseDTO GetByCourseCode(string courseCode)
         {
             var course = _courseRepo.Get(u => u.CourseCode == courseCode);
