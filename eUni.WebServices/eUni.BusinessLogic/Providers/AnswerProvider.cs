@@ -43,5 +43,11 @@ namespace eUni.BusinessLogic.Providers
 
             _answerRepository.Remove(answer);
         }
+
+        public bool IsCorrectAnswerWithId(int answerId)
+        {
+            var answer = _answerRepository.Get(t => t.AnswerId == answerId);
+            return answer.IsCorrect;
+        }
     }
 }

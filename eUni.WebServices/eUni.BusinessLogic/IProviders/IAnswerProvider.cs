@@ -6,5 +6,6 @@ namespace eUni.BusinessLogic.IProviders
     {
         void CreateAnswer(AnswerDTO dtoAnswer);
         void DeleteAnswerWithId(int answerId);
+        bool IsCorrectAnswerWithId(int answerId);
     }
 }
