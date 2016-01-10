@@ -5,7 +5,11 @@
     @foreach (var module in ViewBag.Modules)
     {
         <li>
-            @Html.ActionLink((string)(module.Name), "Index", "Module", new { Module = module }, new { @class = "" })
+            @Html.ActionLink((string)(module.Name), "Index", "Module", new
+            {
+                Module = module, Course = ViewBag.Course
+            
+            }, new { @class = "" })
         </li>
     }
 </ul>

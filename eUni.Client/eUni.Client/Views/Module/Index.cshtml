@@ -6,7 +6,7 @@
 
 @Html.ActionLink("Content", "Content", "Module", new { module = ViewBag.Module }, new { @class = "" })
 <br>
-@Html.ActionLink("Wiki", "Index", "Wiki", new { module = ViewBag.Module }, new { @class = "" })
+@Html.ActionLink("Wiki", "Index", "Wiki", new { module = ViewBag.Module, course = ViewBag.Course }, new { @class = "" })
 <br>
 @Html.ActionLink("Test", "Index", "Test", new { module = ViewBag.Module }, new { @class = "" })
 <br>
