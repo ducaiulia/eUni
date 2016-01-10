@@ -15,7 +15,7 @@ namespace EUni_Client.Controllers
         // GET: Wiki
         public ActionResult Index(string Module, string Course)
         {
-            if (Course != null)
+            if (Module != null)
                 ViewBag.Module = JsonConvert.DeserializeObject(Module);
             return View();
         }
