@@ -87,5 +87,22 @@ namespace eUni.BusinessLogic.Providers
 
             return studentUsers;
         }
+
+        public List<DomainUserDTO> GetAllTeachers()
+        {
+            ICollection<IdentityUserRole> users;
+            using (var db = new ApplicationDbContext())
+            {
+                var role = db.Roles.AsQueryable().FirstOrDefault(r => r.Name.Equals("teacher"));
+                users = role.Users;
+            }
+            List<DomainUserDTO> teacherUsers = new List<DomainUserDTO>();
+            foreach (var user in users)
+            {
+                teacherUsers.Add(Mapper.Map<DomainUserDTO>(_userRepo.Get(u => u.ApplicationUser.Id == user.UserId)));
+            }
+
+            return teacherUsers;
+        }
     }
 }
