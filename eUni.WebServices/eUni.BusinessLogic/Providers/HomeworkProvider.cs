@@ -54,5 +54,18 @@ namespace eUni.BusinessLogic.Providers
             var hw = _homeworkRepo.Get(c => c.HomeworkId == hwId);
             _homeworkRepo.Remove(hw);
         }
+
+        /// <summary>
+        /// Get all homeworks for a given module.
+        /// </summary>
+        /// <param name="moduleId">the given module.</param>
+        /// <returns></returns>
+        public List<HomeworkDTO> GetHomeworksByModuleId(int moduleId)
+        {
+            var allByModuleId = _homeworkRepo.GetAll().Where(x => x.Module.ModuleId == moduleId);
+            var allByModuleIdDTO = Mapper.Map<List<HomeworkDTO>>(allByModuleId);
+            return allByModuleIdDTO;
+
+        }
     }
 }
