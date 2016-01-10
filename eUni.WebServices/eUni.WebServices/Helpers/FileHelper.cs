@@ -16,36 +16,55 @@ namespace eUni.WebServices.Helpers
 {
     public static class FileHelper
     {
-        public static async Task UploadFile(string username, string path, byte[] contentFile, IFileProvider fileProvider,
-            string filename, FileType fileType, int moduleId = -1, int hwId = -1)
+        public static async Task<int> UploadFile(string token, byte[] contentFile, IFileProvider fileProvider,
+            string filename, int moduleId = -1, int hwId = -1)
         {
+
+            string username = TokenHelper.GetFromToken(token, "username");
+            string role = TokenHelper.GetFromToken(token, "role");
+
+            string path = "/" + role + "/" + username + "/" + filename;
+
             var key = WebConfigurationManager.AppSettings["DropboxToken"];
             var dbx = new DropboxClient(key);
-            using (var memoryStream = new MemoryStream(contentFile))
-            {
-                FileMetadata uploaded;
-                try
+
+            FileType fileType;
+            var lastOrDefault = filename.Split('.').LastOrDefault();
+            if (lastOrDefault != null)
+                if (Enum.TryParse(lastOrDefault, out fileType))
                 {
-                    uploaded = await dbx.Files.UploadAsync(
-                        path,
-                        WriteMode.Add.Instance,
-                        body: memoryStream);
-                    Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(username, "Upload File"));
+                    using (var memoryStream = new MemoryStream(contentFile))
+                    {
+                        try
+                        {
+                            await dbx.Files.UploadAsync(
+                                path,
+                                WriteMode.Add.Instance,
+                                body: memoryStream);
+                            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(username, "Upload File"));
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Logger.Instance.LogError(ex);
+                            throw;
+                        }
+                        var input = new FileDTO
+                        {
+                            Path = path,
+                            FileType = fileType,
+                            FileName = filename
+                        };
+                        var fileId = fileProvider.SaveUploadedFilePath(input, moduleId, hwId);
+                        if (fileId < 0)
+                            throw new Exception("Cannot save file path");
+                        else
+                            return fileId;
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Logger.Logger.Instance.LogError(ex);
-                    throw;
-                }
-                var input = new FileDTO
-                {
-                    Path = path,
-                    FileType = fileType,
-                    FileName= filename
-                };
-                if (fileProvider.SaveUploadedFilePath(input, moduleId, hwId) < 0)
-                    throw new Exception("Cannot save file path");
-            }
+                else
+                    throw new Exception("File tye not supported");
+            else
+                throw new Exception("Not a file type");
         }
     }
 }

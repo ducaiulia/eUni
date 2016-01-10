@@ -57,35 +57,19 @@ namespace eUni.WebServices.Controllers
 
         [HttpPost]
         [Route("UploadFile")]
-        public async Task<IHttpActionResult> UploadFile(string filename, [FromBody]byte[] contentFile, int moduleId)
+        public async Task<IHttpActionResult> UploadFile(string filename, [FromBody] byte[] contentFile, int moduleId)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
-            
-            string username = TokenHelper.GetFromToken(token, "username");
-            string role = TokenHelper.GetFromToken(token, "role");
-
-            string path = "/" + role + "/" + username + "/" + filename;
-
-            FileType fileType;
-            var lastOrDefault = filename.Split('.').LastOrDefault();
-            if (lastOrDefault != null)
-                if (Enum.TryParse(lastOrDefault, out fileType))
-                {
-                    try
-                    {
-                        await FileHelper.UploadFile(username, path, contentFile, _fileProvider, filename, fileType, moduleId);
-                        return Ok(path);
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.Logger.Instance.LogError(ex);
-                        return InternalServerError(ex);
-                    }
-                }
-                else
-                    return BadRequest("File type not supported.");
-
-            return BadRequest("Not a file type.");
+            try
+            {
+                await FileHelper.UploadFile(token, contentFile, _fileProvider, filename, moduleId);
+                return Ok("File Uploaded");
+            }
+            catch (Exception ex)
+            {
+                Logger.Logger.Instance.LogError(ex);
+                return InternalServerError(ex);
+            }
         }
 
         [HttpGet]
