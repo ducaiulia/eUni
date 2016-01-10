@@ -37,10 +37,10 @@ namespace eUni.WebServices.Helpers
                     {
                         try
                         {
-                            //await dbx.Files.UploadAsync(
-                            //    path,
-                            //    WriteMode.Add.Instance,
-                            //    body: memoryStream);
+                            await dbx.Files.UploadAsync(
+                                path,
+                                WriteMode.Add.Instance,
+                                body: memoryStream);
                             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(username, "Upload File"));
                         }
                         catch (Exception ex)
