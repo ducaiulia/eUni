@@ -4,6 +4,7 @@ using Autofac;
 using Autofac.Integration.WebApi;
 using eUni.BusinessLogic.IProviders;
 using eUni.BusinessLogic.Providers;
+using eUni.DataAccess.Domain;
 using eUni.DataAccess.eUniDbContext;
 using eUni.DataAccess.Repository;
 using Module = eUni.DataAccess.Domain.Module;
@@ -42,7 +43,8 @@ namespace eUni.WebServices
                 .As<IAspNetUserRepository>();
             builder.RegisterType<FileRepository>()
                 .As<IFileRepository>();
-
+            builder.RegisterType<StudentTestRepository>()
+                .As<IStudentTestRepository>();
 
 
             builder.RegisterType<UserProvider>()
@@ -65,6 +67,8 @@ namespace eUni.WebServices
                 .As<IFileProvider>();
             builder.RegisterType<AnswerProvider>()
                 .As<IAnswerProvider>();
+            builder.RegisterType<StudentTest>().
+                As<IStudentTestProvider>();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
             // add more dependencies here
