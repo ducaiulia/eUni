@@ -15,7 +15,7 @@
             @Html.AntiForgeryToken()
 
             <div id="summernote">Hello Summernote</div>
-            <input name="wiki" id="wiki" style="display: none" />
+            <input validateRequest="false" name="wiki" id="wiki" style="display: none" />
             <script>
                 $(document).ready(function () {
                     $('#summernote').summernote({
