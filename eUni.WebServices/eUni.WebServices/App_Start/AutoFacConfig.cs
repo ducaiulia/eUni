@@ -47,7 +47,8 @@ namespace eUni.WebServices
                 .As<IStudentHomeworkRepository>();
             builder.RegisterType<StudentTestRepository>()
                 .As<IStudentTestRepository>();
-
+            builder.RegisterType<MessageRepository>()
+                .As<IMessageRepository>();
 
             builder.RegisterType<UserProvider>()
                 .As<IUserProvider>();
@@ -71,9 +72,12 @@ namespace eUni.WebServices
                 .As<IAnswerProvider>();
             builder.RegisterType<StudentHomeworkProvider>()
                 .As<IStudentHomeworkProvider>();
-
+            builder.RegisterType<MessageProvider>()
+                .As<IMessageProvider>();
             builder.RegisterType<StudentTestProvider>().
                 As<IStudentTestProvider>();
+
+
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
             // add more dependencies here
