@@ -10,17 +10,33 @@
         <th>Path</th>
     </tr>
     @{
-         var i = 0;
-         foreach (var file in ViewBag.Files)
-         {
-             i++;
-             <tr>
-                 <td>@i</td>
-                 <td>
-                     <a href="@file.Path">@file.Filename</a>
-                 </td>
-                 <td>@file.Path</td>
-             </tr>
-         }
+        var i = 0;
+        foreach (var file in ViewBag.Files)
+        {
+            i++;
+            <tr>
+                <td>@i</td>
+                <td>
+                    <a href="@file.Path">@file.Filename</a>
+                </td>
+                <td>@file.Path</td>
+            </tr>
+        }
     }
 </table>
+<br>
+<br>
+<ol>
+    @{
+        //var i = 0;
+        foreach (var page in ViewBag.WikiPages)
+        {
+            <li>@page.Content</li>
+        }
+    }
+</ol>
+
+
+
+
+

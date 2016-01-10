@@ -27,6 +27,10 @@ namespace EUni_Client.Controllers
             var ApiService = Session[ServiceNames.ApiService] as ApiService;
             var Files = await ApiService.GetAsync<IEnumerable<dynamic>, int>("/File/DownloadLink", "moduleId", (int)(((dynamic)m).ModuleId));
             ViewBag.Files = Files;
+            //get all wikis
+            var WikiPages = await ApiService.GetAsync<IEnumerable<dynamic>, int>("/WikiPage/GetAllWikiPagesByModule", "moduleId", (int)(((dynamic)m).ModuleId));
+            ViewBag.WikiPages = WikiPages;
+            //
             ViewBag.Module = JsonConvert.DeserializeObject(Module);
             if (Course != null)
                 ViewBag.Course = JsonConvert.DeserializeObject(Course);
