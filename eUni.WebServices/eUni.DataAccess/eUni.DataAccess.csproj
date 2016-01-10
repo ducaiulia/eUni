@@ -74,6 +74,7 @@
     <Compile Include="Domain\File.cs" />
     <Compile Include="Domain\Homework.cs" />
     <Compile Include="Domain\Log.cs" />
+    <Compile Include="Domain\Message.cs" />
     <Compile Include="Domain\StudentHomework.cs" />
     <Compile Include="Domain\Test.cs" />
     <Compile Include="Domain\StudentTest.cs" />
@@ -107,6 +108,10 @@
     <Compile Include="Migrations\201601091958267_Added_WikiPages.cs" />
     <Compile Include="Migrations\201601091958267_Added_WikiPages.Designer.cs">
       <DependentUpon>201601091958267_Added_WikiPages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601101241495_Added_Message.cs" />
+    <Compile Include="Migrations\201601101241495_Added_Message.Designer.cs">
+      <DependentUpon>201601101241495_Added_Message.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -158,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601091958267_Added_WikiPages.resx">
       <DependentUpon>201601091958267_Added_WikiPages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601101241495_Added_Message.resx">
+      <DependentUpon>201601101241495_Added_Message.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
