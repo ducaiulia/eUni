@@ -10,5 +10,6 @@ namespace eUni.BusinessLogic.IProviders
     public interface IStudentHomeworkProvider
     {
         void CreateStudentHomework(StudentHomeworkDTO hw);
+        List<FileDTO> GetFilesByStundentIdHomeworkId(int stundentId, int homeworkId);
     }
 }

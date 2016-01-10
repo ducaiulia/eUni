@@ -32,5 +32,30 @@ namespace eUni.BusinessLogic.Providers
             hw.Files.ForEach(f=> c.Files.Add(Mapper.Map<File>(f)));
             _studentHWRepository.Add(c);
         }
+
+        public List<FileDTO> GetFilesByStundentIdHomeworkId(int stundentId, int homeworkId)
+        {
+            var sH = _studentHWRepository.GetAll().Where(current => current.DomainUserId == stundentId && current.HomeworkId == homeworkId);
+            List<File> files = null;
+            foreach (var x in sH)
+            {
+                files = x.Files;
+                break;
+            }
+
+            List<FileDTO> filesDTO = new List<FileDTO>();
+            foreach(File file in files)
+            {
+                filesDTO.Add(new FileDTO()
+                {
+                    FileName = file.FileName,
+                    FileType = file.FileType,
+                    ModuleId = file.Module.ModuleId,
+                    Path = file.Path
+                });
+            }
+
+            return filesDTO;
+        }
     }
 }
