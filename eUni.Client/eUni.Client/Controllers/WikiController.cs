@@ -21,12 +21,12 @@ namespace EUni_Client.Controllers
         }
 
         [HttpPost]
-        public async Task<RedirectToRouteResult> CreateWiki(WikiViewModel wiki)
+        public async Task<RedirectToRouteResult> CreateWiki(string wiki)
         {
+            var wikiLocal = JsonConvert.DeserializeObject<WikiViewModel>(wiki);
             var apiService = Session.GetApiService();
-            var result = await apiService.PostAsyncWithReturn<string, WikiViewModel>("/WikiPage/Add", wiki);
-            var data = new RouteValueDictionary();
-            data.Add("Module", wiki.Module);
+            var result = await apiService.PostAsyncWithReturn<string, WikiViewModel>("/WikiPage/Add", wikiLocal);
+            var data = new RouteValueDictionary {{"Module", wikiLocal.Module}};
             return RedirectToAction("Index", "Module", data);
         }
 

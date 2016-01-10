@@ -281,6 +281,7 @@
     <Compile Include="Models\MessageViewModel.cs" />
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Models\OutputModels\FileOutModel.cs" />
+    <Compile Include="Models\OutputModels\MessageOutModel.cs" />
     <Compile Include="Models\OutputModels\NamedEntityOutModel.cs" />
     <Compile Include="Models\OutputModels\WikiPageOutModel.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />

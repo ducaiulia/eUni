@@ -24,10 +24,13 @@ namespace eUni.BusinessLogic.Providers
             foreach (var item in logs)
             {
                 var pairs = item.Message.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                var date = pairs[2].Substring(pairs[2].IndexOf(':') + 1);
+
                 res.Add(new LogDTO {
                     User = pairs[0].Split(':')[1],
                     Action = pairs[1].Split(':')[1],
-                    Date = pairs[2].Split(':')[1]
+                    Date = date
                 });
             }
             return res;
