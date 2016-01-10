@@ -57,12 +57,6 @@ namespace EUni_Client.Controllers
             return RedirectToAction("Index", "Module", new RouteValueDictionary { { "Module", fileViewModel.Module } });
         }
 
-
-        //public string Path { get; set; }
-        //public string Filename { get; set; }
-        //public byte[] ContentFile { get; set; }
-        //public int ModuleId { get; set; }
-
         public ActionResult Homework(string Module, string Course)
         {
             ViewBag.Module = JsonConvert.DeserializeObject(Module);
