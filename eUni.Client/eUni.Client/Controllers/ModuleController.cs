@@ -61,7 +61,10 @@ namespace EUni_Client.Controllers
                 ViewBag.Course = JsonConvert.DeserializeObject(Course);
             return View();
         }
-
+        public ActionResult CreateHomework(string Module, string Course)
+        {
+            return View();
+        }
         public class FileViewModel
         {
             public string Module { get; set; }
