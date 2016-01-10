@@ -45,9 +45,7 @@ namespace eUni.WebServices
 
         private static void FileDTOToViewModel()
         {
-            Mapper.CreateMap<FileDTO, FileViewModel>()
-                .ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Path))
-                .ForMember(dest => dest.Filename, opt => opt.MapFrom(src => src.Description));
+            Mapper.CreateMap<FileDTO, FileViewModel>();
             Mapper.CreateMap<FileDTO, FileOutModel>();
 
         }
