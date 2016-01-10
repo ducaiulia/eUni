@@ -13,5 +13,6 @@ namespace eUni.BusinessLogic.IProviders
         HomeworkDTO GetById(int hwId);
         void UpdateHomework(HomeworkDTO hw);
         void DeleteHomeworkWithId(int hwId);
+        List<HomeworkDTO> GetHomeworksByModuleId(int moduleId);
     }
 }

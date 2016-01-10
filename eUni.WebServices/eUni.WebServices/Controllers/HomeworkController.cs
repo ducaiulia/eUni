@@ -82,5 +82,25 @@ namespace eUni.WebServices.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Route("AllHomoworksByModulId")]
+        public async Task<IHttpActionResult> GetHomeworksByModuleId( int moduleId )
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            try
+            {
+                var homeworks = _homeworkProvider.GetHomeworksByModuleId(moduleId);
+                var homeworksViewModels = Mapper.Map<List<HomeworkViewModel>>(homeworks);
+                Logger.Logger.Instance.LogAction(
+                    LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "AllHomoworksByModulId"));
+
+                return Content(HttpStatusCode.OK, homeworksViewModels);
+            }
+            catch (Exception ex)
+            {
+                Logger.Logger.Instance.LogError(ex);
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
