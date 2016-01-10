@@ -59,10 +59,22 @@ namespace eUni.WebServices.Controllers
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
 
-            List<DomainUserDTO> users = _userProvider.GetAllStudents();
+            List<DomainUserDTO> users = _userProvider.GetAllTeachers();
             var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
 
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all teachers"));
+            return Content(HttpStatusCode.OK, allUsers);
+        }
+
+        [Route("AllAdmins")]
+        public async Task<IHttpActionResult> GetAllAdmins()
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+
+            List<DomainUserDTO> users = _userProvider.GetAllAdmins();
+            var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all admins"));
             return Content(HttpStatusCode.OK, allUsers);
         }
 

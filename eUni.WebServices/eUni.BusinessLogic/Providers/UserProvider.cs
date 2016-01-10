@@ -104,5 +104,22 @@ namespace eUni.BusinessLogic.Providers
 
             return teacherUsers;
         }
+
+        public List<DomainUserDTO> GetAllAdmins()
+        {
+            ICollection<IdentityUserRole> users;
+            using (var db = new ApplicationDbContext())
+            {
+                var role = db.Roles.AsQueryable().FirstOrDefault(r => r.Name.Equals("admin"));
+                users = role.Users;
+            }
+            List<DomainUserDTO> adminUsers = new List<DomainUserDTO>();
+            foreach (var user in users)
+            {
+                adminUsers.Add(Mapper.Map<DomainUserDTO>(_userRepo.Get(u => u.ApplicationUser.Id == user.UserId)));
+            }
+
+            return adminUsers;
+        }
     }
 }
