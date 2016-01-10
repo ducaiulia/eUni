@@ -15,11 +15,12 @@ namespace eUni.BusinessLogic.Providers
     {
         private readonly IHomeworkRepository _homeworkRepo;
         private readonly IModuleRepository _moduleRepo;
-
-        public HomeworkProvider(IHomeworkRepository homeworkRepo, IModuleRepository moduleRepo)
+        private readonly IStudentHomeworkRepository _studentHomeworkRepo;
+        public HomeworkProvider(IHomeworkRepository homeworkRepo, IModuleRepository moduleRepo, IStudentHomeworkRepository studentHomeworkRepo)
         {
             _homeworkRepo = homeworkRepo;
             _moduleRepo = moduleRepo;
+            _studentHomeworkRepo = studentHomeworkRepo;
         }
 
         public void CreateHomework(HomeworkDTO dtoHw)
@@ -66,6 +67,25 @@ namespace eUni.BusinessLogic.Providers
             var allByModuleIdDTO = Mapper.Map<List<HomeworkDTO>>(allByModuleId);
             return allByModuleIdDTO;
 
+        }
+
+        public List<HomeworkDTO> GetHomeworkdsByModuleIdStudentId(int studentId, int moduleId)
+        {
+            var allByModuleId = _homeworkRepo.GetAll().Where(x => x.Module.ModuleId == moduleId);
+            var allStudentHomework = _studentHomeworkRepo.GetAll().Where(x => x.DomainUserId == studentId);
+            List<Homework> homeworks = new List<Homework>();
+            foreach (var currentHomework in allByModuleId)
+            {
+                var result = allStudentHomework.FirstOrDefault(current => current.HomeworkId == currentHomework.HomeworkId);
+                if (result == null)
+                {
+                    continue;
+                }
+                homeworks.Add(currentHomework);
+            }
+
+            var homeworksDTO = Mapper.Map<List<HomeworkDTO>>(homeworks);
+            return homeworksDTO;
         }
     }
 }

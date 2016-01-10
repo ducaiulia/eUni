@@ -10,6 +10,7 @@ namespace eUni.BusinessLogic.Providers.DataTransferObjects
 {
     public class FileDTO
     {
+        public int Id { get; set; }
         public string Path { get; set; }
         public string FileName { get; set; }
         public FileType FileType { get; set; }

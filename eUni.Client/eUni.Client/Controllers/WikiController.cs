@@ -10,10 +10,10 @@ namespace EUni_Client.Controllers
     public class WikiController : Controller
     {
         // GET: Wiki
-        public ActionResult Index(string Course)
+        public ActionResult Index(string Module, string Course)
         {
             if (Course != null)
-                ViewBag.Course = JsonConvert.DeserializeObject(Course);
+                ViewBag.Module = JsonConvert.DeserializeObject(Module);
             return View();
         }
 

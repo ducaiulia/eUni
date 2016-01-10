@@ -10,6 +10,8 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Antlr.Runtime.Misc;
+using eUni.DataAccess.Enums;
 
 namespace eUni.WebServices.Controllers
 {
@@ -46,9 +48,13 @@ namespace eUni.WebServices.Controllers
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
 
-            //var fileId = FileHelper.UploadFile();
+            int fileId = await FileHelper.UploadFile(token, hw.ContentFile, _fileProvider, hw.Filename, hwId: hw.HomeworkId);
             var hwDTO = Mapper.Map<StudentHomeworkDTO>(hw);
-            //hwDTO.Files.Add(_fileRepo.Get(f=>f.Id == fileId));
+            hwDTO.Files = new List<FileDTO>();
+
+            var temp = _fileProvider.GetFileById(fileId);
+
+            hwDTO.Files.Add(temp);
             _studentHWProvider.CreateStudentHomework(hwDTO);
             
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Homework submitted"));
@@ -101,6 +107,22 @@ namespace eUni.WebServices.Controllers
                 Logger.Logger.Instance.LogError(ex);
                 return BadRequest(ex.Message);
             }
+        }
+
+        [Route("HomeworkByModuleIdStudentId")]
+        public async Task<IHttpActionResult> GetHomeworksByModuleIdAndStudentId(int? moduleId, int? studentId)
+        {
+            if (moduleId == null || studentId == null)
+            {
+                return BadRequest("module id and student id not found");
+            }
+
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All homeworks for module id and student id "));
+
+            var homeworksDto = _homeworkProvider.GetHomeworkdsByModuleIdStudentId((int)studentId, (int)moduleId);
+            var homeworksViewModels = Mapper.Map<List<HomeworkViewModel>>(homeworksDto);
+            return Content(HttpStatusCode.OK, homeworksViewModels);
         }
     }
 }
