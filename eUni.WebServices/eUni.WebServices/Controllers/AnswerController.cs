@@ -43,5 +43,14 @@ namespace eUni.WebServices.Controllers
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Answer deleted"));
             return Content(HttpStatusCode.OK, "Deleted successfully");
         }
+
+        [Route("IsCorrect")]
+        public async Task<IHttpActionResult> IsCorrect(int answerId)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Answer checked"));
+            return Content(HttpStatusCode.OK, _answerProvider.IsCorrectAnswerWithId(answerId));
+        }
     }
 }
