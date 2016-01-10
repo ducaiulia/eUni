@@ -53,6 +53,9 @@ namespace EUni_Client.Controllers
             {
                 "Teacher1", "Teacher2", "Teacher3", "Teacher4", "Teacher5"
             };
+            //aici trebuie sa vina get all teacher din back
+
+
             var ApiService = Session[ServiceNames.ApiService] as ApiService;
             var Courses = await ApiService.GetAsync<IEnumerable<dynamic>>("/Course/GetAllCourses");
             ViewBag.Courses = Courses;
