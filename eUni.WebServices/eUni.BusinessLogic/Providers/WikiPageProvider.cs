@@ -14,9 +14,9 @@ namespace eUni.BusinessLogic.Providers
     public class WikiPageProvider : IWikiPageProvider
     {
         private readonly IWikiPageRepository _wikiPageRepo;
-        private readonly Repository<Module> _moduleRepo;
+        private readonly IModuleRepository _moduleRepo;
 
-        public WikiPageProvider( IWikiPageRepository wikiPageRepo, Repository<Module> moduleRepo)
+        public WikiPageProvider( IWikiPageRepository wikiPageRepo, IModuleRepository moduleRepo)
         {
             _wikiPageRepo = wikiPageRepo;
             _moduleRepo = moduleRepo;

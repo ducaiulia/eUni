@@ -47,5 +47,11 @@ namespace eUni.BusinessLogic.Providers
             files.ForEach(f => res.Add(Mapper.Map<FileDTO>(f)));
             return res;
         }
+
+        public void DeleteFileWithId(int fileId)
+        {
+            var test = _fileRepo.Get(t => t.Id == fileId);
+            _fileRepo.Remove(test);
+        }
     }
 }
