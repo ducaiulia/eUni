@@ -63,7 +63,8 @@ namespace eUni.WebServices
                 .As<ITestProvider>();
             builder.RegisterType<FileProvider>()
                 .As<IFileProvider>();
-
+            builder.RegisterType<AnswerProvider>()
+                .As<IAnswerProvider>();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
             // add more dependencies here

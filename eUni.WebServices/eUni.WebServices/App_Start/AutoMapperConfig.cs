@@ -23,8 +23,9 @@ namespace eUni.WebServices
             BusinessLogicMapper.TestMappings();
             BusinessLogicMapper.FileMappings();
             BusinessLogicMapper.StudentHWMappings();
-            StudentHomeworkDTOToViewModel();
             BusinessLogicMapper.QuestionMappings();
+            BusinessLogicMapper.AnswerMappings();
+            StudentHomeworkDTOToViewModel();
             UserDTOToViewModel();
             CourseDTOToViewModel();
             HomeworkDTOToViewModel();
@@ -34,10 +35,12 @@ namespace eUni.WebServices
             QuestionDTOToViewModel();
             FileDTOToViewModel();
             EntityDTOToNamedEntityModels();
+            AnswerDTOToViewModel();
+
 
         }
 
-        private static void StudentHomeworkDTOToViewModel()
+    private static void StudentHomeworkDTOToViewModel()
         {
             Mapper.CreateMap<StudentHomeworkDTO, StudentHomeworkViewModel>()
                 .ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.StudentId))
@@ -124,6 +127,15 @@ namespace eUni.WebServices
                 .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
                 .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(src => src.CourseCode)).ReverseMap();
 
+        }
+
+        public static void AnswerDTOToViewModel()
+        {
+            Mapper.CreateMap<AnswerDTO, AnswerViewModel>()
+                .ForMember(dest => dest.QuestionId, opt => opt.MapFrom(src => src.QuestionId))
+                .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
+                .ForMember(dest => dest.AnswerId, opt => opt.MapFrom(src => src.AnswerId))
+                .ForMember(dest => dest.IsCorrect, opt => opt.MapFrom(src => src.IsCorrect)).ReverseMap();
         }
     }
 }
