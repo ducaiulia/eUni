@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using EUni_Client.Services;
+using Newtonsoft.Json;
 
 namespace EUni_Client.Controllers
 {
@@ -21,12 +23,16 @@ namespace EUni_Client.Controllers
         {
             return View();
         }
-        public ActionResult Course()
+        public async Task<ActionResult> Course(string c)
         {
-            ViewBag.Modules = new List<string>
-            {
-                "Module1", "Module2", "Module3", "Module4", "Module5"
-            };
+            var course = JsonConvert.DeserializeObject(c);
+            var ApiService = Session[ServiceNames.ApiService] as ApiService;
+            var Modules = await ApiService.GetAsync<IEnumerable<dynamic>, int>("/Module/GetByCourse", "courseId", (int)(((dynamic)course).CourseId));
+
+            if (c != null)
+                ViewBag.Course = JsonConvert.DeserializeObject(c);
+
+            ViewBag.Modules = Modules;
             return View();
         }
         public ActionResult AssignTeacher()

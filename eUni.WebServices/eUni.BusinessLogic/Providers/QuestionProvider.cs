@@ -16,12 +16,26 @@ namespace eUni.BusinessLogic.Providers
         private readonly IQuestionRepository _questionRepository;
         private readonly IModuleRepository _moduleRepository;
         private readonly IAnswerRepository _answerRepository;
+        private readonly ITestRepository _testRepository;
 
-        public QuestionProvider(IQuestionRepository questionRepository, IModuleRepository moduleRepository, IAnswerRepository answerRepository)
+        public QuestionProvider(IQuestionRepository questionRepository, IModuleRepository moduleRepository, IAnswerRepository answerRepository, ITestRepository testRepository)
         {
+            _testRepository = testRepository;
             _questionRepository = questionRepository;
             _moduleRepository = moduleRepository;
             _answerRepository = answerRepository;
+        }
+
+        public void DeleteQuestionWithId(int id)
+        {
+            var question = _questionRepository.Get(t => t.QuestionId == id);
+
+            if (question == null)
+            {
+                throw new Exception("Question was not found");
+            }
+
+            _questionRepository.Remove(question);
         }
 
         public QuestionDTO GetQuestionById(int questionId)
@@ -30,17 +44,28 @@ namespace eUni.BusinessLogic.Providers
             return Mapper.Map<QuestionDTO>(module);
         }
 
+        public List<QuestionDTO> GetByModule(int ModuleId)
+        {
+            var questions = _questionRepository.GetAll().Where(x => x.Module.ModuleId == ModuleId);
+            var questionsDtos = Mapper.Map<List<QuestionDTO>>(questions);
+            return questionsDtos;
+        }
+
         public void CreateQuestion(QuestionDTO dtoQuestion)
         {
             var question = Mapper.Map<Question>(dtoQuestion);
-            question.Module = _moduleRepository.Get(u => u.ModuleId == dtoQuestion.Module.ModuleId);
+            question.Module = _moduleRepository.Get(u => u.ModuleId == dtoQuestion.ModuleId);
+            var test = _testRepository.Get(u => u.TestId == dtoQuestion.TestId);
+            test.Questions.Add(question);
             _questionRepository.Add(question);
+
+            _testRepository.SaveChanges();
         }
 
         public void UpdateQuestion(QuestionDTO dtoQuestion)
         {
             var question = Mapper.Map<Question>(dtoQuestion);
-            question.Module = _moduleRepository.Get(u => u.ModuleId == dtoQuestion.Module.ModuleId);
+            question.Module = _moduleRepository.Get(u => u.ModuleId == dtoQuestion.ModuleId);
             _questionRepository.SaveChanges();
         }
     }

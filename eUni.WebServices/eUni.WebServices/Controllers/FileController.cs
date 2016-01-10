@@ -23,10 +23,11 @@ namespace eUni.WebServices.Controllers
     public class FileController : ApiController
     {
         private IFileProvider _fileProvider;
-
-        public FileController(IFileProvider fileProvider)
+        private IStudentHomeworkProvider _studentHomeworkProvider;
+        public FileController(IFileProvider fileProvider, IStudentHomeworkProvider studentHomeworkProvider)
         {
             _fileProvider = fileProvider;
+            _studentHomeworkProvider = studentHomeworkProvider;
         }
 
         [Route("GetAllFilesByModule")]
@@ -103,6 +104,22 @@ namespace eUni.WebServices.Controllers
                 }
             }
             return Ok(model);
+        }
+
+        [Route("GetFilesByHomeworkIdStudentId")]
+        public async Task<IHttpActionResult> GetFilesByHomeworkIdStudentId(int? homeworkId, int? studentId)
+        {
+            if (homeworkId == null || studentId == null)
+            {
+                return BadRequest("homework id nad student id not found");
+            }
+
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Files for homework id and student id "));
+
+            var filesDto = _studentHomeworkProvider.GetFilesByStundentIdHomeworkId((int)studentId, (int)homeworkId);
+            var fileOutModels = Mapper.Map<List<FileOutModel>>(filesDto);
+            return Content(HttpStatusCode.OK, fileOutModels);
         }
     }
 }

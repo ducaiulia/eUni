@@ -11,6 +11,8 @@ namespace eUni.BusinessLogic.IProviders
     {
         void CreateQuestion(QuestionDTO dtoQuestion);
         void UpdateQuestion(QuestionDTO dtoQuestion);
+        void DeleteQuestionWithId(int id);
         QuestionDTO GetQuestionById(int id);
+        List<QuestionDTO> GetByModule(int ModuleId);
     }
 }

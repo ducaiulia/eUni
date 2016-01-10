@@ -65,6 +65,8 @@ namespace eUni.WebServices
                 .As<ITestProvider>();
             builder.RegisterType<FileProvider>()
                 .As<IFileProvider>();
+            builder.RegisterType<AnswerProvider>()
+                .As<IAnswerProvider>();
             builder.RegisterType<StudentHomeworkProvider>()
                 .As<IStudentHomeworkProvider>();
 

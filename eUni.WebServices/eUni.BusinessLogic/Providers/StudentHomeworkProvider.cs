@@ -84,5 +84,30 @@ namespace eUni.BusinessLogic.Providers
             var studentHw = _studentHWRepository.Get(s => s.DomainUserId.Equals(userId) && s.HomeworkId.Equals(hwId));
             return studentHw;
         }
+
+        public List<FileDTO> GetFilesByStundentIdHomeworkId(int stundentId, int homeworkId)
+        {
+            var sH = _studentHWRepository.GetAll().Where(current => current.DomainUserId == stundentId && current.HomeworkId == homeworkId);
+            List<File> files = null;
+            foreach (var x in sH)
+            {
+                files = x.Files;
+                break;
+            }
+
+            List<FileDTO> filesDTO = new List<FileDTO>();
+            foreach(File file in files)
+            {
+                filesDTO.Add(new FileDTO()
+                {
+                    FileName = file.FileName,
+                    FileType = file.FileType,
+                    ModuleId = file.Module.ModuleId,
+                    Path = file.Path
+                });
+            }
+
+            return filesDTO;
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace eUni.BusinessLogic.Providers
         }
         public List<LogDTO> GetAllLogs()
         {
-            var logs = _logRepo.GetAll();
+            var logs = _logRepo.GetAll().Where(l=>l.Level == "INFO");
             List<LogDTO> res = new List<LogDTO>();
             foreach (var item in logs)
             {
