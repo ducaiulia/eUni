@@ -51,12 +51,9 @@ namespace eUni.WebServices.Controllers
             int fileId = await FileHelper.UploadFile(token, hw.ContentFile, _fileProvider, hw.Filename, hwId: hw.HomeworkId);
             var hwDTO = Mapper.Map<StudentHomeworkDTO>(hw);
             hwDTO.Files = new List<FileDTO>();
-
             var temp = _fileProvider.GetFileById(fileId);
-
             hwDTO.Files.Add(temp);
             _studentHWProvider.CreateStudentHomework(hwDTO);
-            
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Homework submitted"));
             return Content(HttpStatusCode.OK, "Uploaded successfully");
         }

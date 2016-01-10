@@ -17,62 +17,58 @@ namespace eUni.BusinessLogic.Providers
         private IHomeworkRepository _homeworkRepo;
         private IStudentHomeworkRepository _studentHWRepository;
         private IModuleRepository _moduleRepository;
+        private IFileRepository _fileRepository;
 
-        public StudentHomeworkProvider(IHomeworkRepository homeworkRepo,IUserRepository userRepo, IStudentHomeworkRepository studentHWRepository, IModuleRepository moduleRepository)
+        public StudentHomeworkProvider(IFileRepository fileRepository, IHomeworkRepository homeworkRepo, IUserRepository userRepo, IStudentHomeworkRepository studentHWRepository, IModuleRepository moduleRepository)
         {
             _userRepo = userRepo;
             _studentHWRepository = studentHWRepository;
             _homeworkRepo = homeworkRepo;
             _moduleRepository = moduleRepository;
+            _fileRepository = fileRepository;
         }
 
         public void CreateStudentHomework(StudentHomeworkDTO hw)
         {
-            var newHw = new StudentHomework();
-            newHw.HomeworkId = hw.HomeworkId;
-            newHw.Grade = hw.Grade;
-            newHw.Files = new List<File>();
-
-            hw.Files.ForEach(f =>
+            var sHw = Exists(hw.StudentId, hw.HomeworkId);
+            if (sHw == null)
             {
-                newHw.Files.Add(new File
+                var newHw = new StudentHomework();
+                newHw.HomeworkId = hw.HomeworkId;
+                newHw.Grade = hw.Grade;
+                newHw.Files = new List<File>();
+
+                hw.Files.ForEach(f =>
                 {
-                    FileName = f.FileName,
-                    FileType = f.FileType,
-                    Id = f.Id,
-                    Module = _moduleRepository.Get(m => m.ModuleId.Equals(f.ModuleId)),
-                    Path = f.Path
+                    var file = _fileRepository.Get(fil => fil.Id == f.Id);
+                    file.StudentHomework = _studentHWRepository.Get(s => s.DomainUserId == hw.StudentId && s.HomeworkId == hw.HomeworkId);
+                    newHw.Files.Add(file);
+                    _fileRepository.SaveChanges();
                 });
-            });
+                newHw.DomainUser = _userRepo.Get(u => u.DomainUserId == hw.StudentId);
+                newHw.Homework = _homeworkRepo.Get(h => h.HomeworkId == hw.HomeworkId);
+                _studentHWRepository.Add(newHw);
+                _studentHWRepository.SaveChanges();
+            }
+            else
+            {
+                hw.Files.ForEach(f =>
+                {
+                    var file = _fileRepository.Get(fil => fil.Id == f.Id);
+                    file.Module = _moduleRepository.Get(m => m.ModuleId.Equals(f.ModuleId));
+                    file.StudentHomework = _studentHWRepository.Get(s => s.DomainUserId == hw.StudentId && s.HomeworkId == hw.HomeworkId);
+                    _fileRepository.SaveChanges();
 
-            newHw.DomainUser = _userRepo.Get(u => u.DomainUserId == hw.StudentId);
-            newHw.Homework = _homeworkRepo.Get(h => h.HomeworkId == hw.HomeworkId);
-            
-            try
-            {
-                if (Exists(hw.StudentId, hw.HomeworkId) != null)
-                {
-                    UpdateGrade(hw.StudentId, hw.HomeworkId, hw.Grade);
-                }
-                else
-                {
-                    _studentHWRepository.Add(newHw);
-                    _studentHWRepository.SaveChanges();
-                }
+                });
+                _studentHWRepository.SaveChanges();
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            
         }
 
-        public void UpdateGrade(int userId, int hwId, int grade)
+        public void Update(int userId, int hwId)
         {
             var sHw = Exists(userId, hwId);
             if (sHw != null)
             {
-                sHw.Grade = grade;
                 _studentHWRepository.SaveChanges();
             }
             else
@@ -96,7 +92,7 @@ namespace eUni.BusinessLogic.Providers
             }
 
             List<FileDTO> filesDTO = new List<FileDTO>();
-            foreach(File file in files)
+            foreach (File file in files)
             {
                 filesDTO.Add(new FileDTO()
                 {
