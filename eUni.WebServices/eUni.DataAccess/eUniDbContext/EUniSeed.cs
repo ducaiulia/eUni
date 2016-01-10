@@ -109,9 +109,9 @@ namespace eUni.DataAccess.eUniDbContext
 
             var store = new RoleStore<IdentityRole>(_context);
             var manager = new RoleManager<IdentityRole>(store);
-            var adminRole = new IdentityRole { Name = "Admin" };
-            var teacherRole = new IdentityRole { Name = "Teacher" };
-            var studentRole = new IdentityRole { Name = "Student" };
+            var adminRole = new IdentityRole { Name = "admin" };
+            var teacherRole = new IdentityRole { Name = "teacher" };
+            var studentRole = new IdentityRole { Name = "student" };
 
             manager.Create(adminRole);
             manager.Create(teacherRole);
