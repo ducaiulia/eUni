@@ -64,14 +64,42 @@ namespace EUni_Client.Controllers
                 ViewBag.Course = JsonConvert.DeserializeObject(Course);
             return View();
         }
-        public ActionResult CreateHomework(string Module, string Course)
+        public async Task<RedirectToRouteResult> CreateCourse(HomeworkCreateViewModel homework)
         {
+            var apiService = Session.GetApiService();
+            var result = await apiService.PostAsyncWithReturn<string, HomeworkCreateViewModel>("/Homework/Add", homework);
+            //var data = new RouteValueDictionary();
+            //data.Add("Module", course.Course);
+            return RedirectToAction("Index", "Module");
+        }
+        public async Task<ActionResult> CreateHomework(string Module)
+        {
+            ViewBag.Module = JsonConvert.DeserializeObject(Module);
             return View();
         }
+
+        public async Task<RedirectToRouteResult> AddHomework(HomeworkCreateViewModel homeworkCreateViewModel)
+        {
+            var apiService = Session.GetApiService();
+            var moduleId = ((dynamic)JsonConvert.DeserializeObject(homeworkCreateViewModel.Module)).ModuleId;
+            var result = await apiService.PostAsyncWithReturn<object, object>("/Homework/Add", new
+            {
+                ModuleId = moduleId, homeworkCreateViewModel.Score, homeworkCreateViewModel.Text
+            });
+            return RedirectToAction("Index", "Module", new RouteValueDictionary() { {"Module", homeworkCreateViewModel.Module} });
+        }
+
+
         public class FileViewModel
         {
             public string Module { get; set; }
             public HttpPostedFileBase[] Files { get; set; }
+        }
+        public class HomeworkCreateViewModel
+        {
+            public string Module { get; set; }
+            public string Text { get; set; }
+            public int Score { get; set; }
         }
     }
 }

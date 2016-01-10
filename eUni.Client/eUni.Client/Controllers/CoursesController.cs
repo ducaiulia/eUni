@@ -49,16 +49,11 @@ namespace EUni_Client.Controllers
         }
         public async Task<ActionResult> AssignTeacher()
         {
-            ViewBag.Teachers = new List<string>
-            {
-                "Teacher1", "Teacher2", "Teacher3", "Teacher4", "Teacher5"
-            };
-            //aici trebuie sa vina get all teacher din back
-
-
             var ApiService = Session[ServiceNames.ApiService] as ApiService;
+            var Teachers = await ApiService.GetAsync<IEnumerable<dynamic>>("/User/AllTeachers");
             var Courses = await ApiService.GetAsync<IEnumerable<dynamic>>("/Course/GetAllCourses");
             ViewBag.Courses = Courses;
+            ViewBag.Teachers = Teachers;
             return View();
         }
     }
