@@ -15,18 +15,18 @@ namespace EUni_Client.Controllers
         // GET: Wiki
         public ActionResult Index(string Module, string Course)
         {
-            if (Course != null)
+            if (Module != null)
                 ViewBag.Module = JsonConvert.DeserializeObject(Module);
             return View();
         }
 
         [HttpPost]
-        public async Task<RedirectToRouteResult> CreateWiki(WikiViewModel wiki)
+        public async Task<RedirectToRouteResult> CreateWiki(string wiki)
         {
+            var wikiLocal = JsonConvert.DeserializeObject<WikiViewModel>(wiki);
             var apiService = Session.GetApiService();
-            var result = await apiService.PostAsyncWithReturn<string, WikiViewModel>("/WikiPage/Add", wiki);
-            var data = new RouteValueDictionary();
-            data.Add("Module", wiki.Module);
+            var result = await apiService.PostAsyncWithReturn<string, WikiViewModel>("/WikiPage/Add", wikiLocal);
+            var data = new RouteValueDictionary {{"Module", wikiLocal.Module}};
             return RedirectToAction("Index", "Module", data);
         }
 

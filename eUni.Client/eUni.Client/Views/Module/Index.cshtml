@@ -34,4 +34,9 @@
 
 <br>
 
-@Html.ActionLink("Upload Homework(student)", "UploadHomework", "Module", new { area = "" }, new { @class = "btn btn-default" })
+@Html.ActionLink("Upload Homework(student)", "UploadHomework", "Module", new
+{
+    Module = ViewBag.Module,
+    Course = ViewBag.Course
+        
+}, new { @class = "btn btn-default" })
