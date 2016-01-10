@@ -20,13 +20,13 @@ namespace EUni_Client.Controllers
                 ViewBag.Module = JsonConvert.DeserializeObject(Module);
             return View();
         }
-        public async Task<ActionResult> Content(string course)
+        public async Task<ActionResult> Content(string Module, string Course)
         {
             var ApiService = Session[ServiceNames.ApiService] as ApiService;
-            var Modules = await ApiService.GetAsync<IEnumerable<dynamic>, int>("/Module/GetByCourse", "courseId", (int)(((dynamic)course).CourseId));
-            ViewBag.Modules = Modules;
-            if (course != null)
-                ViewBag.c = JsonConvert.DeserializeObject(course);
+            var Files = await ApiService.GetAsync<IEnumerable<dynamic>, int>("/Course/DownloadLink", "moduleId", (int)(((dynamic)Module).ModuleId));
+            ViewBag.Files = Files;
+            if (Course != null)
+                ViewBag.c = JsonConvert.DeserializeObject(Course);
             return View();
         }
 
