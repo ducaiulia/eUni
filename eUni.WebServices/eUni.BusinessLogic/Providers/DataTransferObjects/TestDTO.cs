@@ -8,6 +8,7 @@ namespace eUni.BusinessLogic.Providers.DataTransferObjects
 {
     public class TestDTO
     {
+        public int TestId { get; set; }
         public string Name { get; set; }
         public int ModuleId { get; set; }
     }

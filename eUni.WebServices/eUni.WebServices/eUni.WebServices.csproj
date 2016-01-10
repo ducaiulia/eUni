@@ -258,6 +258,7 @@
     <Compile Include="Controllers\HomeworkController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
+    <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

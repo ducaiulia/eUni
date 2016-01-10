@@ -80,6 +80,7 @@ namespace eUni.BusinessLogic.AutoMapper
             Mapper.CreateMap<Question, QuestionDTO>()
                 .ForMember(dest => dest.QuestionId, opt => opt.MapFrom(src => src.QuestionId))
                 .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
+                .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.Module.ModuleId))
                 .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score)).ReverseMap();
         }
 
@@ -87,6 +88,7 @@ namespace eUni.BusinessLogic.AutoMapper
         {
             Mapper.CreateMap<Test, TestDTO>()
                 .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.Module.ModuleId))
+                .ForMember(dest => dest.TestId, opt => opt.MapFrom(src => src.TestId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name)).ReverseMap();
         }
 
