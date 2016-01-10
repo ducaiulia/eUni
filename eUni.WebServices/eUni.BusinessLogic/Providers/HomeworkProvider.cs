@@ -40,7 +40,12 @@ namespace eUni.BusinessLogic.Providers
         public void UpdateHomework(HomeworkDTO hw)
         {
             var homew = _homeworkRepo.Get(c => c.HomeworkId == hw.HomeworkId);
-            homew.Module = _moduleRepo.Get(u => u.ModuleId == hw.Module.ModuleId);
+            if (homew == null)
+                throw new Exception("Homework not found.");
+
+            homew.Text = hw.Text;
+            homew.Score = hw.Score;
+            
             _homeworkRepo.SaveChanges();
         }
 

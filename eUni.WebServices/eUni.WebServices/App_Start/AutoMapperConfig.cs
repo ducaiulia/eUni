@@ -74,6 +74,7 @@ namespace eUni.WebServices
         private static void HomeworkDTOToViewModel()
         {
             Mapper.CreateMap<HomeworkDTO, HomeworkViewModel>()
+                .ForMember(dest => dest.HomeworkId, opt => opt.MapFrom(src => src.HomeworkId))
                 .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.Module.ModuleId))
                 .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
                 .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score)).ReverseMap();
