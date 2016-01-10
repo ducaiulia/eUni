@@ -22,9 +22,11 @@ namespace EUni_Client.Controllers
         }
         public async Task<ActionResult> Content(string Module, string Course)
         {
+            var m = JsonConvert.DeserializeObject(Module);
             var ApiService = Session[ServiceNames.ApiService] as ApiService;
-            var Files = await ApiService.GetAsync<IEnumerable<dynamic>, int>("/Course/DownloadLink", "moduleId", (int)(((dynamic)Module).ModuleId));
+            var Files = await ApiService.GetAsync<IEnumerable<dynamic>, int>("/File/DownloadLink", "moduleId", (int)(((dynamic)m).ModuleId));
             ViewBag.Files = Files;
+            ViewBag.Module = Module;
             if (Course != null)
                 ViewBag.c = JsonConvert.DeserializeObject(Course);
             return View();

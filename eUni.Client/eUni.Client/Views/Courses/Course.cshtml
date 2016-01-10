@@ -5,11 +5,14 @@
     @foreach (var module in ViewBag.Modules)
     {
         <li>
-            @Html.ActionLink((string)(module.Name), "Index", "Module", new
+            @using (Html.BeginForm("Index", "Module"))
             {
-                Module = module, Course = ViewBag.Course
-            
-            }, new { @class = "" })
+                <input name="Module" value="@module" style="display: none"/>
+                <input name="Course" value="@ViewBag.Course" style="display: none" />
+                <input type="submit" class="btn-link" style="color: dodgerblue" value="@(((string) module.Name))" />
+            }
         </li>
     }
 </ul>
+
+
