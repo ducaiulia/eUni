@@ -55,7 +55,10 @@ namespace eUni.BusinessLogic.AutoMapper
         public static void FileMappings()
         {
             Mapper.CreateMap<File, FileDTO>()
-                .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.Module.ModuleId))
+                .ForMember(dest => dest.FileName, opt => opt.MapFrom(src => src.FileName))
+                .ForMember(dest => dest.FileType, opt => opt.MapFrom(src => src.FileType))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Path))
                 .ReverseMap();
         }
 
@@ -105,6 +108,12 @@ namespace eUni.BusinessLogic.AutoMapper
                .ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.DomainUserId))
                .ForMember(dest => dest.TestId, opt => opt.MapFrom(src => src.TestId))
                .ForMember(dest => dest.Grade, opt => opt.MapFrom(src => src.Grade)).ReverseMap();
+        }
+
+        public static void MessageMapping()
+        {
+            Mapper.CreateMap<MessageDTO, Message>();
+
         }
     }
 }

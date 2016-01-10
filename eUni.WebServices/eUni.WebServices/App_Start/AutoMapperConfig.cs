@@ -26,6 +26,7 @@ namespace eUni.WebServices
             BusinessLogicMapper.QuestionMappings();
             BusinessLogicMapper.AnswerMappings();
             BusinessLogicMapper.StudentTestMapping();
+            BusinessLogicMapper.MessageMapping();
             StudentHomeworkDTOToViewModel();
             UserDTOToViewModel();
             CourseDTOToViewModel();
@@ -37,7 +38,14 @@ namespace eUni.WebServices
             FileDTOToViewModel();
             EntityDTOToNamedEntityModels();
             AnswerDTOToViewModel();
+            MessageDTOToViewModel();
 
+
+        }
+
+        private static void MessageDTOToViewModel()
+        {
+            Mapper.CreateMap<MessageViewModel, MessageDTO>();
 
         }
 

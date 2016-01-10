@@ -68,9 +68,10 @@ namespace eUni.BusinessLogic.Providers
 
         public FileDTO GetFileById(int fileId)
         {
-            var temp = _fileRepo.Get(f => f.Id.Equals(fileId));
-
-            return Mapper.Map<FileDTO>(temp);
+            var file = _fileRepo.Get(f => f.Id.Equals(fileId));
+            var temp = Mapper.Map<FileDTO>(file);
+            temp.ModuleId = file.Module.ModuleId;
+            return temp;
         }
 
         public void DeleteFileWithId(int fileId)
