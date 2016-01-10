@@ -9,5 +9,7 @@ namespace eUni.WebServices.Models
     {
         public string Path { get; set; }
         public string Filename { get; set; }
+        public byte[] ContentFile { get; set; }
+        public int ModuleId { get; set; }
     }
 }

@@ -17,8 +17,8 @@ namespace eUni.DataAccess.Repository
             var result = Context.Messages
                 .Where(x => x.From.DomainUserId == fromUserId)
                 .Select(x => x.To)
-                .GroupBy(x=>x.DomainUserId)
-                .Select(x=>x.FirstOrDefault())
+                .GroupBy(x => x.DomainUserId)
+                .Select(x => x.FirstOrDefault())
                 .ToList();
 
             return result;

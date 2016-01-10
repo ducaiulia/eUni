@@ -53,12 +53,12 @@ namespace eUni.WebServices.Controllers
 
         [HttpPost]
         [Route("UploadFile")]
-        public async Task<IHttpActionResult> UploadFile(string filename, [FromBody] byte[] contentFile, int moduleId)
+        public async Task<IHttpActionResult> UploadFile([FromBody]FileViewModel viewModel)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
             try
             {
-                await FileHelper.UploadFile(token, contentFile, _fileProvider, filename, moduleId);
+                await FileHelper.UploadFile(token, viewModel.ContentFile, _fileProvider, viewModel.Filename, viewModel.ModuleId);
                 return Ok("File Uploaded");
             }
             catch (Exception ex)
@@ -117,12 +117,18 @@ namespace eUni.WebServices.Controllers
             return Content(HttpStatusCode.OK, fileOutModels);
         }
 
-        //public async Task<IHttpActionResult> GetFileById(int fileId)
-        //{
-        //    string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
-        //    Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get File By Id"));
-
-
-        //}
+        [Route("GetFileById")]
+        public async Task<IHttpActionResult> GetFileById(int fileId)
+        {
+            var file = _fileProvider.GetFileById(fileId);
+            if (file != null)
+            {
+                string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+                Logger.Logger.Instance.LogAction(
+                    LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get File By Id"));
+                return Ok(Mapper.Map<FileOutModel>(file));
+            }
+            return BadRequest("File Id doesn't exist");
+        }
     }
 }

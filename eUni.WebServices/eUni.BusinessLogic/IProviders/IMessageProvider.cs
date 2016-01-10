@@ -7,5 +7,6 @@ namespace eUni.BusinessLogic.IProviders
     {
         void CreateMessage(MessageDTO messageDto);
         List<DomainUserDTO> GetAllUsers(int userId);
+        List<MessageDTO> GetConversation(int userId1, int userId2, PaginationFilter filter);
     }
 }
