@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using eUni.DataAccess.Domain;
@@ -25,6 +26,91 @@ namespace eUni.DataAccess.eUniDbContext
             SeedWikiPages();
             SeedFiles();
             SeedMesages();
+            SeedHomeworks();
+        }
+
+        private void SeedHomeworks()
+        {
+            var module1 = _context.Modules.FirstOrDefault(x => x.ModuleId == 1);
+            var module2 = _context.Modules.FirstOrDefault(x => x.ModuleId == 2);
+
+            var user1 = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1);
+            var user2 = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 2);
+            var user3 = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 3);
+            var teacher = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 4);
+
+            _context.Homeworks.AddOrUpdate(
+                  new Homework
+                  {
+                      Module = module1,
+                      Text = "Homework 1",
+                      Score = 100
+                  });
+
+            _context.Homeworks.AddOrUpdate(
+                  new Homework
+                  {
+                      Module = module1,
+                      Text = "Homework 2",
+                      Score = 100
+                  });
+
+            _context.Homeworks.AddOrUpdate(
+                  new Homework
+                  {
+                      Module = module2,
+                      Text = "Homework 1",
+                      Score = 100
+                  });
+
+            _context.StudentHomeworks.AddOrUpdate(
+                  new StudentHomework
+                  {
+                      DomainUserId = 1,
+                      HomeworkId = 1,
+                      Grade = 5
+                  });
+
+            _context.StudentHomeworks.AddOrUpdate(
+                  new StudentHomework
+                  {
+                      DomainUserId = 1,
+                      HomeworkId = 2,
+                      Grade = 7
+                  });
+
+            _context.StudentHomeworks.AddOrUpdate(
+                  new StudentHomework
+                  {
+                      DomainUserId = 1,
+                      HomeworkId = 3,
+                      Grade = 10
+                  });
+            //------------------------------------------------
+            _context.StudentHomeworks.AddOrUpdate(
+                  new StudentHomework
+                  {
+                      DomainUserId = 2,
+                      HomeworkId = 1,
+                      Grade = 10
+                  });
+
+            _context.StudentHomeworks.AddOrUpdate(
+                  new StudentHomework
+                  {
+                      DomainUserId = 2,
+                      HomeworkId = 2,
+                      Grade = 9
+                  });
+
+            _context.StudentHomeworks.AddOrUpdate(
+                  new StudentHomework
+                  {
+                      DomainUserId = 2,
+                      HomeworkId = 3,
+                      Grade = 8
+                  });
+
         }
 
         private void SeedMesages()
@@ -92,14 +178,14 @@ namespace eUni.DataAccess.eUniDbContext
                       Path = "/admin/iulia@euni.com/alabala.txt"
                   });
 
-            //_context.Files.AddOrUpdate(
-            //      new File
-            //      {
-            //          Description = "File1",
-            //          FileType = FileType.jpg,
-            //          Size = 15,
-            //          Path = "path"
-            //      });
+            _context.Files.AddOrUpdate(
+                  new File
+                  {
+                      StudentHomework = _context.StudentHomeworks.FirstOrDefault(x => x.DomainUserId == 1 && x.HomeworkId == 1),
+                      FileName = "File2.pdf",
+                      FileType = FileType.pdf,
+                      Path = "path3"
+                  });
         }
 
         private void SeedWikiPages()
@@ -184,6 +270,7 @@ namespace eUni.DataAccess.eUniDbContext
                 }
             };
 
+
             manager.Create(user1);
             manager.AddToRole(user1.Id, "Student");
 
@@ -259,16 +346,22 @@ namespace eUni.DataAccess.eUniDbContext
 
         private void SeedCourses()
         {
-            _context.Courses.AddOrUpdate(
-                new Course
-                {
-                    CourseCode = "CD001",
-                    Name = "Compiler Design",
-                    StartDate = new DateTime(2015, 10, 01),
-                    EndDate = new DateTime(2016, 10, 01),
-                    Teacher = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1)
-                }
-                );
+            var user1 = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1);
+            var user2 = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 2);
+            var user3 = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 3);
+            var teacher = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 4);
+
+            var course1 = new Course
+            {
+                CourseCode = "CD001",
+                Name = "Compiler Design",
+                StartDate = new DateTime(2015, 10, 01),
+                EndDate = new DateTime(2016, 10, 01),
+                Teacher = teacher,
+                Students = new List<DomainUser> { user1, user2, user3 }
+            };
+
+            _context.Courses.AddOrUpdate(course1);
 
             _context.Courses.AddOrUpdate(
                 new Course
@@ -277,9 +370,10 @@ namespace eUni.DataAccess.eUniDbContext
                     Name = "Web Programming",
                     StartDate = new DateTime(2015, 10, 01),
                     EndDate = new DateTime(2016, 10, 01),
-                    Teacher = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 2)
-                }
-                );
+                    Teacher = teacher,
+                    Students = new List<DomainUser> { user1, user2, user3 }
+                });
+
             _context.Courses.AddOrUpdate(
                 new Course
                 {
@@ -287,9 +381,10 @@ namespace eUni.DataAccess.eUniDbContext
                     Name = "Public Key Cryptography",
                     StartDate = new DateTime(2015, 10, 01),
                     EndDate = new DateTime(2016, 10, 01),
-                    Teacher = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 3)
-                }
-                );
+                    Teacher = teacher,
+                    Students = new List<DomainUser> { user1, user2, user3 }
+                });
+
             _context.SaveChanges();
         }
 
