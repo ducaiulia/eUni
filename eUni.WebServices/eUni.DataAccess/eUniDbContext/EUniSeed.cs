@@ -80,7 +80,7 @@ namespace eUni.DataAccess.eUniDbContext
                       Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 1),
                       FileName = "File1.jpg",
                       FileType = FileType.jpg,
-                      Path = "path"
+                      Path = "/student/iulia@euni.com/alabala.txt"
                   });
 
             _context.Files.AddOrUpdate(
@@ -89,7 +89,7 @@ namespace eUni.DataAccess.eUniDbContext
                       Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 1),
                       FileName = "File2.pdf",
                       FileType = FileType.pdf,
-                      Path = "path3"
+                      Path = "/admin/iulia@euni.com/alabala.txt"
                   });
 
             //_context.Files.AddOrUpdate(

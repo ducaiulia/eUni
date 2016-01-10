@@ -53,12 +53,12 @@ namespace eUni.WebServices.Controllers
 
         [HttpPost]
         [Route("UploadFile")]
-        public async Task<IHttpActionResult> UploadFile(string filename, [FromBody] byte[] contentFile, int moduleId)
+        public async Task<IHttpActionResult> UploadFile([FromBody]FileViewModel viewModel)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
             try
             {
-                await FileHelper.UploadFile(token, contentFile, _fileProvider, filename, moduleId);
+                await FileHelper.UploadFile(token, viewModel.ContentFile, _fileProvider, viewModel.Filename, viewModel.ModuleId);
                 return Ok("File Uploaded");
             }
             catch (Exception ex)
