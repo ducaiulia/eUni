@@ -29,7 +29,6 @@ namespace eUni.WebServices.Controllers
         }
 
 
-
         [Route("GetByCourse")]
         public async Task<IHttpActionResult> GetByCourse(int? courseId)
         {
@@ -72,7 +71,7 @@ namespace eUni.WebServices.Controllers
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
             
-            var filesDTO = _fileProvider.GetFiles(modId);
+            var filesDTO = _fileProvider.GetByModule(modId);
             List<FileViewModel> res = new List<FileViewModel>();
             filesDTO.ForEach(f => res.Add(Mapper.Map<FileViewModel>(f)));
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Module created"));

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using eUni.DataAccess.Domain;
+using eUni.DataAccess.Enums;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -18,7 +19,94 @@ namespace eUni.DataAccess.eUniDbContext
             _context = context;
         }
 
-        public void SeedRoles()
+        public void SeedAll()
+        {
+            SeedRoles();
+            SeedUsers();
+            SeedCourses();
+            SeedModules();
+            SeedWikiPages();
+            SeedFiles();
+        }
+
+        private void SeedFiles()
+        {
+            _context.Files.AddOrUpdate(
+                  new File
+                  {
+                      Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 1),
+                      Description = "File1",
+                      FileType = FileType.jpg,
+                      Size = 15,
+                      Path = "path"
+                  });
+
+            _context.Files.AddOrUpdate(
+                  new File
+                  {
+                      Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 1),
+                      Description = "File2",
+                      FileType = FileType.pdf,
+                      Size = 225,
+                      Path = "path3"
+                  });
+
+            //_context.Files.AddOrUpdate(
+            //      new File
+            //      {
+            //          Description = "File1",
+            //          FileType = FileType.jpg,
+            //          Size = 15,
+            //          Path = "path"
+            //      });
+        }
+
+        private void SeedWikiPages()
+        {
+            _context.WikiPages.AddOrUpdate(
+                  new WikiPage
+                  {
+                      Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 1),
+                      Content = "Content",
+                      Description = "WikiPage 1"
+                  });
+
+            _context.WikiPages.AddOrUpdate(
+                  new WikiPage
+                  {
+                      Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 1),
+                      Content = "Content",
+                      Description = "WikiPage 2"
+                  });
+
+            _context.WikiPages.AddOrUpdate(
+                  new WikiPage
+                  {
+                      Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 1),
+                      Content = "Content",
+                      Description = "WikiPage 3"
+                  });
+
+
+            _context.WikiPages.AddOrUpdate(
+                  new WikiPage
+                  {
+                      Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 2),
+                      Content = "Content",
+                      Description = "WikiPage 4"
+                  });
+
+            _context.WikiPages.AddOrUpdate(
+                  new WikiPage
+                  {
+                      Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 2),
+                      Content = "Content",
+                      Description = "WikiPage 5"
+                  });
+
+        }
+
+        private void SeedRoles()
         {
 
             var store = new RoleStore<IdentityRole>(_context);
@@ -30,10 +118,10 @@ namespace eUni.DataAccess.eUniDbContext
             manager.Create(adminRole);
             manager.Create(teacherRole);
             manager.Create(studentRole);
-            
+
         }
 
-        public void SeedUsers()
+        private void SeedUsers()
         {
             var passwordHash = new PasswordHasher();
             string password = passwordHash.HashPassword("aaa");
@@ -128,7 +216,7 @@ namespace eUni.DataAccess.eUniDbContext
 
         }
 
-        public void SeedCourses()
+        private void SeedCourses()
         {
             _context.Courses.AddOrUpdate(
                 new Course
@@ -164,7 +252,7 @@ namespace eUni.DataAccess.eUniDbContext
             _context.SaveChanges();
         }
 
-        public void SeedModules()
+        private void SeedModules()
         {
             var course1 = _context.Courses.FirstOrDefault(x => x.CourseId == 1);
             _context.Modules.AddOrUpdate(

@@ -26,11 +26,11 @@ namespace eUni.DataAccess.eUniDbContext
         public DbSet<Log> Logs { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<DomainUser> DomainUsers { get; set; }
-        //public DbSet<IdentityRole> IdentityRoles { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<StudentQuestion> StudentQuestions { get; set; }
+        public DbSet<StudentHomework> StudentHomeworks { get; set; }
         public DbSet<Content> Contents { get; set; }
         public DbSet<WikiPage> WikiPages { get; set; }
         public DbSet<File> Files { get; set; }
@@ -75,6 +75,7 @@ namespace eUni.DataAccess.eUniDbContext
                 .HasRequired(t => t.DomainUser)
                 .WithMany()
                 .HasForeignKey(t => t.DomainUserId);
+
 
             modelBuilder.Entity<Course>()
                 .HasMany(x => x.Students)

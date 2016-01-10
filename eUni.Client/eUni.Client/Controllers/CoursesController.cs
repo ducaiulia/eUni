@@ -1,17 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using EUni_Client.Services;
 
 namespace EUni_Client.Controllers
 {
     public class CoursesController : Controller
     {
         // GET: Courses
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            ViewBag.Courses = new List<string>
-            {
-                "Course1", "Course2", "Course3", "Course4", "Course5"
-            };
+
+            var ApiService = Session[ServiceNames.ApiService] as ApiService;
+            var Courses = await ApiService.GetAsync<IEnumerable<dynamic>>("/Course/GetAllCourses");
+            ViewBag.Courses = Courses;
             return View();
         }
 

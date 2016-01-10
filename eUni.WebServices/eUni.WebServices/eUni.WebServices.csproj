@@ -275,6 +275,9 @@
     <Compile Include="Models\FileViewModel.cs" />
     <Compile Include="Models\HomeworkViewModel.cs" />
     <Compile Include="Models\ModuleViewModel.cs" />
+    <Compile Include="Models\OutputModels\FileOutModel.cs" />
+    <Compile Include="Models\OutputModels\NamedEntityOutModel.cs" />
+    <Compile Include="Models\OutputModels\WikiPageOutModel.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\ResultViewModel.cs" />
     <Compile Include="Models\TestViewModel.cs" />

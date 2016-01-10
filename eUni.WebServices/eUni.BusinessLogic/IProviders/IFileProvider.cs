@@ -12,8 +12,8 @@ namespace eUni.BusinessLogic.IProviders
     public interface IFileProvider
     {
         bool SaveUploadedFilePath(FileDTO fileDTO);
-        List<FileDTO> GetFiles(int modId);
         void DeleteFileWithId(int fileId);
+        List<FileDTO> GetByModule(int moduleId);
     }
 
 }
