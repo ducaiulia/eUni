@@ -10,7 +10,7 @@ using WebGrease.Css.Extensions;
 
 namespace eUni.BusinessLogic.Providers
 {
-    public class FileProvider: IFileProvider
+    public class FileProvider : IFileProvider
     {
         private readonly IModuleRepository _moduleRepo;
         private readonly IFileRepository _fileRepo;
@@ -20,7 +20,7 @@ namespace eUni.BusinessLogic.Providers
             _moduleRepo = moduleRepo;
             _fileRepo = fileRepo;
         }
-        
+
         public bool SaveUploadedFilePath(FileDTO fileDTO)
         {
             var module = _moduleRepo.Get(m => m.ModuleId.Equals(fileDTO.ModuleId));
@@ -40,12 +40,11 @@ namespace eUni.BusinessLogic.Providers
             return true;
         }
 
-        public List<FileDTO> GetFiles(int modId)
+        public List<FileDTO> GetByModule(int moduleId)
         {
-            var files =_fileRepo.GetAll().Where(u => u.Module.ModuleId == modId);
-            List<FileDTO> res = new List<FileDTO>();
-            files.ForEach(f => res.Add(Mapper.Map<FileDTO>(f)));
-            return res;
+            var files = _fileRepo.GetAll().Where(u => u.Module.ModuleId == moduleId);
+            var fileDtos = Mapper.Map<List<FileDTO>>(files);
+            return fileDtos;
         }
 
         public void DeleteFileWithId(int fileId)
@@ -53,5 +52,6 @@ namespace eUni.BusinessLogic.Providers
             var test = _fileRepo.Get(t => t.Id == fileId);
             _fileRepo.Remove(test);
         }
+
     }
 }

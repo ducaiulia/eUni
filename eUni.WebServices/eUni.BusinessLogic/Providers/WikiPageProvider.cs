@@ -36,5 +36,12 @@ namespace eUni.BusinessLogic.Providers
             var wiki = _wikiPageRepo.Get(x => x.WikiPageId == wikiId);
             _wikiPageRepo.Remove(wiki);
         }
+
+        public List<WikiPageDTO> GetByModule(int ModuleId)
+        {
+            var wikiPages = _wikiPageRepo.GetAll().Where(x => x.Module.ModuleId == ModuleId);
+            var wikiPageDtos = Mapper.Map<List<WikiPageDTO>>(wikiPages);
+            return wikiPageDtos;
+        }
     }
 }

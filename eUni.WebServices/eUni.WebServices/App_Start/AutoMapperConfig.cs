@@ -6,6 +6,7 @@ using AutoMapper;
 using eUni.BusinessLogic.AutoMapper;
 using eUni.BusinessLogic.Providers.DataTransferObjects;
 using eUni.WebServices.Models;
+using eUni.WebServices.Models.OutputModels;
 
 namespace eUni.WebServices
 {
@@ -29,7 +30,16 @@ namespace eUni.WebServices
             TestDTOToViewModel();
             QuestionDTOToViewModel();
             FileDTOToViewModel();
-            
+            EntityDTOToNamedEntityModels();
+
+        }
+
+        private static void EntityDTOToNamedEntityModels()
+        {
+            Mapper.CreateMap<ModuleDTO, NamedEntityOutModel>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ModuleId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
+
 
         }
 
@@ -38,6 +48,8 @@ namespace eUni.WebServices
             Mapper.CreateMap<FileDTO, FileViewModel>()
                 .ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Path))
                 .ForMember(dest => dest.Filename, opt => opt.MapFrom(src => src.Description));
+            Mapper.CreateMap<FileDTO, FileOutModel>();
+
         }
 
         private static void QuestionDTOToViewModel()
@@ -69,6 +81,10 @@ namespace eUni.WebServices
                 .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.Module.ModuleId));
 
             Mapper.CreateMap<WikiPageViewModel, WikiPageDTO>();
+
+            Mapper.CreateMap<WikiPageDTO, WikiPageOutModel>();
+
+
         }
 
         private static void HomeworkDTOToViewModel()

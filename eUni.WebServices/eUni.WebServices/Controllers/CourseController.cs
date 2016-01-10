@@ -135,7 +135,7 @@ namespace eUni.WebServices.Controllers
             var key = WebConfigurationManager.AppSettings["DropboxToken"];
             var dbx = new DropboxClient(key);
 
-            var files = _fileProvider.GetFiles(moduleId);
+            var files = _fileProvider.GetByModule(moduleId);
 
             var model = new List<FileViewModel>();
 

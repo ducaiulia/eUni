@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
@@ -10,19 +8,34 @@ using eUni.BusinessLogic.IProviders;
 using eUni.BusinessLogic.Providers.DataTransferObjects;
 using eUni.WebServices.Helpers;
 using eUni.WebServices.Models;
+using eUni.WebServices.Models.OutputModels;
 
 namespace eUni.WebServices.Controllers
 {
     [RoutePrefix("api/WikiPage")]
     public class WikiPageController : ApiController
     {
-        private IUserProvider _userProvider;
         private IWikiPageProvider _wikiPageProvider;
 
-        public WikiPageController(IUserProvider userProvider, IWikiPageProvider wikiPageProvider)
+        public WikiPageController(IWikiPageProvider wikiPageProvider)
         {
-            _userProvider = userProvider;
             _wikiPageProvider = wikiPageProvider;
+        }
+
+        [Route("GetAllWikiPagesByModule")]
+        public async Task<IHttpActionResult> GetAllByModule(int? moduleId)
+        {
+
+            if (moduleId == null)
+            {
+                return BadRequest("Module Id not found");
+            }
+
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var fileDtos = _wikiPageProvider.GetByModule(moduleId.Value);
+            var fileOutModels = Mapper.Map<List<WikiPageOutModel>>(fileDtos);
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Files for Module "));
+            return Content(HttpStatusCode.OK, fileOutModels);
         }
 
         [Route("Add")]

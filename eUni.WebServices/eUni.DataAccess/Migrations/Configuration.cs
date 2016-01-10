@@ -19,11 +19,8 @@ namespace eUni.DataAccess.Migrations
             //  This method will be called after migrating to the latest version.
 
             var mySeed = new EUniSeed(context);
-            mySeed.SeedRoles();
-            mySeed.SeedUsers();
-            mySeed.SeedCourses();
-            mySeed.SeedModules();
-          
+            mySeed.SeedAll();
+
         }
     }
 }
