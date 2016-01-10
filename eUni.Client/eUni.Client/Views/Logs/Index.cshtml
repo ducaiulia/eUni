@@ -15,7 +15,7 @@
                     <th>Action</th>
                     <th>Date</th>
                 </tr>
-                <tr ng-animate="'animate'" ng-repeat="log in ctr.logs | filter:search">
+                <tr ng-animate="'animate'" ng-repeat="log in ctr.logs | orderBy:'-Date' |filter:search">
                     <td>{{log.User}}</td>
                     <td>{{log.Action}}</td>
                     <td>{{log.Date}}</td>

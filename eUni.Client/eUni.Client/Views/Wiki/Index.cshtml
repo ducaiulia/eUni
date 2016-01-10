@@ -1,5 +1,8 @@
-﻿
+﻿@using Newtonsoft.Json
 
+
+
+<br>
 <h2>Create Wiki</h2>
 <br />
 <link href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">
@@ -13,7 +16,7 @@
 
             <div id="summernote">Hello Summernote</div>
             <script>
-                $(document).ready(function() {
+                $(document).ready(function () {
                     $('#summernote').summernote({
                         height: 300, // set editor height
                         minHeight: 200, // set minimum height of editor
@@ -21,8 +24,20 @@
                         focus: true // set focus to editable area after initializing summernote
                     });
 
-                    $('#submitbutton').click(function() {
-                        console.log($('#summernote').summernote('code'));
+
+                    $('#submitbutton').click(function () {
+                        var code = $('#summernote').summernote('code');
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("CreateWiki")',
+                            data: {
+                                wiki: {
+                                    Content: code,
+                                    ModuleId: '@ViewBag.Module.ModuleId',
+                                    Module: '@Html.Raw(JsonConvert.SerializeObject(ViewBag.Module))'
+                                }
+                            }
+                        });
                     });
 
                 });

@@ -130,6 +130,7 @@
     <Compile Include="Repository\IQuestionRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\IStudentHomeworkRepository.cs" />
+    <Compile Include="Repository\IStudentTestRepository.cs" />
     <Compile Include="Repository\ITestRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\IWikiPageRepository.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Repository\QuestionRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\StudentHomeworkRepository.cs" />
+    <Compile Include="Repository\StudentTestRepository.cs" />
     <Compile Include="Repository\TestRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Repository\WikiPageRepository.cs" />
