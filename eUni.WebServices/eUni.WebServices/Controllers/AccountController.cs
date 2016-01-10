@@ -253,7 +253,10 @@ namespace eUni.WebServices.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var user = await UserManager.FindByNameAsync(TokenHelper.GetFromToken(token, "username"));
+
+            IdentityResult result = await UserManager.ChangePasswordAsync(user.Id, model.OldPassword,
                 model.NewPassword);
 
             if (!result.Succeeded)

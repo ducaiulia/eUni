@@ -13,5 +13,8 @@ namespace eUni.BusinessLogic.IProviders
         List<DomainUserDTO> GetAllUsers();
         DomainUserDTO GetByName(string lastName, string firstName);
         ResultActionDTO EnrollUserToCourse(string courseCode, int domainUserId);
+        List<DomainUserDTO> GetAllStudents();
+        List<DomainUserDTO> GetAllTeachers();
+        List<DomainUserDTO> GetAllAdmins();
     }
 }
