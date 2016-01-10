@@ -12,8 +12,10 @@ namespace EUni_Client.Controllers
     public class ModuleController : Controller
     {
         // GET: Module
-        public ActionResult Index(string Module)
+        public ActionResult Index(string Module, string Course)
         {
+            if (Course != null)
+                ViewBag.Course = JsonConvert.DeserializeObject(Course);
             if (Module != null)
                 ViewBag.Module = JsonConvert.DeserializeObject(Module);
             return View();

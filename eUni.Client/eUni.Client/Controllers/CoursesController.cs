@@ -30,7 +30,7 @@ namespace EUni_Client.Controllers
             var Modules = await ApiService.GetAsync<IEnumerable<dynamic>, int>("/Module/GetByCourse", "courseId", (int)(((dynamic)course).CourseId));
 
             if (c != null)
-                ViewBag.c = JsonConvert.DeserializeObject(c);
+                ViewBag.Course = JsonConvert.DeserializeObject(c);
 
             ViewBag.Modules = Modules;
             return View();
