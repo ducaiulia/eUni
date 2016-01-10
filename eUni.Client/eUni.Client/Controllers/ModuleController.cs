@@ -9,12 +9,14 @@ namespace EUni_Client.Controllers
     public class ModuleController : Controller
     {
         // GET: Module
-        public ActionResult Index()
+        public ActionResult Index(object c)
         {
+            ViewBag.c = c;
             return View();
         }
-        public ActionResult Content()
+        public ActionResult Content(object c)
         {
+            ViewBag.c = c;
             return View();
         }
 

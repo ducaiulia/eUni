@@ -163,5 +163,61 @@ namespace eUni.DataAccess.eUniDbContext
                 );
             _context.SaveChanges();
         }
+
+        public void SeedModules()
+        {
+            var course1 = _context.Courses.FirstOrDefault(x => x.CourseId == 1);
+            _context.Modules.AddOrUpdate(
+                  new Module
+                  {
+                      Name = "Module1",
+                      Course = course1
+                  }
+                  );
+
+            _context.Modules.AddOrUpdate(
+                  new Module
+                  {
+                      Name = "Module2",
+                      Course = course1
+                  }
+                  );
+
+            _context.Modules.AddOrUpdate(
+                  new Module
+                  {
+                      Name = "Module3",
+                      Course = course1
+                  }
+                  );
+
+
+            var course2 = _context.Courses.FirstOrDefault(x => x.CourseId == 2);
+            _context.Modules.AddOrUpdate(
+                  new Module
+                  {
+                      Name = "Module1",
+                      Course = course2
+                  }
+                  );
+
+            _context.Modules.AddOrUpdate(
+                  new Module
+                  {
+                      Name = "Module2",
+                      Course = course2
+                  }
+                  );
+
+            _context.Modules.AddOrUpdate(
+                  new Module
+                  {
+                      Name = "Module3",
+                      Course = course2
+                  }
+                  );
+
+            _context.SaveChanges();
+        }
     }
 }

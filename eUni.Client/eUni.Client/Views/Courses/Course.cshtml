@@ -4,7 +4,7 @@
     @foreach (var module in ViewBag.Modules)
     {
         <li>
-            @Html.ActionLink((((string)module)), "Index", "Module", new { area = "" }, new { @class = "" })
+            @Html.ActionLink((((string)module)), "Index", "Module", new { c = ViewBag.c }, new { @class = "" })
         </li>
     }
 </ul>

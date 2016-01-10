@@ -9,56 +9,21 @@
         <th>Start Date</th>
         <th>End Date</th>
     </tr>
-    <tr>
-        <td>1</td>
-        <td>
-            @Html.ActionLink(((string)ViewBag.Courses[0]), "Course", "Courses", new { area = "" }, new { @class = "" })
-        </td>
+    @{
+        var i = 0;
 
-        <td>code</td>
-        <td>date</td>
-        <td>date</td>
-    <tr>
-    <tr>
-        <td>2</td>
-        <td>
-            @Html.ActionLink(((string)ViewBag.Courses[1]), "Course", "Courses", new { area = "" }, new { @class = "" })
-        </td>
-        <td>code</td>
-        <td>date</td>
-        <td>date</td>
-
-    <tr>
-    <tr>
-        <td>3</td>
-        <td>
-            @Html.ActionLink(((string)ViewBag.Courses[2]), "Course", "Courses", new { area = "" }, new { @class = "" })
-        </td>
-        <td>code</td>
-        <td>date</td>
-        <td>date</td>
-
-    <tr>
-    <tr>
-        <td>4</td>
-        <td>
-            @Html.ActionLink(((string)ViewBag.Courses[3]), "Course", "Courses", new { area = "" }, new { @class = "" })
-        </td>
-        <td>code</td>
-        <td>date</td>
-        <td>date</td>
-
-    <tr>
-    <tr>
-        <td>5</td>
-        <td>
-            @Html.ActionLink(((string)ViewBag.Courses[4]), "Course", "Courses", new { area = "" }, new { @class = "" })
-        </td>
-        <td>code</td>
-        <td>date</td>
-        <td>date</td>
-
-    <tr>
+        foreach (var course in ViewBag.Courses)
+        {
+            i++;
+             <tr>
+                 <td>@i</td>
+                 <td>@Html.ActionLink((((string)course.Name)), "Index", "Module", new { c=course }, new { @class = "" })</td>
+                 <td>@course.CourseCode</td>
+                 <td>@(((string)course.StartDate).Replace("00:00:00", ""))</td>
+                 <td>@(((string)course.EndDate).Replace("00:00:00", ""))</td>
+             </tr>
+         }
+    }
 </table>
 
 
