@@ -26,9 +26,9 @@ namespace EUni_Client.Controllers
             var ApiService = Session[ServiceNames.ApiService] as ApiService;
             var Files = await ApiService.GetAsync<IEnumerable<dynamic>, int>("/File/DownloadLink", "moduleId", (int)(((dynamic)m).ModuleId));
             ViewBag.Files = Files;
-            ViewBag.Module = Module;
+            ViewBag.Module = JsonConvert.DeserializeObject(Module);
             if (Course != null)
-                ViewBag.c = JsonConvert.DeserializeObject(Course);
+                ViewBag.Course = JsonConvert.DeserializeObject(Course);
             return View();
         }
 
@@ -36,8 +36,11 @@ namespace EUni_Client.Controllers
         {
             return View();
         }
-        public ActionResult Homework()
+        public ActionResult Homework(string Module, string Course)
         {
+            ViewBag.Module = JsonConvert.DeserializeObject(Module);
+            if (Course != null)
+                ViewBag.Course = JsonConvert.DeserializeObject(Course);
             return View();
         }
     }
