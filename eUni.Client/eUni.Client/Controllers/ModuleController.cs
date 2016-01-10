@@ -41,14 +41,23 @@ namespace EUni_Client.Controllers
         [HttpPost]
         public async Task<RedirectToRouteResult> UploadFile(FileViewModel fileViewModel)
         {
-            var bytes = fileViewModel.Files[0].InputStream.ToByteArray();
+            dynamic module = JsonConvert.DeserializeObject(fileViewModel.Module);
+            var file = fileViewModel.Files[0];
+            var bytes = file.InputStream.ToByteArray();
             var apiService = Session.GetApiService();
             var result = await apiService.PostAsyncWithReturn<object, object>("/File/UploadFile", new
             {
-                
+                Filename = file.FileName,
+                ContentFile = bytes, module.ModuleId
             });
-            return RedirectToAction("Index", "Module", new RouteValueDictionary { {"Module", fileViewModel.Module} });
+            return RedirectToAction("Index", "Module", new RouteValueDictionary { { "Module", fileViewModel.Module } });
         }
+
+
+        //public string Path { get; set; }
+        //public string Filename { get; set; }
+        //public byte[] ContentFile { get; set; }
+        //public int ModuleId { get; set; }
 
         public ActionResult Homework(string Module, string Course)
         {
