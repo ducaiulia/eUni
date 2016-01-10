@@ -65,7 +65,7 @@ namespace eUni.WebServices.Controllers
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Module deleted"));
             return Content(HttpStatusCode.OK, "Deleted successfully");
         }
-
+        
         //[Route("GetFiles")]
         //public async Task<IHttpActionResult> GetFiles(int modId)
         //{

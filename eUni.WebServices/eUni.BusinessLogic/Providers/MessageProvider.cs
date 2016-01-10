@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using eUni.BusinessLogic.IProviders;
 using eUni.BusinessLogic.Providers.DataTransferObjects;
 using eUni.DataAccess.Domain;
@@ -23,6 +24,13 @@ namespace eUni.BusinessLogic.Providers
             message.From = _userRepository.Get(u => u.DomainUserId == messageDto.From.DomainUserId);
             message.To = _userRepository.Get(u => u.DomainUserId == messageDto.To.DomainUserId);
             _messageRepository.Add(message);
+        }
+
+        public List<DomainUserDTO> GetAllUsers(int userId)
+        {
+            var users = _messageRepository.GetToUsersByFromUserId(userId);
+            var userDtos = Mapper.Map<List<DomainUserDTO>>(users);
+            return userDtos;
         }
     }
 }
