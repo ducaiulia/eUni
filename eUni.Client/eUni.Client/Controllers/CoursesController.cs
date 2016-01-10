@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Routing;
 using EUni_Client.Services;
 using Newtonsoft.Json;
 
@@ -17,7 +19,15 @@ namespace EUni_Client.Controllers
             ViewBag.Courses = Courses;
             return View();
         }
-
+        [HttpPost]
+        public async Task<RedirectToRouteResult> CreateCourse(CreateCourseViewModel course)
+        {
+            var apiService = Session.GetApiService();
+            var result = await apiService.PostAsyncWithReturn<string, CreateCourseViewModel>("/Course/Add", course);
+            //var data = new RouteValueDictionary();
+            //data.Add("Module", course.Course);
+            return RedirectToAction("Index", "Courses");
+        }
         public async Task<ActionResult> Create()
         {
             //var ApiService = Session[ServiceNames.ApiService] as ApiService;
@@ -48,5 +58,13 @@ namespace EUni_Client.Controllers
             ViewBag.Courses = Courses;
             return View();
         }
+    }
+
+    public class CreateCourseViewModel
+    {
+        public string Name { get; set; }
+        public string CourseCode { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }
