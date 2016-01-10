@@ -11,5 +11,6 @@ namespace eUni.BusinessLogic.Providers.DataTransferObjects
         public int AnswerId { get; set; }
         public string Text { get; set; }
         public bool IsCorrect { get; set; }
+        public int QuestionId { get; set; }
     }
 }

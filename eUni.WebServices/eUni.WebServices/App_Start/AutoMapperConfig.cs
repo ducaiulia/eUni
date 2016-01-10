@@ -22,6 +22,10 @@ namespace eUni.WebServices
             BusinessLogicMapper.WikiPageMapping();
             BusinessLogicMapper.TestMappings();
             BusinessLogicMapper.FileMappings();
+            BusinessLogicMapper.StudentHWMappings();
+            BusinessLogicMapper.QuestionMappings();
+            BusinessLogicMapper.AnswerMappings();
+            StudentHomeworkDTOToViewModel();
             UserDTOToViewModel();
             CourseDTOToViewModel();
             HomeworkDTOToViewModel();
@@ -31,7 +35,17 @@ namespace eUni.WebServices
             QuestionDTOToViewModel();
             FileDTOToViewModel();
             EntityDTOToNamedEntityModels();
+            AnswerDTOToViewModel();
 
+
+        }
+
+    private static void StudentHomeworkDTOToViewModel()
+        {
+            Mapper.CreateMap<StudentHomeworkDTO, StudentHomeworkViewModel>()
+                .ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.StudentId))
+                .ForMember(dest => dest.HomeworkId, opt => opt.MapFrom(src => src.HomeworkId))
+                .ForMember(dest => dest.Grade, opt => opt.MapFrom(src => src.Grade)).ReverseMap();
         }
 
         private static void EntityDTOToNamedEntityModels()
@@ -45,9 +59,7 @@ namespace eUni.WebServices
 
         private static void FileDTOToViewModel()
         {
-            Mapper.CreateMap<FileDTO, FileViewModel>()
-                .ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Path))
-                .ForMember(dest => dest.Filename, opt => opt.MapFrom(src => src.Description));
+            Mapper.CreateMap<FileDTO, FileViewModel>();
             Mapper.CreateMap<FileDTO, FileOutModel>();
 
         }
@@ -55,8 +67,9 @@ namespace eUni.WebServices
         private static void QuestionDTOToViewModel()
         {
             Mapper.CreateMap<QuestionDTO, QuestionViewModel>()
-                 .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.Module.ModuleId))
+                 .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.ModuleId))
                  .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
+                 .ForMember(dest => dest.TestId, opt => opt.MapFrom(src => src.TestId))
                  .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score)).ReverseMap();
         }
 
@@ -114,6 +127,15 @@ namespace eUni.WebServices
                 .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
                 .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(src => src.CourseCode)).ReverseMap();
 
+        }
+
+        public static void AnswerDTOToViewModel()
+        {
+            Mapper.CreateMap<AnswerDTO, AnswerViewModel>()
+                .ForMember(dest => dest.QuestionId, opt => opt.MapFrom(src => src.QuestionId))
+                .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
+                .ForMember(dest => dest.AnswerId, opt => opt.MapFrom(src => src.AnswerId))
+                .ForMember(dest => dest.IsCorrect, opt => opt.MapFrom(src => src.IsCorrect)).ReverseMap();
         }
     }
 }

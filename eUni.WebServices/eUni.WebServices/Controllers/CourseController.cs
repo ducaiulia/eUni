@@ -50,7 +50,7 @@ namespace eUni.WebServices.Controllers
             dtoCourse.Teacher = _userProvider.GetByUserName(Helpers.TokenHelper.GetFromToken(token, "username"));
             _courseProvider.CreateCourse(dtoCourse);
 
-            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"),"Course created"));
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Course created"));
             return Content(HttpStatusCode.OK, "Created successfully");
         }
 
@@ -67,12 +67,12 @@ namespace eUni.WebServices.Controllers
         [Route("AssignTeacher")]
         public async Task<IHttpActionResult> AssignTeacher(string lastName, string firstName, string courseCode)
         {
-            CourseDTO course=_courseProvider.GetByCourseCode(courseCode);
-            course.Teacher = _userProvider.GetByName(lastName,firstName);
+            CourseDTO course = _courseProvider.GetByCourseCode(courseCode);
+            course.Teacher = _userProvider.GetByName(lastName, firstName);
             _courseProvider.UpdateCourse(course);
 
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
-            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"),"Teacher assigned to course"));
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Teacher assigned to course"));
             return Content(HttpStatusCode.OK, "Assigned successfully");
         }
 
@@ -113,9 +113,10 @@ namespace eUni.WebServices.Controllers
 
                         if (_fileProvider.SaveUploadedFilePath(new FileDTO
                         {
-                            ModuleId = moduleId,Path = path, FileType = fileType,
-                            Size = (int) uploaded.Size, Description = filename
-                        
+                            ModuleId = moduleId,
+                            Path = path,
+                            FileType = fileType,
+                            FileName = filename
                         }))
                             return Ok(path);
                         else
@@ -147,7 +148,7 @@ namespace eUni.WebServices.Controllers
 
                     var viewModel = new FileViewModel
                     {
-                        Filename = file.Description,
+                        Filename = file.FileName,
                         Path = downloadLink.Url.Remove(downloadLink.Url.Length - 1) + "1"
                     };
                     model.Add(viewModel);
@@ -157,7 +158,7 @@ namespace eUni.WebServices.Controllers
                     Logger.Logger.Instance.LogError(ex);
                     return InternalServerError(ex);
                 }
-                }
+            }
             return Ok(model);
         }
     }

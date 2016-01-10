@@ -34,7 +34,7 @@ namespace eUni.WebServices.Controllers
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
             var fileDtos = _wikiPageProvider.GetByModule(moduleId.Value);
             var fileOutModels = Mapper.Map<List<WikiPageOutModel>>(fileDtos);
-            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Files for Module "));
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Wiki Pages for Module "));
             return Content(HttpStatusCode.OK, fileOutModels);
         }
 

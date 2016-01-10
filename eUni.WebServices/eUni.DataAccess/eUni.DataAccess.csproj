@@ -74,6 +74,7 @@
     <Compile Include="Domain\File.cs" />
     <Compile Include="Domain\Homework.cs" />
     <Compile Include="Domain\Log.cs" />
+    <Compile Include="Domain\Message.cs" />
     <Compile Include="Domain\StudentHomework.cs" />
     <Compile Include="Domain\Test.cs" />
     <Compile Include="Domain\StudentTest.cs" />
@@ -108,6 +109,10 @@
     <Compile Include="Migrations\201601091958267_Added_WikiPages.Designer.cs">
       <DependentUpon>201601091958267_Added_WikiPages.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601101241495_Added_Message.cs" />
+    <Compile Include="Migrations\201601101241495_Added_Message.Designer.cs">
+      <DependentUpon>201601101241495_Added_Message.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AnswerRepository.cs" />
@@ -124,6 +129,7 @@
     <Compile Include="Repository\IModuleRepository.cs" />
     <Compile Include="Repository\IQuestionRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\IStudentHomeworkRepository.cs" />
     <Compile Include="Repository\ITestRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\IWikiPageRepository.cs" />
@@ -131,6 +137,7 @@
     <Compile Include="Repository\ModuleRepository.cs" />
     <Compile Include="Repository\QuestionRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\StudentHomeworkRepository.cs" />
     <Compile Include="Repository\TestRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Repository\WikiPageRepository.cs" />
@@ -156,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601091958267_Added_WikiPages.resx">
       <DependentUpon>201601091958267_Added_WikiPages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601101241495_Added_Message.resx">
+      <DependentUpon>201601101241495_Added_Message.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

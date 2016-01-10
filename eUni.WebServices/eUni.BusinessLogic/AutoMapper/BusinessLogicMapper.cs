@@ -54,11 +54,7 @@ namespace eUni.BusinessLogic.AutoMapper
 
         public static void FileMappings()
         {
-            Mapper.CreateMap<FileDTO, File>()
-                .ForMember(dest => dest.FileType, opt => opt.MapFrom(src => src.FileType))
-                .ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Path))
-                .ForMember(dest => dest.Size, opt => opt.MapFrom(src => src.Size))
-                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description)).ReverseMap();
+            Mapper.CreateMap<FileDTO, File>().ReverseMap();
         }
 
         public static void ContentMappings()
@@ -80,6 +76,7 @@ namespace eUni.BusinessLogic.AutoMapper
             Mapper.CreateMap<Question, QuestionDTO>()
                 .ForMember(dest => dest.QuestionId, opt => opt.MapFrom(src => src.QuestionId))
                 .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
+                .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.Module.ModuleId))
                 .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score)).ReverseMap();
         }
 
@@ -87,8 +84,16 @@ namespace eUni.BusinessLogic.AutoMapper
         {
             Mapper.CreateMap<Test, TestDTO>()
                 .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.Module.ModuleId))
+                .ForMember(dest => dest.TestId, opt => opt.MapFrom(src => src.TestId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name)).ReverseMap();
         }
 
+        public static void StudentHWMappings()
+        {
+            Mapper.CreateMap<StudentHomework, StudentHomeworkDTO>()
+                .ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.DomainUserId))
+                .ForMember(dest => dest.HomeworkId, opt => opt.MapFrom(src => src.HomeworkId))
+                .ForMember(dest => dest.Grade, opt => opt.MapFrom(src => src.Grade)).ReverseMap();
+        }
     }
 }
