@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -66,9 +67,11 @@ namespace eUni.DataAccess.Repository
         {
             Context.SaveChanges();
         }
-        public void Remove(Expression<Func<T, bool>> predicate)
+        public void Remove(T entity)
         {
-            throw new NotImplementedException();
+            DbSet dbSet = Context.Set<T>();
+            dbSet.Remove(entity);
+            SaveChanges();
         }
 
         public virtual int Count
