@@ -36,5 +36,15 @@ namespace eUni.WebServices.Controllers
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Homework created"));
             return Content(HttpStatusCode.OK, "Created successfully");
         }
+
+        [Route("Remove")]
+        public async Task<IHttpActionResult> Remove(int hwId)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            _homeworkProvider.DeleteHomeworkWithId(hwId);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Homework deleted"));
+            return Content(HttpStatusCode.OK, "Deleted successfully");
+        }
     }
 }

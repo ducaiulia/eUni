@@ -43,5 +43,11 @@ namespace eUni.BusinessLogic.Providers
             homew.Module = _moduleRepo.Get(u => u.ModuleId == hw.Module.ModuleId);
             _homeworkRepo.SaveChanges();
         }
+
+        public void DeleteHomeworkWithId(int hwId)
+        {
+            var hw = _homeworkRepo.Get(c => c.HomeworkId == hwId);
+            _homeworkRepo.Remove(hw);
+        }
     }
 }
