@@ -1,19 +1,14 @@
-﻿using eUni.BusinessLogic.IProviders;
-using eUni.WebServices.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Configuration;
 using System.Web.Http;
 using AutoMapper;
 using Dropbox.Api;
-using Dropbox.Api.Files;
-using eUni.BusinessLogic.Providers.DataTransferObjects;
-using eUni.DataAccess.Enums;
+using eUni.BusinessLogic.IProviders;
+using eUni.WebServices.Helpers;
 using eUni.WebServices.Models;
 using eUni.WebServices.Models.OutputModels;
 
@@ -121,5 +116,13 @@ namespace eUni.WebServices.Controllers
             var fileOutModels = Mapper.Map<List<FileOutModel>>(filesDto);
             return Content(HttpStatusCode.OK, fileOutModels);
         }
+
+        //public async Task<IHttpActionResult> GetFileById(int fileId)
+        //{
+        //    string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+        //    Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get File By Id"));
+
+
+        //}
     }
 }
