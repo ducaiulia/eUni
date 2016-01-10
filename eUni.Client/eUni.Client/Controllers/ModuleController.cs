@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using EUni_Client.Services;
 using Newtonsoft.Json;
 
@@ -26,6 +27,10 @@ namespace EUni_Client.Controllers
             var ApiService = Session[ServiceNames.ApiService] as ApiService;
             var Files = await ApiService.GetAsync<IEnumerable<dynamic>, int>("/File/DownloadLink", "moduleId", (int)(((dynamic)m).ModuleId));
             ViewBag.Files = Files;
+            //get all wikis
+            var WikiPages = await ApiService.GetAsync<IEnumerable<dynamic>, int>("/WikiPage/GetAllWikiPagesByModule", "moduleId", (int)(((dynamic)m).ModuleId));
+            ViewBag.WikiPages = WikiPages;
+            //
             ViewBag.Module = JsonConvert.DeserializeObject(Module);
             if (Course != null)
                 ViewBag.Course = JsonConvert.DeserializeObject(Course);
@@ -36,12 +41,31 @@ namespace EUni_Client.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public async Task<RedirectToRouteResult> UploadFile(FileViewModel fileViewModel)
+        {
+            var bytes = fileViewModel.Files[0].InputStream.ToByteArray();
+            var apiService = Session.GetApiService();
+            var result = await apiService.PostAsyncWithReturn<object, object>("/File/UploadFile", new
+            {
+                
+            });
+            return RedirectToAction("Index", "Module", new RouteValueDictionary { {"Module", fileViewModel.Module} });
+        }
+
         public ActionResult Homework(string Module, string Course)
         {
             ViewBag.Module = JsonConvert.DeserializeObject(Module);
             if (Course != null)
                 ViewBag.Course = JsonConvert.DeserializeObject(Course);
             return View();
+        }
+
+        public class FileViewModel
+        {
+            public string Module { get; set; }
+            public HttpPostedFileBase[] Files { get; set; }
         }
     }
 }
