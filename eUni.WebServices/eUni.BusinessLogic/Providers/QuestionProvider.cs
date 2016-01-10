@@ -64,8 +64,9 @@ namespace eUni.BusinessLogic.Providers
 
         public void UpdateQuestion(QuestionDTO dtoQuestion)
         {
-            var question = Mapper.Map<Question>(dtoQuestion);
-            question.Module = _moduleRepository.Get(u => u.ModuleId == dtoQuestion.ModuleId);
+            var question = _questionRepository.Get(u => u.QuestionId == dtoQuestion.QuestionId);
+            question.Score = dtoQuestion.Score;
+            question.Text = dtoQuestion.Text;
             _questionRepository.SaveChanges();
         }
     }
