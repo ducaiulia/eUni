@@ -50,10 +50,33 @@ namespace eUni.WebServices.Controllers
             List<DomainUserDTO> users = _userProvider.GetAllStudents();
             var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
 
-            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all users"));
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all students"));
             return Content(HttpStatusCode.OK, allUsers);
         }
 
+        [Route("AllTeachers")]
+        public async Task<IHttpActionResult> GetAllTeachers()
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+
+            List<DomainUserDTO> users = _userProvider.GetAllTeachers();
+            var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all teachers"));
+            return Content(HttpStatusCode.OK, allUsers);
+        }
+
+        [Route("AllAdmins")]
+        public async Task<IHttpActionResult> GetAllAdmins()
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+
+            List<DomainUserDTO> users = _userProvider.GetAllAdmins();
+            var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all admins"));
+            return Content(HttpStatusCode.OK, allUsers);
+        }
 
         [Route("EnrollUserToCourse")]
         public async Task<IHttpActionResult> EnrollUserToCourse(CourseViewModel course, UserViewModel user)

@@ -86,7 +86,7 @@ namespace eUni.WebServices.Controllers
             }
         }
 
-        [Route("AllHomoworksByModulId")]
+        [Route("AllHomeworksByModuleId")]
         public async Task<IHttpActionResult> GetHomeworksByModuleId( int moduleId )
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -95,7 +95,7 @@ namespace eUni.WebServices.Controllers
                 var homeworks = _homeworkProvider.GetHomeworksByModuleId(moduleId);
                 var homeworksViewModels = Mapper.Map<List<HomeworkViewModel>>(homeworks);
                 Logger.Logger.Instance.LogAction(
-                    LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "AllHomoworksByModulId"));
+                    LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "AllHomeworksByModuleId"));
 
                 return Content(HttpStatusCode.OK, homeworksViewModels);
             }
@@ -120,6 +120,28 @@ namespace eUni.WebServices.Controllers
             var homeworksDto = _homeworkProvider.GetHomeworkdsByModuleIdStudentId((int)studentId, (int)moduleId);
             var homeworksViewModels = Mapper.Map<List<HomeworkViewModel>>(homeworksDto);
             return Content(HttpStatusCode.OK, homeworksViewModels);
+        }
+
+        [Route("AssignGradeToHomework")]
+        public async Task<IHttpActionResult> AssignGradeToHomework(GradeToHomeworkViewModel model)
+        {
+            //string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            //Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get Uploaded homeworks by homeworkId"));
+
+            _homeworkProvider.SetGradeUploadedHW(Mapper.Map<GradeToHomeworkDTO>(model));
+
+            return Content(HttpStatusCode.OK, "Grade added successfully");
+        }
+
+        [Route("UploadedHomeworksByHomeworkId")]
+        public async Task<IHttpActionResult> GetUploadedHomeworksByHomeworkId(int hwId)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get Uploaded homeworks by homeworkId"));
+
+            var resDTO = await _homeworkProvider.GetUploadedHW(hwId);
+
+            return Content(HttpStatusCode.OK, resDTO);
         }
     }
 }
