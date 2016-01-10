@@ -47,5 +47,21 @@ namespace eUni.WebServices.Controllers
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Test deleted"));
             return Content(HttpStatusCode.OK, "Deleted successfully");
         }
+
+        [Route("GetAllTestsByModule")]
+        public async Task<IHttpActionResult> GetAllByModule(int? moduleId)
+        {
+
+            if (moduleId == null)
+            {
+                return BadRequest("Module Id not found");
+            }
+
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var testDtos = _testProvider.GetByModule(moduleId.Value);
+            var testModels = Mapper.Map<List<TestViewModel>>(testDtos);
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Tests for Module "));
+            return Content(HttpStatusCode.OK, testModels);
+        }
     }
 }

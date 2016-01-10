@@ -13,5 +13,6 @@ namespace eUni.BusinessLogic.IProviders
         TestDTO GetByTestId(int testId);
         void UpdateTest(TestDTO dtoTest);
         void DeleteTestWithId(int testId);
+        List<TestDTO> GetByModule(int ModuleId);
     }
 }

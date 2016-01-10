@@ -37,6 +37,13 @@ namespace eUni.BusinessLogic.Providers
             _testRepository.Remove(test);
         }
 
+        public List<TestDTO> GetByModule(int ModuleId)
+        {
+            var tests = _testRepository.GetAll().Where(x => x.Module.ModuleId == ModuleId);
+            var testDtos = Mapper.Map<List<TestDTO>>(tests);
+            return testDtos;
+        }
+
         public TestDTO GetByTestId(int testId)
         {
             var test = _testRepository.Get(u => u.TestId == testId);
