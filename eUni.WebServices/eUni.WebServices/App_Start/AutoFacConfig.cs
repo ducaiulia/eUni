@@ -72,7 +72,7 @@ namespace eUni.WebServices
             builder.RegisterType<StudentHomeworkProvider>()
                 .As<IStudentHomeworkProvider>();
 
-            builder.RegisterType<StudentTest>().
+            builder.RegisterType<StudentTestProvider>().
                 As<IStudentTestProvider>();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
