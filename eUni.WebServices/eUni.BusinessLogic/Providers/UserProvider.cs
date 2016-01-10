@@ -24,9 +24,11 @@ namespace eUni.BusinessLogic.Providers
             _courseRepo = courseRepo;
         }
 
-        public List<DomainUserDTO> GetAllUsers()
+        public List<DomainUserDTO> GetAllUsers(PaginationFilter filter)
         {
-            IEnumerable<DomainUser> enumerableAllUsers = _userRepo.GetAll();
+            IEnumerable<DomainUser> enumerableAllUsers = _userRepo.GetAll().OrderBy(x => x.DomainUserId)
+                    .Skip((filter.PageNumber - 1) * filter.PageSize)
+                    .Take(filter.PageSize);
             var allUsers = Mapper.Map<IEnumerable<DomainUserDTO>>(enumerableAllUsers);
 
             return allUsers.ToList();

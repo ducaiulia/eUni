@@ -31,13 +31,19 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("AllUsers")]
-        public async Task<IHttpActionResult> GetAllUsers()
+        public async Task<IHttpActionResult> GetAllUsers(int? pageNumber, int? pageSize)
         {
+            var filter = new PaginationFilter()
+            {
+                PageNumber = pageNumber ?? 1,
+                PageSize = pageSize ?? 20
+            };
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
 
-            List<DomainUserDTO> users = _userProvider.GetAllUsers();
+
+            List<DomainUserDTO> users = _userProvider.GetAllUsers(filter);
             var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
 
-            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all users"));
             return Content(HttpStatusCode.OK, allUsers);
         }
