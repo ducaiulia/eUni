@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using EUni_Client.Services;
 using Newtonsoft.Json;
 
@@ -36,12 +37,31 @@ namespace EUni_Client.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public async Task<RedirectToRouteResult> UploadFile(FileViewModel fileViewModel)
+        {
+            var bytes = fileViewModel.Files[0].InputStream.ToByteArray();
+            var apiService = Session.GetApiService();
+            var result = await apiService.PostAsyncWithReturn<object, object>("/File/UploadFile", new
+            {
+                
+            });
+            return RedirectToAction("Index", "Module", new RouteValueDictionary { {"Module", fileViewModel.Module} });
+        }
+
         public ActionResult Homework(string Module, string Course)
         {
             ViewBag.Module = JsonConvert.DeserializeObject(Module);
             if (Course != null)
                 ViewBag.Course = JsonConvert.DeserializeObject(Course);
             return View();
+        }
+
+        public class FileViewModel
+        {
+            public string Module { get; set; }
+            public HttpPostedFileBase[] Files { get; set; }
         }
     }
 }
