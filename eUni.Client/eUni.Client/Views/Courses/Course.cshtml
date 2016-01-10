@@ -1,10 +1,11 @@
 ﻿
-<h3>Course</h3>
+
+<h3>Course (@ViewBag.Modules[0].CourseCode)</h3>
 <ul class="list-unstyled">
     @foreach (var module in ViewBag.Modules)
     {
         <li>
-            @Html.ActionLink((((string)module)), "Index", "Module", new { c = ViewBag.c }, new { @class = "" })
+            @Html.ActionLink((string)(module.Name), "Index", "Module", new { Module = module }, new { @class = "" })
         </li>
     }
 </ul>
