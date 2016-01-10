@@ -19,12 +19,14 @@ namespace eUni.WebServices.Controllers
         private IModuleProvider _moduleProvider;
         private IQuestionProvider _questionProvider;
         private ITestProvider _testProvider;
+        private IStudentTestProvider _studentTestProvider;
 
-        public TestController(IModuleProvider moduleProvider, IQuestionProvider questionProvider, ITestProvider testProvider)
+        public TestController(IStudentTestProvider studentTestProvider,IModuleProvider moduleProvider, IQuestionProvider questionProvider, ITestProvider testProvider)
         {
             _moduleProvider = moduleProvider;
             _questionProvider = questionProvider;
             _testProvider = testProvider;
+            _studentTestProvider = studentTestProvider;
         }
 
         [Route("Add")]
@@ -48,6 +50,18 @@ namespace eUni.WebServices.Controllers
             return Content(HttpStatusCode.OK, "Deleted successfully");
         }
 
+        [Route("UpdateGrade")]
+        public async Task<IHttpActionResult> UpdateGrade(StudentTestDTO studentTest)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var studentTestDTO = Mapper.Map<StudentTestDTO>(studentTest);
+            //hwDTO.Files.Add(_fileRepo.Get(f=>f.Id == fileId));
+            _studentTestProvider.CreateStudentTest(studentTestDTO);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Grade updated"));
+            return Content(HttpStatusCode.OK, "Updated successfully");
+        }
+
         [Route("GetAllTestsByModule")]
         public async Task<IHttpActionResult> GetAllByModule(int? moduleId)
         {
@@ -63,5 +77,7 @@ namespace eUni.WebServices.Controllers
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Tests for Module "));
             return Content(HttpStatusCode.OK, testModels);
         }
+
+
     }
 }
