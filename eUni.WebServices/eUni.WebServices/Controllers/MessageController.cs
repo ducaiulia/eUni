@@ -23,6 +23,21 @@ namespace eUni.WebServices.Controllers
             _messageProvider = messageProvider;
         }
 
+        [Route("GetAllPersons")]
+        public async Task<IHttpActionResult> GetAllPersons(int? userId)
+        {
+            if (userId == null)
+            {
+                return BadRequest("User Id Not Found");
+            }
+
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var userDtos = _messageProvider.GetAllUsers(userId.Value);
+            var userViewModels = Mapper.Map<List<UserViewModel>>(userDtos);
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Persons For Converstion "));
+            return Content(HttpStatusCode.OK, userViewModels);
+        }
+
         [Route("Add")]
         public async Task<IHttpActionResult> Add(MessageViewModel message)
         {

@@ -130,6 +130,7 @@
     <Compile Include="Providers\DataTransferObjects\LogDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\MessageDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\ModuleDTO.cs" />
+    <Compile Include="Providers\DataTransferObjects\PaginationFilter.cs" />
     <Compile Include="Providers\DataTransferObjects\StudentHomeworkDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\StudentTestDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\WikiPageDTO.cs" />
