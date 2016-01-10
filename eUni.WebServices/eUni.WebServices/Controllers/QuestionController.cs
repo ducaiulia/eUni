@@ -60,5 +60,15 @@ namespace eUni.WebServices.Controllers
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Questions for Module "));
             return Content(HttpStatusCode.OK, questionModels);
         }
+
+        [Route("Update")]
+        public async Task<IHttpActionResult> Update(QuestionDTO questionDto)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            _questionProvider.UpdateQuestion(questionDto);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Question Updated "));
+            return Content(HttpStatusCode.OK, "Updated successfully");
+        }
     }
 }

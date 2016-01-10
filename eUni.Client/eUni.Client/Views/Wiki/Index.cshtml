@@ -10,11 +10,12 @@
 
 <div class="">
     <section id="loginForm">
-        @using (Html.BeginForm("CreateWiki", "Wiki", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        @using (Html.BeginForm("CreateWiki", "Wiki", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @id = "target", @class = "form-horizontal", role = "form" }))
         {
             @Html.AntiForgeryToken()
 
             <div id="summernote">Hello Summernote</div>
+            <input validateRequest="false" name="wiki" id="wiki" style="display: none" />
             <script>
                 $(document).ready(function () {
                     $('#summernote').summernote({
@@ -24,28 +25,34 @@
                         focus: true // set focus to editable area after initializing summernote
                     });
 
+                    $("#target").submit(function (event) {
+                        var code = $('#summernote').summernote('code');
+                        $("#wiki").val(
+                            JSON.stringify({
+                                Content: code,
+                                ModuleId: '@ViewBag.Module.ModuleId',
+                                Module: '@Html.Raw(JsonConvert.SerializeObject(ViewBag.Module))'
+                            }));
+                        console.log($("#wiki").val());
+                    });
 
-                    $('#submitbutton').click(function () {
+                    @*$('#submitbutton').click(function () {
                         var code = $('#summernote').summernote('code');
                         $.ajax({
                             type: "POST",
                             url: '@Url.Action("CreateWiki")',
                             data: {
-                                wiki: {
-                                    Content: code,
-                                    ModuleId: '@ViewBag.Module.ModuleId',
-                                    Module: '@Html.Raw(JsonConvert.SerializeObject(ViewBag.Module))'
-                                }
+                                wiki:
                             }
                         });
-                    });
+                    });*@
 
                 });
             </script>
 
             <div class="form-group">
                 <div class="col-md-offset-10">
-                    <input id="submitbutton" type="button" value="Create Wiki" class="btn btn-default" />
+                    <input id="submitbutton" type="submit" value="Create Wiki" class="btn btn-default" />
                 </div>
             </div>
         }

@@ -54,6 +54,9 @@ namespace eUni.WebServices
         private static void MessageDTOToViewModel()
         {
             Mapper.CreateMap<MessageViewModel, MessageDTO>();
+            Mapper.CreateMap<MessageDTO, MessageOutModel>()
+                .ForMember(dest => dest.FromName, opt => opt.MapFrom(src => src.From.FirstName + " " + src.From.LastName))
+                .ForMember(dest => dest.ToName, opt => opt.MapFrom(src => src.To.FirstName + " " + src.To.LastName));
 
         }
 

@@ -7,6 +7,8 @@ using eUni.BusinessLogic.Providers.DataTransferObjects;
 using eUni.DataAccess.Domain;
 using eUni.DataAccess.eUniDbContext;
 using eUni.DataAccess.Repository;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace eUni.BusinessLogic.Providers
 {
@@ -69,5 +71,38 @@ namespace eUni.BusinessLogic.Providers
 
         }
 
+        public List<DomainUserDTO> GetAllStudents()
+        {
+            ICollection<IdentityUserRole> users;
+            using (var db = new ApplicationDbContext())
+            {
+                var role = db.Roles.AsQueryable().FirstOrDefault(r => r.Name.Equals("student"));
+                users = role.Users;
+            }
+            List<DomainUserDTO> studentUsers = new List<DomainUserDTO>();
+            foreach (var user in users)
+            {
+                studentUsers.Add(Mapper.Map<DomainUserDTO>(_userRepo.Get(u => u.ApplicationUser.Id == user.UserId)));
+            }
+
+            return studentUsers;
+        }
+
+        public List<DomainUserDTO> GetAllTeachers()
+        {
+            ICollection<IdentityUserRole> users;
+            using (var db = new ApplicationDbContext())
+            {
+                var role = db.Roles.AsQueryable().FirstOrDefault(r => r.Name.Equals("teacher"));
+                users = role.Users;
+            }
+            List<DomainUserDTO> teacherUsers = new List<DomainUserDTO>();
+            foreach (var user in users)
+            {
+                teacherUsers.Add(Mapper.Map<DomainUserDTO>(_userRepo.Get(u => u.ApplicationUser.Id == user.UserId)));
+            }
+
+            return teacherUsers;
+        }
     }
 }

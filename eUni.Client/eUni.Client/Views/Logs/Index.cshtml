@@ -13,7 +13,7 @@
                 <tr>
                     <th>User</th>
                     <th>Action</th>
-                    <th>Date</th>
+                    <th>Date</th>   
                 </tr>
                 <tr ng-animate="'animate'" ng-repeat="log in ctr.logs | orderBy:'-Date' |filter:search">
                     <td>{{log.User}}</td>
@@ -31,7 +31,6 @@
         logsApp.controller('LogsController', [function () {
             var self = this;
             self.logs = JSON.parse('@Html.Raw(JsonConvert.SerializeObject(ViewBag.Logs))');
-            console.log(self.logs);
         }]);
     })();
 </script>

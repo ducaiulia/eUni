@@ -34,7 +34,7 @@ namespace eUni.DataAccess.eUniDbContext
                   {
                       From = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1),
                       To = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 2),
-                      Text = "Message 1",
+                      Text = "Salut :)",
                       DateTime = DateTime.Now
                   });
             _context.Messages.AddOrUpdate(
@@ -42,7 +42,7 @@ namespace eUni.DataAccess.eUniDbContext
                   {
                       From = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 2),
                       To = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1),
-                      Text = "Message 2",
+                      Text = "Hey :D",
                       DateTime = DateTime.Now
                   });
             _context.Messages.AddOrUpdate(
@@ -50,7 +50,7 @@ namespace eUni.DataAccess.eUniDbContext
                   {
                       From = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1),
                       To = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 2),
-                      Text = "Message 3",
+                      Text = "Ce mai faci?",
                       DateTime = DateTime.Now
                   });
             _context.Messages.AddOrUpdate(
@@ -58,7 +58,7 @@ namespace eUni.DataAccess.eUniDbContext
                   {
                       From = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 2),
                       To = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1),
-                      Text = "Message 4",
+                      Text = "Lucrez la proiect. Tu?",
                       DateTime = DateTime.Now
                   });
 
@@ -80,7 +80,7 @@ namespace eUni.DataAccess.eUniDbContext
                       Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 1),
                       FileName = "File1.jpg",
                       FileType = FileType.jpg,
-                      Path = "path"
+                      Path = "/student/iulia@euni.com/alabala.txt"
                   });
 
             _context.Files.AddOrUpdate(
@@ -89,7 +89,7 @@ namespace eUni.DataAccess.eUniDbContext
                       Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 1),
                       FileName = "File2.pdf",
                       FileType = FileType.pdf,
-                      Path = "path3"
+                      Path = "/admin/iulia@euni.com/alabala.txt"
                   });
 
             //_context.Files.AddOrUpdate(

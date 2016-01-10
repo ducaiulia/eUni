@@ -1,19 +1,14 @@
-﻿using eUni.BusinessLogic.IProviders;
-using eUni.WebServices.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Configuration;
 using System.Web.Http;
 using AutoMapper;
 using Dropbox.Api;
-using Dropbox.Api.Files;
-using eUni.BusinessLogic.Providers.DataTransferObjects;
-using eUni.DataAccess.Enums;
+using eUni.BusinessLogic.IProviders;
+using eUni.WebServices.Helpers;
 using eUni.WebServices.Models;
 using eUni.WebServices.Models.OutputModels;
 
@@ -58,12 +53,12 @@ namespace eUni.WebServices.Controllers
 
         [HttpPost]
         [Route("UploadFile")]
-        public async Task<IHttpActionResult> UploadFile(string filename, [FromBody] byte[] contentFile, int moduleId)
+        public async Task<IHttpActionResult> UploadFile([FromBody]FileViewModel viewModel)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
             try
             {
-                await FileHelper.UploadFile(token, contentFile, _fileProvider, filename, moduleId);
+                await FileHelper.UploadFile(token, viewModel.ContentFile, _fileProvider, viewModel.Filename, viewModel.ModuleId);
                 return Ok("File Uploaded");
             }
             catch (Exception ex)
@@ -120,6 +115,20 @@ namespace eUni.WebServices.Controllers
             var filesDto = _studentHomeworkProvider.GetFilesByStundentIdHomeworkId((int)studentId, (int)homeworkId);
             var fileOutModels = Mapper.Map<List<FileOutModel>>(filesDto);
             return Content(HttpStatusCode.OK, fileOutModels);
+        }
+
+        [Route("GetFileById")]
+        public async Task<IHttpActionResult> GetFileById(int fileId)
+        {
+            var file = _fileProvider.GetFileById(fileId);
+            if (file != null)
+            {
+                string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+                Logger.Logger.Instance.LogAction(
+                    LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get File By Id"));
+                return Ok(Mapper.Map<FileOutModel>(file));
+            }
+            return BadRequest("File Id doesn't exist");
         }
     }
 }
