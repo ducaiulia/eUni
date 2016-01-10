@@ -25,6 +25,8 @@ namespace eUni.WebServices
             BusinessLogicMapper.StudentHWMappings();
             BusinessLogicMapper.QuestionMappings();
             BusinessLogicMapper.AnswerMappings();
+            BusinessLogicMapper.StudentTestMapping();
+            BusinessLogicMapper.MessageMapping();
             StudentHomeworkDTOToViewModel();
             UserDTOToViewModel();
             CourseDTOToViewModel();
@@ -36,15 +38,30 @@ namespace eUni.WebServices
             FileDTOToViewModel();
             EntityDTOToNamedEntityModels();
             AnswerDTOToViewModel();
+            MessageDTOToViewModel();
 
 
         }
 
-    private static void StudentHomeworkDTOToViewModel()
+        private static void MessageDTOToViewModel()
+        {
+            Mapper.CreateMap<MessageViewModel, MessageDTO>();
+
+        }
+
+        private static void StudentHomeworkDTOToViewModel()
         {
             Mapper.CreateMap<StudentHomeworkDTO, StudentHomeworkViewModel>()
                 .ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.StudentId))
                 .ForMember(dest => dest.HomeworkId, opt => opt.MapFrom(src => src.HomeworkId))
+                .ForMember(dest => dest.Grade, opt => opt.MapFrom(src => src.Grade)).ReverseMap();
+        }
+
+        private static void StudentTestDTOToViewModel()
+        {
+            Mapper.CreateMap<StudentTestDTO, StudentTestViewModel>()
+                .ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.StudentId))
+                .ForMember(dest => dest.TestId, opt => opt.MapFrom(src => src.TestId))
                 .ForMember(dest => dest.Grade, opt => opt.MapFrom(src => src.Grade)).ReverseMap();
         }
 

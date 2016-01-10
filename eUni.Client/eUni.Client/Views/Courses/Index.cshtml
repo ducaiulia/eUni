@@ -23,8 +23,6 @@
                         <input type="submit" class="btn-link" style="color: dodgerblue" value="@(((string) course.Name))" />
                     }
                 </td>
-                <td>@*<button onclick="onButtonClick(@course)">@(((string)course.Name))</button>*@</td>
-                <td>@*@Html.ActionLink((((string)course.Name)), "Index", "Module", new {  }, new { @class = "" })*@</td>
                 <td>@course.CourseCode</td>
                 <td>@(((string)course.StartDate).Replace("00:00:00", ""))</td>
                 <td>@(((string)course.EndDate).Replace("00:00:00", ""))</td>

@@ -110,9 +110,11 @@
     <Compile Include="IProviders\IFileProvider.cs" />
     <Compile Include="IProviders\IHomeworkProvider.cs" />
     <Compile Include="IProviders\ILogProvider.cs" />
+    <Compile Include="IProviders\IMessageProvider.cs" />
     <Compile Include="IProviders\IModuleProvider.cs" />
     <Compile Include="IProviders\IQuestionProvider.cs" />
     <Compile Include="IProviders\IStudentHomeworkProvider.cs" />
+    <Compile Include="IProviders\IStudentTestProvider.cs" />
     <Compile Include="IProviders\ITestProvider.cs" />
     <Compile Include="IProviders\IUserProvider.cs" />
     <Compile Include="IProviders\IWikiPageProvider.cs" />
@@ -126,8 +128,10 @@
     <Compile Include="Providers\DataTransferObjects\FileDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\HomeworkDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\LogDTO.cs" />
+    <Compile Include="Providers\DataTransferObjects\MessageDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\ModuleDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\StudentHomeworkDTO.cs" />
+    <Compile Include="Providers\DataTransferObjects\StudentTestDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\WikiPageDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\QuestionDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\ResultActionDTO.cs" />
@@ -135,9 +139,11 @@
     <Compile Include="Providers\FileProvider.cs" />
     <Compile Include="Providers\HomeworkProvider.cs" />
     <Compile Include="Providers\LogProvider.cs" />
+    <Compile Include="Providers\MessageProvider.cs" />
     <Compile Include="Providers\ModuleProvider.cs" />
     <Compile Include="Providers\QuestionProvider.cs" />
     <Compile Include="Providers\StudentHomeworkProvider.cs" />
+    <Compile Include="Providers\StudentTestProvider.cs" />
     <Compile Include="Providers\TestProvider.cs" />
     <Compile Include="Providers\UserProvider.cs" />
     <Compile Include="Providers\WikiPageProvider.cs" />

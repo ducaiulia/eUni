@@ -52,5 +52,15 @@ namespace eUni.WebServices.Controllers
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Answer checked"));
             return Content(HttpStatusCode.OK, _answerProvider.IsCorrectAnswerWithId(answerId));
         }
+
+        [Route("Update")]
+        public async Task<IHttpActionResult> Update(AnswerDTO answerDto)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            _answerProvider.UpdateAnswer(answerDto);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Answer updated"));
+            return Content(HttpStatusCode.OK, "Updated successfully");
+        }
     }
 }

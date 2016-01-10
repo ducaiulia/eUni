@@ -258,6 +258,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HomeworkController.cs" />
     <Compile Include="Controllers\LogController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -277,6 +278,7 @@
     <Compile Include="Models\CourseViewModel.cs" />
     <Compile Include="Models\FileViewModel.cs" />
     <Compile Include="Models\HomeworkViewModel.cs" />
+    <Compile Include="Models\MessageViewModel.cs" />
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Models\OutputModels\FileOutModel.cs" />
     <Compile Include="Models\OutputModels\NamedEntityOutModel.cs" />
@@ -284,6 +286,7 @@
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\ResultViewModel.cs" />
     <Compile Include="Models\StudentHomeworkViewModel.cs" />
+    <Compile Include="Models\StudentTestViewModel.cs" />
     <Compile Include="Models\TestViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\WikiPageViewModel.cs" />
