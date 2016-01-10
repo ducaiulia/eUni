@@ -1,19 +1,18 @@
 ﻿
 
-<h3>Module</h3>
+@if (ViewBag.module != null)
+{<h3>@ViewBag.Module.Name</h3>}
 
 
-@Html.ActionLink("Content", "Content", "Module", new { c = ViewBag.c }, new { @class = "" })
+@Html.ActionLink("Content", "Content", "Module", new { module = ViewBag.Module }, new { @class = "" })
 <br>
-@Html.ActionLink("Wiki", "Index", "Wiki", new { area = "" }, new { @class = "" })
+@Html.ActionLink("Wiki", "Index", "Wiki", new { module = ViewBag.Module, course = ViewBag.Course }, new { @class = "" })
 <br>
-@Html.ActionLink("Test", "Index", "Test", new { area = "" }, new { @class = "" })
+@Html.ActionLink("Test", "Index", "Test", new { module = ViewBag.Module }, new { @class = "" })
 <br>
-@Html.ActionLink("Homework", "Homework", "Module", new { area = "" }, new { @class = "" })
+@Html.ActionLink("Homework", "Homework", "Module", new { module = ViewBag.Module }, new { @class = "" })
 <br>
-
 <br>
-
 
 
 @Html.ActionLink("Upload Homework(student)", "UploadHomework", "Module", new { area = "" }, new { @class = "btn btn-default" })

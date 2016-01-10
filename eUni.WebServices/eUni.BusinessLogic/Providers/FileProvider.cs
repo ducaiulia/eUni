@@ -14,30 +14,49 @@ namespace eUni.BusinessLogic.Providers
     {
         private readonly IModuleRepository _moduleRepo;
         private readonly IFileRepository _fileRepo;
+        private readonly IHomeworkRepository _hwRepo;
 
-        public FileProvider(IModuleRepository moduleRepo, IFileRepository fileRepo)
+        public FileProvider(IModuleRepository moduleRepo, IFileRepository fileRepo, IHomeworkRepository hwRepo)
         {
             _moduleRepo = moduleRepo;
             _fileRepo = fileRepo;
+            _hwRepo = hwRepo;
         }
 
-        public bool SaveUploadedFilePath(FileDTO fileDTO)
+        public int SaveUploadedFilePath(FileDTO fileDTO, int moduleId = -1, int hwId = -1)
         {
-            var module = _moduleRepo.Get(m => m.ModuleId.Equals(fileDTO.ModuleId));
-            if (module == null)
-                return false;
+            if (moduleId > 0)
+            {
+                var module = _moduleRepo.Get(m => m.ModuleId.Equals(moduleId));
+                if (module == null)
+                    return -1;
+                var file = Mapper.Map<File>(fileDTO);
 
-            var file = Mapper.Map<File>(fileDTO);
+                file.Module = module;
 
-            file.Module = module;
+                _fileRepo.Add(file);
+                _fileRepo.SaveChanges();
 
-            _fileRepo.Add(file);
-            _fileRepo.SaveChanges();
+                module.Files.Add(file);
+                _moduleRepo.SaveChanges();
+                return file.Id;
+            }
 
-            module.Files.Add(file);
-            _moduleRepo.SaveChanges();
+            if (hwId > 0)
+            {
+                var hw = _hwRepo.Get(h => h.HomeworkId.Equals(hwId));
+                if (hw == null)
+                    return -1;
 
-            return true;
+                var file = Mapper.Map<File>(fileDTO);
+
+                file.Module = hw.Module;
+                
+                _fileRepo.Add(file);
+                _fileRepo.SaveChanges();
+                return file.Id;
+            }
+            return -1;
         }
 
         public List<FileDTO> GetByModule(int moduleId)
@@ -45,6 +64,13 @@ namespace eUni.BusinessLogic.Providers
             var files = _fileRepo.GetAll().Where(u => u.Module.ModuleId == moduleId);
             var fileDtos = Mapper.Map<List<FileDTO>>(files);
             return fileDtos;
+        }
+
+        public FileDTO GetFileById(int fileId)
+        {
+            var temp = _fileRepo.Get(f => f.Id.Equals(fileId));
+
+            return Mapper.Map<FileDTO>(temp);
         }
 
         public void DeleteFileWithId(int fileId)

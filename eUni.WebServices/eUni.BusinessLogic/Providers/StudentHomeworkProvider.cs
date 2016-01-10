@@ -16,21 +16,98 @@ namespace eUni.BusinessLogic.Providers
         private IUserRepository _userRepo;
         private IHomeworkRepository _homeworkRepo;
         private IStudentHomeworkRepository _studentHWRepository;
+        private IModuleRepository _moduleRepository;
 
-        public StudentHomeworkProvider(IHomeworkRepository homeworkRepo,IUserRepository userRepo, IStudentHomeworkRepository studentHWRepository)
+        public StudentHomeworkProvider(IHomeworkRepository homeworkRepo,IUserRepository userRepo, IStudentHomeworkRepository studentHWRepository, IModuleRepository moduleRepository)
         {
             _userRepo = userRepo;
             _studentHWRepository = studentHWRepository;
             _homeworkRepo = homeworkRepo;
+            _moduleRepository = moduleRepository;
         }
 
         public void CreateStudentHomework(StudentHomeworkDTO hw)
         {
-            var c = Mapper.Map<StudentHomework>(hw);
-            c.DomainUser = _userRepo.Get(u => u.DomainUserId == hw.StudentId);
-            c.Homework = _homeworkRepo.Get(h=>h.HomeworkId == hw.HomeworkId);
-            hw.Files.ForEach(f=> c.Files.Add(Mapper.Map<File>(f)));
-            _studentHWRepository.Add(c);
+            var newHw = new StudentHomework();
+            newHw.HomeworkId = hw.HomeworkId;
+            newHw.Grade = hw.Grade;
+            newHw.Files = new List<File>();
+
+            hw.Files.ForEach(f =>
+            {
+                newHw.Files.Add(new File
+                {
+                    FileName = f.FileName,
+                    FileType = f.FileType,
+                    Id = f.Id,
+                    Module = _moduleRepository.Get(m => m.ModuleId.Equals(f.ModuleId)),
+                    Path = f.Path
+                });
+            });
+
+            newHw.DomainUser = _userRepo.Get(u => u.DomainUserId == hw.StudentId);
+            newHw.Homework = _homeworkRepo.Get(h => h.HomeworkId == hw.HomeworkId);
+            
+            try
+            {
+                if (Exists(hw.StudentId, hw.HomeworkId) != null)
+                {
+                    UpdateGrade(hw.StudentId, hw.HomeworkId, hw.Grade);
+                }
+                else
+                {
+                    _studentHWRepository.Add(newHw);
+                    _studentHWRepository.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
+        }
+
+        public void UpdateGrade(int userId, int hwId, int grade)
+        {
+            var sHw = Exists(userId, hwId);
+            if (sHw != null)
+            {
+                sHw.Grade = grade;
+                _studentHWRepository.SaveChanges();
+            }
+            else
+                throw new Exception("StudentHomework doesn't exist");
+        }
+
+        public StudentHomework Exists(int userId, int hwId)
+        {
+            var studentHw = _studentHWRepository.Get(s => s.DomainUserId.Equals(userId) && s.HomeworkId.Equals(hwId));
+            return studentHw;
+        }
+
+        public List<FileDTO> GetFilesByStundentIdHomeworkId(int stundentId, int homeworkId)
+        {
+            var sH = _studentHWRepository.GetAll().Where(current => current.DomainUserId == stundentId && current.HomeworkId == homeworkId);
+            List<File> files = null;
+            foreach (var x in sH)
+            {
+                files = x.Files;
+                break;
+            }
+
+            List<FileDTO> filesDTO = new List<FileDTO>();
+            foreach(File file in files)
+            {
+                filesDTO.Add(new FileDTO()
+                {
+                    FileName = file.FileName,
+                    FileType = file.FileType,
+                    ModuleId = file.Module.ModuleId,
+                    Path = file.Path
+                });
+            }
+
+            return filesDTO;
         }
     }
 }
