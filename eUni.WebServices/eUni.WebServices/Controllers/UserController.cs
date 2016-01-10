@@ -11,6 +11,7 @@ using eUni.BusinessLogic.Providers;
 using eUni.BusinessLogic.Providers.DataTransferObjects;
 using eUni.WebServices.Helpers;
 using eUni.WebServices.Models;
+using Microsoft.AspNet.Identity;
 
 namespace eUni.WebServices.Controllers
 {
@@ -37,6 +38,18 @@ namespace eUni.WebServices.Controllers
             var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
 
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all users"));
+            return Content(HttpStatusCode.OK, allUsers);
+        }
+
+        [Route("AllStudents")]
+        public async Task<IHttpActionResult> GetAllStudents()
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+
+            List<DomainUserDTO> users = _userProvider.GetAllStudents();
+            var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
+
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all users"));
             return Content(HttpStatusCode.OK, allUsers);
         }
