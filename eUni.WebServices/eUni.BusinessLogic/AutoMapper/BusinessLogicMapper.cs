@@ -112,7 +112,7 @@ namespace eUni.BusinessLogic.AutoMapper
 
         public static void MessageMapping()
         {
-            Mapper.CreateMap<MessageDTO, Message>();
+            Mapper.CreateMap<MessageDTO, Message>().ReverseMap();
 
         }
     }
