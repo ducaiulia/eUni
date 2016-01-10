@@ -11,5 +11,6 @@ namespace eUni.BusinessLogic.Providers.DataTransferObjects
         public int TestId { get; set; }
         public string Name { get; set; }
         public int ModuleId { get; set; }
+        public List<QuestionDTO> Questions { get; set; } 
     }
 }

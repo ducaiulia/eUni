@@ -78,6 +78,19 @@ namespace eUni.WebServices.Controllers
             return Content(HttpStatusCode.OK, testModels);
         }
 
+        [Route("GetAllQuestionsByTestId")]
+        public async Task<IHttpActionResult> GetAllQuestionsByTestId(int testId)
+        {
+            if (testId == null)
+            {
+                return BadRequest("Test Id not found");
+            }
 
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var testDto = _testProvider.GetByTestId(testId);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Questions for Test"));
+            return Content(HttpStatusCode.OK, testDto.Questions);
+        }
     }
 }
