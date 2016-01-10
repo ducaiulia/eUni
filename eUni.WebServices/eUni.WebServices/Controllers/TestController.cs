@@ -37,5 +37,15 @@ namespace eUni.WebServices.Controllers
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Test created"));
             return Content(HttpStatusCode.OK, "Created successfully");
         }
+
+        [Route("Remove")]
+        public async Task<IHttpActionResult> Remove(int testId)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            _testProvider.DeleteTestWithId(testId);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Test deleted"));
+            return Content(HttpStatusCode.OK, "Deleted successfully");
+        }
     }
 }

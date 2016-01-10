@@ -29,6 +29,12 @@ namespace eUni.BusinessLogic.Providers
             _moduleRepo.Add(module);
         }
 
+        public void DeleteModuleWithId(int moduleId)
+        {
+            var module = _moduleRepo.Get(u => u.ModuleId == moduleId);
+            _moduleRepo.Remove(module);
+        }
+
         public ModuleDTO GetById(int modId)
         {
             var module = _moduleRepo.Get(u => u.ModuleId == modId);

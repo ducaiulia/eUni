@@ -13,5 +13,10 @@ namespace EUni_Client.Controllers
         {
             return View();
         }
+
+        public RedirectToRouteResult CreateWiki(object o)
+        {
+            return RedirectToAction("Index");
+        }
     }
 }

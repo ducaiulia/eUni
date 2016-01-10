@@ -42,5 +42,15 @@ namespace eUni.WebServices.Controllers
             return Content(HttpStatusCode.OK, "Created successfully");
         }
 
+        [Route("Remove")]
+        public async Task<IHttpActionResult> Remove(int wikiId)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+           _wikiPageProvider.DeleteWikiPageWithId(wikiId);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Wiki Page deleted"));
+            return Content(HttpStatusCode.OK, "Deleted successfully");
+        }
+
     }
 }

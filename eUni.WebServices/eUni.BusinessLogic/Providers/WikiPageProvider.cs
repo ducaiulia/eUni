@@ -14,9 +14,9 @@ namespace eUni.BusinessLogic.Providers
     public class WikiPageProvider : IWikiPageProvider
     {
         private readonly IWikiPageRepository _wikiPageRepo;
-        private readonly Repository<Module> _moduleRepo;
+        private readonly IModuleRepository _moduleRepo;
 
-        public WikiPageProvider( IWikiPageRepository wikiPageRepo, Repository<Module> moduleRepo)
+        public WikiPageProvider( IWikiPageRepository wikiPageRepo, IModuleRepository moduleRepo)
         {
             _wikiPageRepo = wikiPageRepo;
             _moduleRepo = moduleRepo;
@@ -29,6 +29,12 @@ namespace eUni.BusinessLogic.Providers
             var module = _moduleRepo.Get(x => x.ModuleId == dtoWikiPage.Module.ModuleId);
             wikiPage.Module = module;
             _wikiPageRepo.Add(wikiPage);
+        }
+
+        public void DeleteWikiPageWithId(int wikiId)
+        {
+            var wiki = _wikiPageRepo.Get(x => x.WikiPageId == wikiId);
+            _wikiPageRepo.Remove(wiki);
         }
     }
 }

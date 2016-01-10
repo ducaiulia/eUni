@@ -46,7 +46,7 @@ namespace eUni.DataAccess.Repository
         /// <summary>
         /// Remove objects from database by specified filter expression.
         /// </summary>
-        void Remove(Expression<Func<T, bool>> predicate);
+        void Remove(T entity);
 
         ///// <summary>
         ///// Update object changes and save to database.

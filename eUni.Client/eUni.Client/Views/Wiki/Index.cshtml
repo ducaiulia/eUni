@@ -1,11 +1,37 @@
 ﻿
-<h2>title</h2>
+<h2>Create Wiki</h2>
 <br />
 <link href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">
 @Scripts.Render("~/bundles/jquery")
-<div id="summernote">Hello Summernote</div>
-<script>
-    $(document).ready(function () {
-        $('#summernote').summernote();
-    });
-</script>
+
+<div class="">
+    <section id="loginForm">
+        @using (Html.BeginForm("CreateWiki", "Wiki", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div id="summernote">Hello Summernote</div>
+            <script>
+                $(document).ready(function() {
+                    $('#summernote').summernote({
+                        height: 300, // set editor height
+                        minHeight: 200, // set minimum height of editor
+                        maxHeight: 1000, // set maximum height of editor
+                        focus: true // set focus to editable area after initializing summernote
+                    });
+
+                    $('#submitbutton').click(function() {
+                        console.log($('#summernote').summernote('code'));
+                    });
+
+                });
+            </script>
+
+            <div class="form-group">
+                <div class="col-md-offset-10">
+                    <input id="submitbutton" type="button" value="Create Wiki" class="btn btn-default" />
+                </div>
+            </div>
+        }
+    </section>
+</div>

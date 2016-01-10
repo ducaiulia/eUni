@@ -13,5 +13,7 @@ namespace eUni.BusinessLogic.IProviders
     {
         bool SaveUploadedFilePath(FileDTO fileDTO);
         List<FileDTO> GetFiles(int modId);
+        void DeleteFileWithId(int fileId);
     }
+
 }
