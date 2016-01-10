@@ -107,7 +107,7 @@ namespace eUni.WebServices.Controllers
 
                     var viewModel = new FileViewModel
                     {
-                        Filename = file.Description,
+                        Filename = file.FileName,
                         Path = downloadLink.Url.Remove(downloadLink.Url.Length - 1) + "1"
                     };
                     model.Add(viewModel);

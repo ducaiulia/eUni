@@ -111,6 +111,7 @@
     <Compile Include="IProviders\ILogProvider.cs" />
     <Compile Include="IProviders\IModuleProvider.cs" />
     <Compile Include="IProviders\IQuestionProvider.cs" />
+    <Compile Include="IProviders\IStudentHomeworkProvider.cs" />
     <Compile Include="IProviders\ITestProvider.cs" />
     <Compile Include="IProviders\IUserProvider.cs" />
     <Compile Include="IProviders\IWikiPageProvider.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Providers\DataTransferObjects\HomeworkDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\LogDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\ModuleDTO.cs" />
+    <Compile Include="Providers\DataTransferObjects\StudentHomeworkDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\WikiPageDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\QuestionDTO.cs" />
     <Compile Include="Providers\DataTransferObjects\ResultActionDTO.cs" />
@@ -133,6 +135,7 @@
     <Compile Include="Providers\LogProvider.cs" />
     <Compile Include="Providers\ModuleProvider.cs" />
     <Compile Include="Providers\QuestionProvider.cs" />
+    <Compile Include="Providers\StudentHomeworkProvider.cs" />
     <Compile Include="Providers\TestProvider.cs" />
     <Compile Include="Providers\UserProvider.cs" />
     <Compile Include="Providers\WikiPageProvider.cs" />

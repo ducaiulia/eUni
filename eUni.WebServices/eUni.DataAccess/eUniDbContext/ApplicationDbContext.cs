@@ -34,6 +34,7 @@ namespace eUni.DataAccess.eUniDbContext
         public DbSet<Content> Contents { get; set; }
         public DbSet<WikiPage> WikiPages { get; set; }
         public DbSet<File> Files { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
 
 
@@ -64,7 +65,9 @@ namespace eUni.DataAccess.eUniDbContext
                 });
 
             // Relationships
-            modelBuilder.Entity<ApplicationUser>().HasOptional(au => au.DomainUser).WithRequired(x => x.ApplicationUser);
+            modelBuilder.Entity<ApplicationUser>()
+                .HasOptional(au => au.DomainUser)
+                .WithRequired(x => x.ApplicationUser);
 
             modelBuilder.Entity<StudentTest>()
                 .HasRequired(t => t.Test)

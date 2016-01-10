@@ -22,6 +22,8 @@ namespace eUni.WebServices
             BusinessLogicMapper.WikiPageMapping();
             BusinessLogicMapper.TestMappings();
             BusinessLogicMapper.FileMappings();
+            BusinessLogicMapper.StudentHWMappings();
+            StudentHomeworkDTOToViewModel();
             UserDTOToViewModel();
             CourseDTOToViewModel();
             HomeworkDTOToViewModel();
@@ -32,6 +34,14 @@ namespace eUni.WebServices
             FileDTOToViewModel();
             EntityDTOToNamedEntityModels();
 
+        }
+
+        private static void StudentHomeworkDTOToViewModel()
+        {
+            Mapper.CreateMap<StudentHomeworkDTO, StudentHomeworkViewModel>()
+                .ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.StudentId))
+                .ForMember(dest => dest.HomeworkId, opt => opt.MapFrom(src => src.HomeworkId))
+                .ForMember(dest => dest.Grade, opt => opt.MapFrom(src => src.Grade)).ReverseMap();
         }
 
         private static void EntityDTOToNamedEntityModels()
@@ -45,9 +55,7 @@ namespace eUni.WebServices
 
         private static void FileDTOToViewModel()
         {
-            Mapper.CreateMap<FileDTO, FileViewModel>()
-                .ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Path))
-                .ForMember(dest => dest.Filename, opt => opt.MapFrom(src => src.Description));
+            Mapper.CreateMap<FileDTO, FileViewModel>();
             Mapper.CreateMap<FileDTO, FileOutModel>();
 
         }

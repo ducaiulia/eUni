@@ -281,6 +281,7 @@
     <Compile Include="Models\OutputModels\WikiPageOutModel.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\ResultViewModel.cs" />
+    <Compile Include="Models\StudentHomeworkViewModel.cs" />
     <Compile Include="Models\TestViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\WikiPageViewModel.cs" />

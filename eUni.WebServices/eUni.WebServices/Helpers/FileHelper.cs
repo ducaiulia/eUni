@@ -41,9 +41,7 @@ namespace eUni.WebServices.Helpers
                 {
                     Path = path,
                     FileType = fileType,
-                    Size = (int) uploaded.Size,
-                    Description = filename
-
+                    FileName= filename
                 };
                 if (fileProvider.SaveUploadedFilePath(input, moduleId, hwId) < 0)
                     throw new Exception("Cannot save file path");

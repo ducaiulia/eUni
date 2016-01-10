@@ -35,9 +35,8 @@ namespace eUni.DataAccess.eUniDbContext
                   new File
                   {
                       Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 1),
-                      Description = "File1",
+                      FileName = "File1.jpg",
                       FileType = FileType.jpg,
-                      Size = 15,
                       Path = "path"
                   });
 
@@ -45,9 +44,8 @@ namespace eUni.DataAccess.eUniDbContext
                   new File
                   {
                       Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 1),
-                      Description = "File2",
+                      FileName = "File2.pdf",
                       FileType = FileType.pdf,
-                      Size = 225,
                       Path = "path3"
                   });
 
