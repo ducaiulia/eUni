@@ -102,5 +102,21 @@ namespace eUni.WebServices.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Route("HomeworkByModuleIdStudentId")]
+        public async Task<IHttpActionResult> GetHomeworksByModuleIdAndStudentId(int? moduleId, int? studentId)
+        {
+            if (moduleId == null || studentId == null)
+            {
+                return BadRequest("module id and student id not found");
+            }
+
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All homeworks for module id and student id "));
+
+            var homeworksDto = _homeworkProvider.GetHomeworkdsByModuleIdStudentId((int)studentId, (int)moduleId);
+            var homeworksViewModels = Mapper.Map<List<HomeworkViewModel>>(homeworksDto);
+            return Content(HttpStatusCode.OK, homeworksViewModels);
+        }
     }
 }
