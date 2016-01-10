@@ -13,19 +13,13 @@ namespace DbTests
         {
             ApplicationDbContext context = new ApplicationDbContext();
 
-            var user1 = context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1);
-            var user2 = context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 2);
+            //var seed = new EUniSeed(context);
+            //seed.SeedAll();
 
-            context.Messages.AddOrUpdate(new Message
-            {
-                From = user1,
-                To = user2,
-                DateTime = DateTime.Now,
-                Text = "wedfwefw"
-            });
-            context.SaveChanges();
-            var m = context.Messages.FirstOrDefault();
-            Console.WriteLine(m.Text + m.From.DomainUserId + m.To.DomainUserId + m.DateTime);
+
+            var shw = context.StudentHomeworks.FirstOrDefault();
+
+            Console.WriteLine(shw.DomainUser.FirstName+" "+shw.Homework.Text);
 
             Console.ReadLine();
         }

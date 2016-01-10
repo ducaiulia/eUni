@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using eUni.BusinessLogic.Providers.DataTransferObjects;
+using eUni.DataAccess.Domain;
 using eUni.DataAccess.Repository;
 
 namespace eUni.BusinessLogic.Providers
@@ -17,9 +18,21 @@ namespace eUni.BusinessLogic.Providers
         {
             _logRepo = logRepo;
         }
-        public List<LogDTO> GetAllLogs()
+        public List<LogDTO> GetAllLogs(bool isPaginated, PaginationFilter filter)
         {
-            var logs = _logRepo.GetAll().Where(l=>l.Level == "INFO");
+            IQueryable<Log> logs;
+            if (isPaginated)
+            {
+                logs = _logRepo.GetAll().Where(l => l.Level == "INFO")
+                    .OrderBy(x => x.Date)
+                    .Skip((filter.PageNumber - 1) * filter.PageSize)
+                    .Take(filter.PageSize);
+            }
+            else
+            {
+                logs = _logRepo.GetAll().Where(l => l.Level == "INFO");
+            }
+
             List<LogDTO> res = new List<LogDTO>();
             foreach (var item in logs)
             {
@@ -27,7 +40,8 @@ namespace eUni.BusinessLogic.Providers
 
                 var date = pairs[2].Substring(pairs[2].IndexOf(':') + 1);
 
-                res.Add(new LogDTO {
+                res.Add(new LogDTO
+                {
                     User = pairs[0].Split(':')[1],
                     Action = pairs[1].Split(':')[1],
                     Date = date

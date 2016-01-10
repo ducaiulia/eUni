@@ -1,12 +1,9 @@
 ﻿using eUni.BusinessLogic.IProviders;
 using eUni.WebServices.Helpers;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using eUni.BusinessLogic.Providers.DataTransferObjects;
 
 namespace eUni.WebServices.Controllers
 {
@@ -26,10 +23,28 @@ namespace eUni.WebServices.Controllers
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
 
-            var res = _logProvider.GetAllLogs();
+            var res = _logProvider.GetAllLogs(false, new PaginationFilter());
 
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Homework created"));
             return Ok(res);
         }
+
+        [Route("GetWithPagination")]
+        public async Task<IHttpActionResult> GetWithPagination(int? pageNumber, int? pageSize)
+        {
+            var filter = new PaginationFilter
+            {
+                PageNumber = pageNumber ?? 1,
+                PageSize = pageSize ?? 20
+            };
+
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+
+            var res = _logProvider.GetAllLogs(true, filter);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Homework created"));
+            return Ok(res);
+        }
+
     }
 }

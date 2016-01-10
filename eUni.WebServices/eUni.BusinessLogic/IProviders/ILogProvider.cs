@@ -9,6 +9,6 @@ namespace eUni.BusinessLogic.IProviders
 {
     public interface ILogProvider
     {
-        List<LogDTO> GetAllLogs();
+        List<LogDTO> GetAllLogs(bool isPaginated, PaginationFilter filter);
     }
 }

@@ -9,7 +9,6 @@ namespace eUni.DataAccess.Domain
         public int Id { get; set; }
         public string FileName { get; set; }
         public string Path { get; set; }
-        //public int Size { get; set; }
         public FileType FileType { get; set; }
         public virtual Module Module { get; set; }
         public virtual StudentHomework StudentHomework { get; set; }

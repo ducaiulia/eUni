@@ -35,6 +35,8 @@ namespace eUni.DataAccess.eUniDbContext
         public DbSet<WikiPage> WikiPages { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Homework> Homeworks { get; set; }
+        public DbSet<Test> Tests{ get; set; }
 
 
 
