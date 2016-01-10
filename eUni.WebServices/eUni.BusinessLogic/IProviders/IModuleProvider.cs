@@ -12,5 +12,6 @@ namespace eUni.BusinessLogic.IProviders
         void CreateModule(ModuleDTO dtoMod);
         ModuleDTO GetById(int modId);
         void UpdateModule(ModuleDTO mod);
+        List<ModuleDTO> GetByCourse (int courseId);
     }
 }

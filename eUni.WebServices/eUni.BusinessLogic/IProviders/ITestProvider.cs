@@ -12,5 +12,6 @@ namespace eUni.BusinessLogic.IProviders
         void CreateTest(TestDTO dtoTest);
         TestDTO GetByTestId(int testId);
         void UpdateTest(TestDTO dtoTest);
+        void DeleteTestWithId(int testId);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using eUni.BusinessLogic.Providers;
 using eUni.BusinessLogic.Providers.DataTransferObjects;
 using eUni.WebServices.Models;
 using System;
@@ -7,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Configuration;
 using System.Web.Http;
@@ -32,6 +30,16 @@ namespace eUni.WebServices.Controllers
             _userProvider = userProvider;
             _courseProvider = courseProvider;
             _fileProvider = fileProvider;
+        }
+
+        [Route("GetAllCourses")]
+        public async Task<IHttpActionResult> GetAll()
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var coursesDTO = _courseProvider.GetAll();
+            var coursesViewModels = Mapper.Map<List<CourseViewModel>>(coursesDTO);
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Courses "));
+            return Content(HttpStatusCode.OK, coursesViewModels);
         }
 
         [Route("Add")]
@@ -82,9 +90,9 @@ namespace eUni.WebServices.Controllers
                         try
                         {
                             uploaded = await dbx.Files.UploadAsync(
-                                path,
-                                WriteMode.Add.Instance,
-                                body: memoryStream);
+                            path,
+                            WriteMode.Add.Instance,
+                            body: memoryStream);
                             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(username, "Upload File"));
                         }
                         catch (Exception ex)
@@ -139,7 +147,7 @@ namespace eUni.WebServices.Controllers
                     Logger.Logger.Instance.LogError(ex);
                     return InternalServerError(ex);
                 }
-            }
+                }
             return Ok(model);
         }
     }
