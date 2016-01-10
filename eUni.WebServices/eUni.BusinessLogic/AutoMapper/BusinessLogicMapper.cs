@@ -90,5 +90,12 @@ namespace eUni.BusinessLogic.AutoMapper
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name)).ReverseMap();
         }
 
+        public static void StudentHWMappings()
+        {
+            Mapper.CreateMap<StudentHomework, StudentHomeworkDTO>()
+                .ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.DomainUserId))
+                .ForMember(dest => dest.HomeworkId, opt => opt.MapFrom(src => src.HomeworkId))
+                .ForMember(dest => dest.Grade, opt => opt.MapFrom(src => src.Grade)).ReverseMap();
+        }
     }
 }

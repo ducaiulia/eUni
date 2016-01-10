@@ -18,11 +18,15 @@ namespace eUni.WebServices.Controllers
     {
         private IModuleProvider _moduleProvider;
         private IHomeworkProvider _homeworkProvider;
+        private IStudentHomeworkProvider _studentHWProvider;
+        private IFileProvider _fileProvider;
 
-        public HomeworkController(IModuleProvider moduleProvider, IHomeworkProvider homeworkProvider)
+        public HomeworkController(IFileProvider fileProvider, IStudentHomeworkProvider studentHWProvider, IModuleProvider moduleProvider, IHomeworkProvider homeworkProvider)
         {
             _moduleProvider = moduleProvider;
             _homeworkProvider = homeworkProvider;
+            _studentHWProvider = studentHWProvider;
+            _fileProvider = fileProvider;
         }
 
         [Route("Add")]
@@ -35,6 +39,20 @@ namespace eUni.WebServices.Controllers
 
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Homework created"));
             return Content(HttpStatusCode.OK, "Created successfully");
+        }
+
+        [Route("UploadHomeworkAnswer")]
+        public async Task<IHttpActionResult> UploadHomeworkAnswer(StudentHomeworkViewModel hw)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+
+            //var fileId = FileHelper.UploadFile();
+            var hwDTO = Mapper.Map<StudentHomeworkDTO>(hw);
+            //hwDTO.Files.Add(_fileRepo.Get(f=>f.Id == fileId));
+            _studentHWProvider.CreateStudentHomework(hwDTO);
+            
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Homework submitted"));
+            return Content(HttpStatusCode.OK, "Uploaded successfully");
         }
 
         [Route("Remove")]
