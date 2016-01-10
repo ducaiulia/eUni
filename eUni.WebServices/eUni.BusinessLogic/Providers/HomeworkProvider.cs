@@ -8,6 +8,9 @@ using eUni.BusinessLogic.Providers.DataTransferObjects;
 using AutoMapper;
 using eUni.DataAccess.Domain;
 using eUni.DataAccess.Repository;
+using Dropbox.Api;
+using System.Configuration;
+using System.Data.Entity;
 
 namespace eUni.BusinessLogic.Providers
 {
@@ -15,10 +18,12 @@ namespace eUni.BusinessLogic.Providers
     {
         private readonly IHomeworkRepository _homeworkRepo;
         private readonly IModuleRepository _moduleRepo;
+        private readonly IFileRepository _fileRepo;
         private readonly IStudentHomeworkRepository _studentHomeworkRepo;
-        public HomeworkProvider(IHomeworkRepository homeworkRepo, IModuleRepository moduleRepo, IStudentHomeworkRepository studentHomeworkRepo)
+        public HomeworkProvider(IFileRepository fileRepo, IHomeworkRepository homeworkRepo, IModuleRepository moduleRepo, IStudentHomeworkRepository studentHomeworkRepo)
         {
             _homeworkRepo = homeworkRepo;
+            _fileRepo = fileRepo;
             _moduleRepo = moduleRepo;
             _studentHomeworkRepo = studentHomeworkRepo;
         }
@@ -86,6 +91,43 @@ namespace eUni.BusinessLogic.Providers
 
             var homeworksDTO = Mapper.Map<List<HomeworkDTO>>(homeworks);
             return homeworksDTO;
+        }
+
+        public async Task<List<UploadedHomeworksDTO>> GetUploadedHW(int hwId)
+        {
+            var result = new List<UploadedHomeworksDTO>();
+            var files = _fileRepo.GetAll().Where(f=>f.StudentHomework.HomeworkId == hwId).Include("StudentHomework");
+            var groups = files.GroupBy(fi => fi.StudentHomework.DomainUserId);
+            foreach (var item in groups)
+            {
+                var upl = new UploadedHomeworksDTO();
+                var stHW = item.First().StudentHomework;
+                upl.StudentId = stHW.DomainUserId;
+                upl.Grade = stHW.Grade;
+                upl.Paths = new List<string>();
+                foreach (var file in item)
+                {
+                    upl.Paths.Add(await GetDownloadLink(file.Path));
+                }
+                result.Add(upl);
+            }
+            return result;
+        }
+
+        private async Task<string> GetDownloadLink(string path)
+        {
+            var key = ConfigurationManager.AppSettings["DropboxToken"];
+            var dbx = new DropboxClient(key);
+            var downloadLink = await dbx.Sharing.CreateSharedLinkAsync(path, false);
+
+            return downloadLink.Url.Remove(downloadLink.Url.Length - 1) + "1";
+        }
+
+        public void SetGradeUploadedHW(GradeToHomeworkDTO model)
+        {
+            var studentHW = _studentHomeworkRepo.Get(s => s.DomainUserId == model.StudentId && s.HomeworkId == model.HomeworkId);
+            studentHW.Grade = model.Grade;
+            _studentHomeworkRepo.SaveChanges();
         }
     }
 }

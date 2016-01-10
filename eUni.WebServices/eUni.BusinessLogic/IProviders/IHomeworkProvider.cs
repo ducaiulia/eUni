@@ -15,5 +15,7 @@ namespace eUni.BusinessLogic.IProviders
         void DeleteHomeworkWithId(int hwId);
         List<HomeworkDTO> GetHomeworksByModuleId(int moduleId);
         List<HomeworkDTO> GetHomeworkdsByModuleIdStudentId(int studentId, int moduleId);
+        Task<List<UploadedHomeworksDTO>> GetUploadedHW(int hwId);
+        void SetGradeUploadedHW(GradeToHomeworkDTO model);
     }
 }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using AutoMapper;
 using eUni.BusinessLogic.AutoMapper;
 using eUni.BusinessLogic.Providers.DataTransferObjects;
@@ -39,8 +36,19 @@ namespace eUni.WebServices
             EntityDTOToNamedEntityModels();
             AnswerDTOToViewModel();
             MessageDTOToViewModel();
+            UploadedHomeworksDTOToViewModel();
+            GradeToHomeworkDTOViewModel();
 
+        }
 
+        private static void GradeToHomeworkDTOViewModel()
+        {
+            Mapper.CreateMap<GradeToHomeworkViewModel, GradeToHomeworkDTO>();
+        }
+
+        private static void UploadedHomeworksDTOToViewModel()
+        {
+            Mapper.CreateMap<UploadedHomeworksViewModel, UploadedHomeworksDTO>();
         }
 
         private static void MessageDTOToViewModel()
