@@ -17,7 +17,15 @@ namespace EUni_Client.Controllers
             ViewBag.Courses = Courses;
             return View();
         }
-
+        [HttpPost]
+        public async Task<RedirectToRouteResult> CreateCourse()
+        {
+            //var apiService = Session.GetApiService();
+            //var result = await apiService.PostAsyncWithReturn<string, WikiViewModel>("/WikiPage/Add", wiki);
+            //var data = new RouteValueDictionary();
+            //data.Add("Module", wiki.Module);
+            return RedirectToAction("Index", "Courses");
+        }
         public async Task<ActionResult> Create()
         {
             //var ApiService = Session[ServiceNames.ApiService] as ApiService;
