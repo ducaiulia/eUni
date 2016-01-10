@@ -37,7 +37,7 @@ namespace eUni.WebServices
         {
             Mapper.CreateMap<FileDTO, FileViewModel>()
                 .ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Path))
-                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
+                .ForMember(dest => dest.Filename, opt => opt.MapFrom(src => src.Description));
         }
 
         private static void QuestionDTOToViewModel()
