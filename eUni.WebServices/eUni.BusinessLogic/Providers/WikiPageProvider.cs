@@ -30,5 +30,11 @@ namespace eUni.BusinessLogic.Providers
             wikiPage.Module = module;
             _wikiPageRepo.Add(wikiPage);
         }
+
+        public void DeleteWikiPageWithId(int wikiId)
+        {
+            var wiki = _wikiPageRepo.Get(x => x.WikiPageId == wikiId);
+            _wikiPageRepo.Remove(wiki);
+        }
     }
 }

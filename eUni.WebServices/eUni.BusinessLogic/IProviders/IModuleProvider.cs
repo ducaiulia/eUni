@@ -10,6 +10,7 @@ namespace eUni.BusinessLogic.IProviders
     public interface IModuleProvider
     {
         void CreateModule(ModuleDTO dtoMod);
+        void DeleteModuleWithId(int moduleId);
         ModuleDTO GetById(int modId);
         void UpdateModule(ModuleDTO mod);
         List<ModuleDTO> GetByCourse (int courseId);

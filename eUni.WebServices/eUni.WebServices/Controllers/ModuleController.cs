@@ -57,6 +57,16 @@ namespace eUni.WebServices.Controllers
             return Content(HttpStatusCode.OK, "Created successfully");
         }
 
+        [Route("Remove")]
+        public async Task<IHttpActionResult> Remove(int moduleId)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            _moduleProvider.DeleteModuleWithId(moduleId);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Module deleted"));
+            return Content(HttpStatusCode.OK, "Deleted successfully");
+        }
+
         [Route("GetFiles")]
         public async Task<IHttpActionResult> GetFiles(int modId)
         {

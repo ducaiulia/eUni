@@ -54,6 +54,16 @@ namespace eUni.WebServices.Controllers
             return Content(HttpStatusCode.OK, "Created successfully");
         }
 
+        [Route("Remove")]
+        public async Task<IHttpActionResult> Remove(int courseId)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            _courseProvider.DeleteCourseWithId(courseId);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Course deleted"));
+            return Content(HttpStatusCode.OK, "Deleted successfully");
+        }
+
         [Route("AssignTeacher")]
         public async Task<IHttpActionResult> AssignTeacher(string lastName, string firstName, string courseCode)
         {
