@@ -115,5 +115,28 @@ namespace eUni.WebServices.Controllers
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Questions for Test"));
             return Content(HttpStatusCode.OK, testDto.Questions);
         }
+
+        [Route("GetAllQuestionsByTestIdWithPagination")]
+        public async Task<IHttpActionResult> GetAllQuestionsByTestIdWithPagination(int testId, int? pageNumber, int? pageSize)
+        {
+            if (testId == null)
+            {
+                return BadRequest("Test Id not found");
+            }
+
+            var filter = new PaginationFilter()
+            {
+                PageNumber = pageNumber ?? 1,
+                PageSize = pageSize ?? 20
+            };
+
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var testDto = _testProvider.GetByTestId(testId);
+            var questions = testDto.Questions.OrderBy(x => x.QuestionId)
+                                .Skip((filter.PageNumber - 1) * filter.PageSize)
+                                .Take(filter.PageSize).ToList();
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Questions for Test"));
+            return Content(HttpStatusCode.OK, questions);
+        }
     }
 }
