@@ -13,6 +13,7 @@ namespace eUni.BusinessLogic.IProviders
         List<DomainUserDTO> GetAllUsers(PaginationFilter filter);
         DomainUserDTO GetByName(string lastName, string firstName);
         ResultActionDTO EnrollUserToCourse(string courseCode, int domainUserId);
+        List<DomainUserDTO> GetAllStudentsWithPagination(PaginationFilter filter);
         List<DomainUserDTO> GetAllStudents();
         List<DomainUserDTO> GetAllTeachers();
         List<DomainUserDTO> GetAllAdmins();

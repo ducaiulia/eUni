@@ -48,11 +48,29 @@ namespace eUni.WebServices.Controllers
             return Content(HttpStatusCode.OK, allUsers);
         }
 
+        [Route("AllStudentsWithPagination")]
+        public async Task<IHttpActionResult> GetAllStudentsWithPagination(int? pageNumber, int? pageSize)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+
+            var filter = new PaginationFilter()
+            {
+                PageNumber = pageNumber ?? 1,
+                PageSize = pageSize ?? 20
+            };
+
+            List<DomainUserDTO> users = _userProvider.GetAllStudentsWithPagination(filter);
+            var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all students"));
+            return Content(HttpStatusCode.OK, allUsers);
+        }
+
         [Route("AllStudents")]
         public async Task<IHttpActionResult> GetAllStudents()
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
-
+            
             List<DomainUserDTO> users = _userProvider.GetAllStudents();
             var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
 
