@@ -31,7 +31,19 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("AllUsers")]
-        public async Task<IHttpActionResult> GetAllUsers(int? pageNumber, int? pageSize)
+        public async Task<IHttpActionResult> GetAllUsers()
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+
+            List<DomainUserDTO> users = _userProvider.GetAllUsers();
+            var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all users"));
+            return Content(HttpStatusCode.OK, allUsers);
+        }
+
+        [Route("AllUsersWithPagination")]
+        public async Task<IHttpActionResult> GetAllUsersWithPagination(int? pageNumber, int? pageSize)
         {
             var filter = new PaginationFilter()
             {
@@ -41,7 +53,7 @@ namespace eUni.WebServices.Controllers
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
 
 
-            List<DomainUserDTO> users = _userProvider.GetAllUsers(filter);
+            List<DomainUserDTO> users = _userProvider.GetAllUsersWithPagination(filter);
             var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
 
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all users"));

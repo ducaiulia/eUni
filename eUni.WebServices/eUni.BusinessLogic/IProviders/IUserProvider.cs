@@ -10,7 +10,8 @@ namespace eUni.BusinessLogic.IProviders
     public interface IUserProvider
     {
         DomainUserDTO GetByUserName(string getFromToken);
-        List<DomainUserDTO> GetAllUsers(PaginationFilter filter);
+        List<DomainUserDTO> GetAllUsers();
+        List<DomainUserDTO> GetAllUsersWithPagination(PaginationFilter filter);
         DomainUserDTO GetByName(string lastName, string firstName);
         ResultActionDTO EnrollUserToCourse(string courseCode, int domainUserId);
         List<DomainUserDTO> GetAllStudentsWithPagination(PaginationFilter filter);

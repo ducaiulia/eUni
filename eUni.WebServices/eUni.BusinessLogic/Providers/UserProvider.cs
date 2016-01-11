@@ -24,7 +24,15 @@ namespace eUni.BusinessLogic.Providers
             _courseRepo = courseRepo;
         }
 
-        public List<DomainUserDTO> GetAllUsers(PaginationFilter filter)
+        public List<DomainUserDTO> GetAllUsers()
+        {
+            IEnumerable<DomainUser> enumerableAllUsers = _userRepo.GetAll();
+            var allUsers = Mapper.Map<IEnumerable<DomainUserDTO>>(enumerableAllUsers);
+
+            return allUsers.ToList();
+        }
+
+        public List<DomainUserDTO> GetAllUsersWithPagination(PaginationFilter filter)
         {
             IEnumerable<DomainUser> enumerableAllUsers = _userRepo.GetAll().OrderBy(x => x.DomainUserId)
                     .Skip((filter.PageNumber - 1) * filter.PageSize)
@@ -33,6 +41,7 @@ namespace eUni.BusinessLogic.Providers
 
             return allUsers.ToList();
         }
+
         public DomainUserDTO GetByUserName(string userName)
         {
             var user = _aspNetUserRepo.Get(u => u.UserName.Trim().Equals(userName));
