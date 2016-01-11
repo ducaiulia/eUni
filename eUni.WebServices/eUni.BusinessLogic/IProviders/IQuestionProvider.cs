@@ -13,6 +13,6 @@ namespace eUni.BusinessLogic.IProviders
         void UpdateQuestion(QuestionDTO dtoQuestion);
         void DeleteQuestionWithId(int id);
         QuestionDTO GetQuestionById(int id);
-        List<QuestionDTO> GetByModule(int ModuleId);
+        List<QuestionDTO> GetByModule(int ModuleId, PaginationFilter filter);
     }
 }

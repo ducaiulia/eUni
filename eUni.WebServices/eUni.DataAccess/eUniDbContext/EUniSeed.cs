@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using eUni.DataAccess.Domain;
@@ -25,6 +26,248 @@ namespace eUni.DataAccess.eUniDbContext
             SeedWikiPages();
             SeedFiles();
             SeedMesages();
+            SeedHomeworks();
+            SeedQuestions();
+            SeedStudentQuestions();
+            SeedAnswers();
+            SeedTests();
+        }
+
+        private void SeedTests()
+        {
+            var module1 = _context.Modules.FirstOrDefault(x => x.ModuleId == 1);
+
+            var question1 = _context.Questions.FirstOrDefault(x => x.QuestionId == 1);
+            var question2 = _context.Questions.FirstOrDefault(x => x.QuestionId == 2);
+            var question3 = _context.Questions.FirstOrDefault(x => x.QuestionId == 3);
+            var question4 = _context.Questions.FirstOrDefault(x => x.QuestionId == 4);
+
+            _context.Tests.AddOrUpdate(
+                  new Test
+                  {
+                      Name = "Test1",
+                      Module = module1,
+                      Questions = new List<Question> { question1, question2 }
+                  });
+
+            _context.Tests.AddOrUpdate(
+                  new Test
+                  {
+                      Name = "Test2",
+                      Module = module1,
+                      Questions = new List<Question> { question3, question4 }
+                  });
+
+        }
+
+        private void SeedStudentQuestions()
+        {
+            var answer1 = _context.Answers.FirstOrDefault(x => x.AnswerId == 1);
+            var answer2 = _context.Answers.FirstOrDefault(x => x.AnswerId == 2);
+            var answer3 = _context.Answers.FirstOrDefault(x => x.AnswerId == 3);
+            var answer4 = _context.Answers.FirstOrDefault(x => x.AnswerId == 4);
+
+
+            var test1 = _context.Tests.FirstOrDefault(x => x.TestId == 1);
+            var test2 = _context.Tests.FirstOrDefault(x => x.TestId == 2);
+
+            _context.StudentQuestions.AddOrUpdate(
+                  new StudentQuestion
+                  {
+                      DomainUserId = 1,
+                      Answer = answer1,
+                      QuestionId = 1,
+                      Test = test1,
+                  });
+
+            _context.StudentQuestions.AddOrUpdate(
+               new StudentQuestion
+               {
+                   DomainUserId = 1,
+                   Answer = answer4,
+                   QuestionId = 2,
+                   Test = test1,
+               });
+
+            //------------------------------------
+
+
+            _context.StudentQuestions.AddOrUpdate(
+                  new StudentQuestion
+                  {
+                      DomainUserId = 2,
+                      Answer = answer2,
+                      QuestionId = 1,
+                      Test = test1,
+                  });
+
+            _context.StudentQuestions.AddOrUpdate(
+               new StudentQuestion
+               {
+                   DomainUserId = 2,
+                   Answer = answer3,
+                   QuestionId = 2,
+                   Test = test1,
+               });
+
+            //------------------------------------
+
+        }
+
+        private void SeedAnswers()
+        {
+            _context.Answers.AddOrUpdate(
+                  new Answer
+                  {
+                      IsCorrect = true,
+                      Text = "LL(1) "
+                  });
+
+            _context.Answers.AddOrUpdate(
+                  new Answer
+                  {
+                      IsCorrect = false,
+                      Text = "Descendent Recursive "
+                  });
+
+            _context.Answers.AddOrUpdate(
+                  new Answer
+                  {
+                      IsCorrect = true,
+                      Text = "Answer Correct "
+                  });
+
+            _context.Answers.AddOrUpdate(
+                  new Answer
+                  {
+                      IsCorrect = false,
+                      Text = "Answer Incorrect "
+                  });
+        }
+
+        private void SeedQuestions()
+        {
+            var module1 = _context.Modules.FirstOrDefault(x => x.ModuleId == 1);
+
+            var answer1 = _context.Answers.FirstOrDefault(x => x.AnswerId == 1);
+            var answer2 = _context.Answers.FirstOrDefault(x => x.AnswerId == 2);
+            var answer3 = _context.Answers.FirstOrDefault(x => x.AnswerId == 3);
+            var answer4 = _context.Answers.FirstOrDefault(x => x.AnswerId == 4);
+
+            _context.Questions.AddOrUpdate(
+                  new Question
+                  {
+                      Module = module1,
+                      Text = "Which parser is mostly used? ",
+                      Score = 100,
+                      Answers = new List<Answer> { answer1, answer2 }
+                  });
+
+            _context.Questions.AddOrUpdate(
+                  new Question
+                  {
+                      Module = module1,
+                      Text = "Question1 ? ",
+                      Score = 50,
+                      Answers = new List<Answer> { answer3, answer4 }
+                  });
+
+            _context.Questions.AddOrUpdate(
+                  new Question
+                  {
+                      Module = module1,
+                      Text = "Question2 ? ",
+                      Score = 70,
+                      Answers = new List<Answer> { answer3, answer4 }
+                  });
+
+            _context.Questions.AddOrUpdate(
+                  new Question
+                  {
+                      Module = module1,
+                      Text = "Question3 ? ",
+                      Score = 35,
+                      Answers = new List<Answer> { answer3, answer4 }
+                  });
+        }
+
+        private void SeedHomeworks()
+        {
+            var module1 = _context.Modules.FirstOrDefault(x => x.ModuleId == 1);
+            var module2 = _context.Modules.FirstOrDefault(x => x.ModuleId == 2);
+
+            _context.Homeworks.AddOrUpdate(
+                  new Homework
+                  {
+                      Module = module1,
+                      Text = "Homework 1",
+                      Score = 100
+                  });
+
+            _context.Homeworks.AddOrUpdate(
+                  new Homework
+                  {
+                      Module = module1,
+                      Text = "Homework 2",
+                      Score = 100
+                  });
+
+            _context.Homeworks.AddOrUpdate(
+                  new Homework
+                  {
+                      Module = module2,
+                      Text = "Homework 1",
+                      Score = 100
+                  });
+
+            _context.StudentHomeworks.AddOrUpdate(
+                  new StudentHomework
+                  {
+                      DomainUserId = 1,
+                      HomeworkId = 1,
+                      Grade = 5
+                  });
+
+            _context.StudentHomeworks.AddOrUpdate(
+                  new StudentHomework
+                  {
+                      DomainUserId = 1,
+                      HomeworkId = 2,
+                      Grade = 7
+                  });
+
+            _context.StudentHomeworks.AddOrUpdate(
+                  new StudentHomework
+                  {
+                      DomainUserId = 1,
+                      HomeworkId = 3,
+                      Grade = 10
+                  });
+            //------------------------------------------------
+            _context.StudentHomeworks.AddOrUpdate(
+                  new StudentHomework
+                  {
+                      DomainUserId = 2,
+                      HomeworkId = 1,
+                      Grade = 10
+                  });
+
+            _context.StudentHomeworks.AddOrUpdate(
+                  new StudentHomework
+                  {
+                      DomainUserId = 2,
+                      HomeworkId = 2,
+                      Grade = 9
+                  });
+
+            _context.StudentHomeworks.AddOrUpdate(
+                  new StudentHomework
+                  {
+                      DomainUserId = 2,
+                      HomeworkId = 3,
+                      Grade = 8
+                  });
+
         }
 
         private void SeedMesages()
@@ -92,14 +335,14 @@ namespace eUni.DataAccess.eUniDbContext
                       Path = "/admin/iulia@euni.com/alabala.txt"
                   });
 
-            //_context.Files.AddOrUpdate(
-            //      new File
-            //      {
-            //          Description = "File1",
-            //          FileType = FileType.jpg,
-            //          Size = 15,
-            //          Path = "path"
-            //      });
+            _context.Files.AddOrUpdate(
+                  new File
+                  {
+                      StudentHomework = _context.StudentHomeworks.FirstOrDefault(x => x.DomainUserId == 1 && x.HomeworkId == 1),
+                      FileName = "File2.pdf",
+                      FileType = FileType.pdf,
+                      Path = "path3"
+                  });
         }
 
         private void SeedWikiPages()
@@ -184,6 +427,7 @@ namespace eUni.DataAccess.eUniDbContext
                 }
             };
 
+
             manager.Create(user1);
             manager.AddToRole(user1.Id, "Student");
 
@@ -259,16 +503,22 @@ namespace eUni.DataAccess.eUniDbContext
 
         private void SeedCourses()
         {
-            _context.Courses.AddOrUpdate(
-                new Course
-                {
-                    CourseCode = "CD001",
-                    Name = "Compiler Design",
-                    StartDate = new DateTime(2015, 10, 01),
-                    EndDate = new DateTime(2016, 10, 01),
-                    Teacher = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1)
-                }
-                );
+            var user1 = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1);
+            var user2 = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 2);
+            var user3 = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 3);
+            var teacher = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 4);
+
+            var course1 = new Course
+            {
+                CourseCode = "CD001",
+                Name = "Compiler Design",
+                StartDate = new DateTime(2015, 10, 01),
+                EndDate = new DateTime(2016, 10, 01),
+                Teacher = teacher,
+                Students = new List<DomainUser> { user1, user2, user3 }
+            };
+
+            _context.Courses.AddOrUpdate(course1);
 
             _context.Courses.AddOrUpdate(
                 new Course
@@ -277,9 +527,10 @@ namespace eUni.DataAccess.eUniDbContext
                     Name = "Web Programming",
                     StartDate = new DateTime(2015, 10, 01),
                     EndDate = new DateTime(2016, 10, 01),
-                    Teacher = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 2)
-                }
-                );
+                    Teacher = teacher,
+                    Students = new List<DomainUser> { user1, user2, user3 }
+                });
+
             _context.Courses.AddOrUpdate(
                 new Course
                 {
@@ -287,9 +538,10 @@ namespace eUni.DataAccess.eUniDbContext
                     Name = "Public Key Cryptography",
                     StartDate = new DateTime(2015, 10, 01),
                     EndDate = new DateTime(2016, 10, 01),
-                    Teacher = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 3)
-                }
-                );
+                    Teacher = teacher,
+                    Students = new List<DomainUser> { user1, user2, user3 }
+                });
+
             _context.SaveChanges();
         }
 

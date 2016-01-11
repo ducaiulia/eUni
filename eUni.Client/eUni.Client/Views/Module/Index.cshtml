@@ -34,10 +34,14 @@
 }
 
 <br>
-
-@Html.ActionLink("Create homework", "CreateHomework", "Module", new
+@using (Html.BeginForm("CreateHomework", "Module"))
+{
+    <input name="Module" value="@ViewBag.Module" style="display: none" />
+    <input type="submit" class="btn btn-default" value="Create Homework" />
+}
+@*@Html.ActionLink("Create homework", "CreateHomework", "Module", new
 {
     Module = ViewBag.Module,
     Course = ViewBag.Course
         
-}, new { @class = "btn btn-default" })
+}, new { @class = "btn btn-default" })*@

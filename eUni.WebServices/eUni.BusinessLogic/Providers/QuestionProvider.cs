@@ -44,9 +44,11 @@ namespace eUni.BusinessLogic.Providers
             return Mapper.Map<QuestionDTO>(module);
         }
 
-        public List<QuestionDTO> GetByModule(int ModuleId)
+        public List<QuestionDTO> GetByModule(int ModuleId, PaginationFilter filter)
         {
-            var questions = _questionRepository.GetAll().Where(x => x.Module.ModuleId == ModuleId);
+            var questions = _questionRepository.GetAll().Where(x => x.Module.ModuleId == ModuleId).OrderBy(x => x.QuestionId)
+                    .Skip((filter.PageNumber - 1) * filter.PageSize)
+                    .Take(filter.PageSize);
             var questionsDtos = Mapper.Map<List<QuestionDTO>>(questions);
             return questionsDtos;
         }

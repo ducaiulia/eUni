@@ -1,7 +1,6 @@
 ﻿
 <h3>@ViewBag.Module.Name Homework</h3>
 <br>
-@Html.ActionLink("Upload Homework(student)", "UploadHomework", "Module", new { area = "" }, new { @class = "btn btn-default" })
 
 @Scripts.Render("~/bundles/jquery")
 
@@ -10,15 +9,11 @@
     @Html.AntiForgeryToken()
 
     <div class="form-group">
-        <div class="col-md-10">
-            <input type="file" name="Module" value="@ViewBag.Module" style="display: none"/>
-            <input type="file" id="Avatar" name="files" class="btn btn-default"/>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+        <div class="">
+            <input type="text" name="Module" value="@ViewBag.Module" style="display: none"/>
+            <input type="file" id="Avatar" name="Files" class="btn"/>
+            <br/>
+            <input type="submit" value="Upload Homework" class="btn btn-default" />
         </div>
     </div>
 }

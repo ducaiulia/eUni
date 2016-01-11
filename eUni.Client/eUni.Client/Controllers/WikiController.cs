@@ -21,6 +21,7 @@ namespace EUni_Client.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public async Task<RedirectToRouteResult> CreateWiki(string wiki)
         {
             var wikiLocal = JsonConvert.DeserializeObject<WikiViewModel>(wiki);

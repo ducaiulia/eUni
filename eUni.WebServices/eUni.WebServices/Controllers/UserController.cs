@@ -33,12 +33,48 @@ namespace eUni.WebServices.Controllers
         [Route("AllUsers")]
         public async Task<IHttpActionResult> GetAllUsers()
         {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
 
             List<DomainUserDTO> users = _userProvider.GetAllUsers();
             var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
 
-            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all users"));
+            return Content(HttpStatusCode.OK, allUsers);
+        }
+
+        [Route("AllUsersWithPagination")]
+        public async Task<IHttpActionResult> GetAllUsersWithPagination(int? pageNumber, int? pageSize)
+        {
+            var filter = new PaginationFilter()
+            {
+                PageNumber = pageNumber ?? 1,
+                PageSize = pageSize ?? 20
+            };
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+
+
+            List<DomainUserDTO> users = _userProvider.GetAllUsersWithPagination(filter);
+            var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all users"));
+            return Content(HttpStatusCode.OK, allUsers);
+        }
+
+        [Route("AllStudentsWithPagination")]
+        public async Task<IHttpActionResult> GetAllStudentsWithPagination(int? pageNumber, int? pageSize)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+
+            var filter = new PaginationFilter()
+            {
+                PageNumber = pageNumber ?? 1,
+                PageSize = pageSize ?? 20
+            };
+
+            List<DomainUserDTO> users = _userProvider.GetAllStudentsWithPagination(filter);
+            var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all students"));
             return Content(HttpStatusCode.OK, allUsers);
         }
 
@@ -46,7 +82,7 @@ namespace eUni.WebServices.Controllers
         public async Task<IHttpActionResult> GetAllStudents()
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
-
+            
             List<DomainUserDTO> users = _userProvider.GetAllStudents();
             var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
 
@@ -66,12 +102,48 @@ namespace eUni.WebServices.Controllers
             return Content(HttpStatusCode.OK, allUsers);
         }
 
+        [Route("AllTeachersWithPagination")]
+        public async Task<IHttpActionResult> GetAllTeachersWithPagination(int? pageNumber, int? pageSize)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+
+            var filter = new PaginationFilter()
+            {
+                PageNumber = pageNumber ?? 1,
+                PageSize = pageSize ?? 20
+            };
+
+            List<DomainUserDTO> users = _userProvider.GetAllTeachersWithPagination(filter);
+            var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all teachers"));
+            return Content(HttpStatusCode.OK, allUsers);
+        }
+
         [Route("AllAdmins")]
         public async Task<IHttpActionResult> GetAllAdmins()
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
 
             List<DomainUserDTO> users = _userProvider.GetAllAdmins();
+            var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all admins"));
+            return Content(HttpStatusCode.OK, allUsers);
+        }
+
+        [Route("AllAdminsWithPagination")]
+        public async Task<IHttpActionResult> GetAllAdminsWithPagination(int? pageNumber, int? pageSize)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+
+            var filter = new PaginationFilter()
+            {
+                PageNumber = pageNumber ?? 1,
+                PageSize = pageSize ?? 20
+            };
+
+            List<DomainUserDTO> users = _userProvider.GetAllAdminsWithPagination(filter);
             var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
 
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all admins"));

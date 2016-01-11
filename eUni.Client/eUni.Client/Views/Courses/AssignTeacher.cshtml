@@ -5,19 +5,17 @@
 <form>
     <div class="form-group">
         <label>Teacher:</label>
-        <select class="form-control" style="margin-left: 17px;" required>
+        <select name="" class="form-control" style="margin-left: 17px;" required>
             @foreach (var teacher in ViewBag.Teachers)
             {
-                <option>@(((string)teacher))</option>
+                <option>@teacher.LastName @teacher.FirstName @teacher.DomainUserId</option>
             }
         </select>
-    </div>
-    <div class="form-group">
         <label>Course:</label>
-        <select class="form-control" style="margin-left: 17px;" required>
+        <select name="CourseCode"class="form-control" style="margin-left: 17px;" required>
             @foreach (var course in ViewBag.Courses)
             {
-                <option>@course.Name</option>
+                <option>@course.Name @course.CourseCode</option>
             }
         </select>
     </div>

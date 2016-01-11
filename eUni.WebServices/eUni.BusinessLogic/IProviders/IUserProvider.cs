@@ -11,10 +11,14 @@ namespace eUni.BusinessLogic.IProviders
     {
         DomainUserDTO GetByUserName(string getFromToken);
         List<DomainUserDTO> GetAllUsers();
+        List<DomainUserDTO> GetAllUsersWithPagination(PaginationFilter filter);
         DomainUserDTO GetByName(string lastName, string firstName);
         ResultActionDTO EnrollUserToCourse(string courseCode, int domainUserId);
+        List<DomainUserDTO> GetAllStudentsWithPagination(PaginationFilter filter);
         List<DomainUserDTO> GetAllStudents();
         List<DomainUserDTO> GetAllTeachers();
+        List<DomainUserDTO> GetAllTeachersWithPagination(PaginationFilter filter);
         List<DomainUserDTO> GetAllAdmins();
+        List<DomainUserDTO> GetAllAdminsWithPagination(PaginationFilter filter);
     }
 }

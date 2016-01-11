@@ -31,6 +31,17 @@ namespace eUni.BusinessLogic.Providers
 
             return allUsers.ToList();
         }
+
+        public List<DomainUserDTO> GetAllUsersWithPagination(PaginationFilter filter)
+        {
+            IEnumerable<DomainUser> enumerableAllUsers = _userRepo.GetAll().OrderBy(x => x.DomainUserId)
+                    .Skip((filter.PageNumber - 1) * filter.PageSize)
+                    .Take(filter.PageSize);
+            var allUsers = Mapper.Map<IEnumerable<DomainUserDTO>>(enumerableAllUsers);
+
+            return allUsers.ToList();
+        }
+
         public DomainUserDTO GetByUserName(string userName)
         {
             var user = _aspNetUserRepo.Get(u => u.UserName.Trim().Equals(userName));
@@ -71,6 +82,25 @@ namespace eUni.BusinessLogic.Providers
 
         }
 
+        public List<DomainUserDTO> GetAllStudentsWithPagination(PaginationFilter filter)
+        {
+            IList<IdentityUserRole> users;
+            using (var db = new ApplicationDbContext())
+            {
+                var role = db.Roles.AsQueryable().FirstOrDefault(r => r.Name.Equals("student"));
+                users = role.Users.OrderBy(x => x.UserId)
+                    .Skip((filter.PageNumber - 1) * filter.PageSize)
+                    .Take(filter.PageSize).ToList();
+            }
+            List<DomainUserDTO> studentUsers = new List<DomainUserDTO>();
+            foreach (var user in users)
+            {
+                studentUsers.Add(Mapper.Map<DomainUserDTO>(_userRepo.Get(u => u.ApplicationUser.Id == user.UserId)));
+            }
+
+            return studentUsers;
+        }
+
         public List<DomainUserDTO> GetAllStudents()
         {
             ICollection<IdentityUserRole> users;
@@ -105,6 +135,25 @@ namespace eUni.BusinessLogic.Providers
             return teacherUsers;
         }
 
+        public List<DomainUserDTO> GetAllTeachersWithPagination(PaginationFilter filter)
+        {
+            List<IdentityUserRole> users;
+            using (var db = new ApplicationDbContext())
+            {
+                var role = db.Roles.AsQueryable().FirstOrDefault(r => r.Name.Equals("teacher"));
+                users = role.Users.OrderBy(x => x.UserId)
+                    .Skip((filter.PageNumber - 1) * filter.PageSize)
+                    .Take(filter.PageSize).ToList();
+            }
+            List<DomainUserDTO> teacherUsers = new List<DomainUserDTO>();
+            foreach (var user in users)
+            {
+                teacherUsers.Add(Mapper.Map<DomainUserDTO>(_userRepo.Get(u => u.ApplicationUser.Id == user.UserId)));
+            }
+
+            return teacherUsers;
+        }
+
         public List<DomainUserDTO> GetAllAdmins()
         {
             ICollection<IdentityUserRole> users;
@@ -112,6 +161,25 @@ namespace eUni.BusinessLogic.Providers
             {
                 var role = db.Roles.AsQueryable().FirstOrDefault(r => r.Name.Equals("admin"));
                 users = role.Users;
+            }
+            List<DomainUserDTO> adminUsers = new List<DomainUserDTO>();
+            foreach (var user in users)
+            {
+                adminUsers.Add(Mapper.Map<DomainUserDTO>(_userRepo.Get(u => u.ApplicationUser.Id == user.UserId)));
+            }
+
+            return adminUsers;
+        }
+
+        public List<DomainUserDTO> GetAllAdminsWithPagination(PaginationFilter filter)
+        {
+            List<IdentityUserRole> users;
+            using (var db = new ApplicationDbContext())
+            {
+                var role = db.Roles.AsQueryable().FirstOrDefault(r => r.Name.Equals("admin"));
+                users = role.Users.OrderBy(x => x.UserId)
+                    .Skip((filter.PageNumber - 1) * filter.PageSize)
+                    .Take(filter.PageSize).ToList(); ;
             }
             List<DomainUserDTO> adminUsers = new List<DomainUserDTO>();
             foreach (var user in users)

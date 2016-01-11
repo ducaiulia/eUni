@@ -14,7 +14,7 @@ namespace eUni.DataAccess.Domain
         public string Text { get; set; }
         public int Score { get; set; }
         public virtual Module Module { get; set; }
-        public virtual ICollection<Answer> Answers { get; set; }
+        public virtual List<Answer> Answers { get; set; }
 
 
     }
