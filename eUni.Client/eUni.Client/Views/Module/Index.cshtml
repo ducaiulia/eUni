@@ -27,6 +27,7 @@
 
 @using (Html.BeginForm("Index", "Test"))
 {
+    <input name="moduleId" value="@ViewBag.Module.ModuleId" style="display: none" />
     <input name="Module" value="@ViewBag.Module" style="display: none" />
     <input name="Course" value="@ViewBag.Course" style="display: none" />
     <input type="submit" class="btn-link" style="color: dodgerblue" value="Test" />

@@ -1,5 +1,42 @@
-﻿
+﻿@model IList<EUni_Client.Models.TestViewModel>
 
 <h2>title</h2>
 
-@ViewBag.m
+@if (Model.Count > 0)
+{
+    foreach (var test in Model)
+    {
+        <p>@test.Name</p>
+    }
+}
+else
+{
+    <p>No tests to show.</p>
+}
+
+<button type="submit" class="btn btn-default" id="createBtn">Create Test</button>
+
+<div id="hiddenForm" hidden>
+
+    <h3>Create Test</h3>
+
+    @using (Html.BeginForm("Create", "Test", FormMethod.Post, new {@id = "target", @class = "form-horizontal", role = "form"}))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <label>Test Name</label>
+            <input name="name" type="text" class="form-control" placeholder="Course Name" style="margin-left: 17px;" required>
+        </div>
+
+        <button type="submit" class="btn btn-default">Create</button>
+    }
+</div>
+
+<script src="~/Scripts/jquery-2.2.0.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#createBtn').on('click', function() {
+            $('#hiddenForm').show();
+        });
+    });
+</script>
