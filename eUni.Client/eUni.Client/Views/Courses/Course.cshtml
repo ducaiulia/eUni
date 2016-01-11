@@ -9,13 +9,19 @@
                 <li>
                     @using (Html.BeginForm("Index", "Module"))
                     {
-                        <input name="Module" value="@module" style="display: none" />
-                        <input name="Course" value="@ViewBag.Course" style="display: none" />
-                        <input type="submit" class="btn-link" style="color: dodgerblue" value="@(((string) module.Name))" />
+                        <input name="Module" value="@module" style="display: none"/>
+                        <input name="Course" value="@ViewBag.Course" style="display: none"/>
+                        <input type="submit" class="btn-link" style="color: dodgerblue" value="@(((string) module.Name))"/>
                     }
                 </li>
             }
         </ul>
+
+        using (Html.BeginForm("CreateModule", "Module"))
+         {
+             <input name="Course" value="@ViewBag.Course" style="display: none"/>
+             <input type="submit" value="Create Module"/>
+         }
     }
     else
     {

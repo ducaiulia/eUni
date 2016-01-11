@@ -211,6 +211,8 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ModuleViewModel.cs" />
+    <Compile Include="Models\TestViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApiService.cs" />
     <Compile Include="Services\Extensions.cs" />
@@ -1076,6 +1078,7 @@
     <Content Include="Views\Wiki\Index.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <None Include="Views\Module\CreateHomework.cshtml" />
+    <Content Include="Views\Module\CreateModule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
