@@ -78,6 +78,29 @@ namespace eUni.WebServices.Controllers
             return Content(HttpStatusCode.OK, testModels);
         }
 
+        [Route("GetAllTestsByModuleWithPagination")]
+        public async Task<IHttpActionResult> GetAllByModuleWithPagination(int? moduleId, int? pageNumber, int? pageSize)
+        {
+
+            if (moduleId == null)
+            {
+                return BadRequest("Module Id not found");
+            }
+
+            var filter = new PaginationFilter()
+            {
+                PageNumber = pageNumber ?? 1,
+                PageSize = pageSize ?? 20
+            };
+
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+
+            var testDtos = _testProvider.GetByModuleWithPagination(moduleId.Value, filter);
+            var testModels = Mapper.Map<List<TestViewModel>>(testDtos);
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Tests for Module "));
+            return Content(HttpStatusCode.OK, testModels);
+        }
+
         [Route("GetAllQuestionsByTestId")]
         public async Task<IHttpActionResult> GetAllQuestionsByTestId(int testId)
         {

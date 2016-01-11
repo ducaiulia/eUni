@@ -14,5 +14,6 @@ namespace eUni.BusinessLogic.IProviders
         void UpdateTest(TestDTO dtoTest);
         void DeleteTestWithId(int testId);
         List<TestDTO> GetByModule(int ModuleId);
+        List<TestDTO> GetByModuleWithPagination(int ModuleId, PaginationFilter filter);
     }
 }

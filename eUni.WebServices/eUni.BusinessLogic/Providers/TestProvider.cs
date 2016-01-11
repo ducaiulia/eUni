@@ -44,6 +44,16 @@ namespace eUni.BusinessLogic.Providers
             return testDtos;
         }
 
+        public List<TestDTO> GetByModuleWithPagination(int ModuleId, PaginationFilter filter)
+        {
+            var tests = _testRepository.GetAll().Where(x => x.Module.ModuleId == ModuleId)
+                            .OrderBy(x => x.TestId)
+                            .Skip((filter.PageNumber - 1) * filter.PageSize)
+                            .Take(filter.PageSize).ToList();
+            var testDtos = Mapper.Map<List<TestDTO>>(tests);
+            return testDtos;
+        }
+
         public TestDTO GetByTestId(int testId)
         {
             var test = _testRepository.Get(u => u.TestId == testId);
