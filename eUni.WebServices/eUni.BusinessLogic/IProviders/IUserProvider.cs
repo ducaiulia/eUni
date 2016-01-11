@@ -17,6 +17,7 @@ namespace eUni.BusinessLogic.IProviders
         List<DomainUserDTO> GetAllStudentsWithPagination(PaginationFilter filter);
         List<DomainUserDTO> GetAllStudents();
         List<DomainUserDTO> GetAllTeachers();
+        List<DomainUserDTO> GetAllTeachersWithPagination(PaginationFilter filter);
         List<DomainUserDTO> GetAllAdmins();
     }
 }

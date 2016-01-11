@@ -135,6 +135,25 @@ namespace eUni.BusinessLogic.Providers
             return teacherUsers;
         }
 
+        public List<DomainUserDTO> GetAllTeachersWithPagination(PaginationFilter filter)
+        {
+            List<IdentityUserRole> users;
+            using (var db = new ApplicationDbContext())
+            {
+                var role = db.Roles.AsQueryable().FirstOrDefault(r => r.Name.Equals("teacher"));
+                users = role.Users.OrderBy(x => x.UserId)
+                    .Skip((filter.PageNumber - 1) * filter.PageSize)
+                    .Take(filter.PageSize).ToList(); ;
+            }
+            List<DomainUserDTO> teacherUsers = new List<DomainUserDTO>();
+            foreach (var user in users)
+            {
+                teacherUsers.Add(Mapper.Map<DomainUserDTO>(_userRepo.Get(u => u.ApplicationUser.Id == user.UserId)));
+            }
+
+            return teacherUsers;
+        }
+
         public List<DomainUserDTO> GetAllAdmins()
         {
             ICollection<IdentityUserRole> users;
