@@ -132,6 +132,24 @@ namespace eUni.WebServices.Controllers
             return Content(HttpStatusCode.OK, allUsers);
         }
 
+        [Route("AllAdminsWithPagination")]
+        public async Task<IHttpActionResult> GetAllAdminsWithPagination(int? pageNumber, int? pageSize)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+
+            var filter = new PaginationFilter()
+            {
+                PageNumber = pageNumber ?? 1,
+                PageSize = pageSize ?? 20
+            };
+
+            List<DomainUserDTO> users = _userProvider.GetAllAdminsWithPagination(filter);
+            var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all admins"));
+            return Content(HttpStatusCode.OK, allUsers);
+        }
+
         [Route("EnrollUserToCourse")]
         public async Task<IHttpActionResult> EnrollUserToCourse(CourseViewModel course, UserViewModel user)
         {
