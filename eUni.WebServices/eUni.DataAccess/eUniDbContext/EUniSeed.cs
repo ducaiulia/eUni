@@ -22,20 +22,20 @@ namespace eUni.DataAccess.eUniDbContext
             SeedRoles();
             SeedUsers();
             SeedCourses();
+            SeedAnswers();
             SeedModules();
             SeedWikiPages();
-            SeedFiles();
             SeedMesages();
             SeedHomeworks();
             SeedQuestions();
             SeedStudentQuestions();
-            SeedAnswers();
+            SeedFiles();
             SeedTests();
         }
             
         private void SeedTests()
         {
-            var module1 = _context.Modules.FirstOrDefault(x => x.ModuleId == 1);
+            var module1 = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1);
 
             var question1 = _context.Questions.FirstOrDefault(x => x.QuestionId == 1);
             var question2 = _context.Questions.FirstOrDefault(x => x.QuestionId == 2);
@@ -62,14 +62,14 @@ namespace eUni.DataAccess.eUniDbContext
 
         private void SeedStudentQuestions()
         {
-            var answer1 = _context.Answers.FirstOrDefault(x => x.AnswerId == 1);
-            var answer2 = _context.Answers.FirstOrDefault(x => x.AnswerId == 2);
-            var answer3 = _context.Answers.FirstOrDefault(x => x.AnswerId == 3);
-            var answer4 = _context.Answers.FirstOrDefault(x => x.AnswerId == 4);
+            var answer1 = _context.Answers.Local.FirstOrDefault(x => x.AnswerId == 1);
+            var answer2 = _context.Answers.Local.FirstOrDefault(x => x.AnswerId == 2);
+            var answer3 = _context.Answers.Local.FirstOrDefault(x => x.AnswerId == 3);
+            var answer4 = _context.Answers.Local.FirstOrDefault(x => x.AnswerId == 4);
 
 
-            var test1 = _context.Tests.FirstOrDefault(x => x.TestId == 1);
-            var test2 = _context.Tests.FirstOrDefault(x => x.TestId == 2);
+            var test1 = _context.Tests.Local.FirstOrDefault(x => x.TestId == 1);
+            var test2 = _context.Tests.Local.FirstOrDefault(x => x.TestId == 2);
 
             _context.StudentQuestions.AddOrUpdate(
                   new StudentQuestion
@@ -143,16 +143,18 @@ namespace eUni.DataAccess.eUniDbContext
                       IsCorrect = false,
                       Text = "Answer Incorrect "
                   });
+
+            _context.SaveChanges();
         }
 
         private void SeedQuestions()
         {
-            var module1 = _context.Modules.FirstOrDefault(x => x.ModuleId == 1);
+            var module1 = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1);
 
-            var answer1 = _context.Answers.FirstOrDefault(x => x.AnswerId == 1);
-            var answer2 = _context.Answers.FirstOrDefault(x => x.AnswerId == 2);
-            var answer3 = _context.Answers.FirstOrDefault(x => x.AnswerId == 3);
-            var answer4 = _context.Answers.FirstOrDefault(x => x.AnswerId == 4);
+            var answer1 = _context.Answers.Local.FirstOrDefault(x => x.AnswerId == 1);
+            var answer2 = _context.Answers.Local.FirstOrDefault(x => x.AnswerId == 2);
+            var answer3 = _context.Answers.Local.FirstOrDefault(x => x.AnswerId == 3);
+            var answer4 = _context.Answers.Local.FirstOrDefault(x => x.AnswerId == 4);
 
             _context.Questions.AddOrUpdate(
                   new Question
@@ -189,12 +191,14 @@ namespace eUni.DataAccess.eUniDbContext
                       Score = 35,
                       Answers = new List<Answer> { answer3, answer4 }
                   });
+            _context.SaveChanges();
+
         }
 
         private void SeedHomeworks()
         {
-            var module1 = _context.Modules.FirstOrDefault(x => x.ModuleId == 1);
-            var module2 = _context.Modules.FirstOrDefault(x => x.ModuleId == 2);
+            var module1 = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1);
+            var module2 = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 2);
 
             _context.Homeworks.AddOrUpdate(
                   new Homework
@@ -268,6 +272,7 @@ namespace eUni.DataAccess.eUniDbContext
                       Grade = 8
                   });
 
+            _context.SaveChanges();
         }
 
         private void SeedMesages()
@@ -275,32 +280,32 @@ namespace eUni.DataAccess.eUniDbContext
             _context.Messages.AddOrUpdate(
                   new Message
                   {
-                      From = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1),
-                      To = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 2),
+                      From = _context.DomainUsers.Local.FirstOrDefault(x => x.DomainUserId == 1),
+                      To = _context.DomainUsers.Local.FirstOrDefault(x => x.DomainUserId == 2),
                       Text = "Salut :)",
                       DateTime = DateTime.Now
                   });
             _context.Messages.AddOrUpdate(
                   new Message
                   {
-                      From = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 2),
-                      To = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1),
+                      From = _context.DomainUsers.Local.FirstOrDefault(x => x.DomainUserId == 2),
+                      To = _context.DomainUsers.Local.FirstOrDefault(x => x.DomainUserId == 1),
                       Text = "Hey :D",
                       DateTime = DateTime.Now
                   });
             _context.Messages.AddOrUpdate(
                   new Message
                   {
-                      From = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1),
-                      To = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 2),
+                      From = _context.DomainUsers.Local.FirstOrDefault(x => x.DomainUserId == 1),
+                      To = _context.DomainUsers.Local.FirstOrDefault(x => x.DomainUserId == 2),
                       Text = "Ce mai faci?",
                       DateTime = DateTime.Now
                   });
             _context.Messages.AddOrUpdate(
                   new Message
                   {
-                      From = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 2),
-                      To = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1),
+                      From = _context.DomainUsers.Local.FirstOrDefault(x => x.DomainUserId == 2),
+                      To = _context.DomainUsers.Local.FirstOrDefault(x => x.DomainUserId == 1),
                       Text = "Lucrez la proiect. Tu?",
                       DateTime = DateTime.Now
                   });
@@ -308,11 +313,13 @@ namespace eUni.DataAccess.eUniDbContext
             _context.Messages.AddOrUpdate(
                   new Message
                   {
-                      From = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 1),
-                      To = _context.DomainUsers.FirstOrDefault(x => x.DomainUserId == 3),
+                      From = _context.DomainUsers.Local.FirstOrDefault(x => x.DomainUserId == 1),
+                      To = _context.DomainUsers.Local.FirstOrDefault(x => x.DomainUserId == 3),
                       Text = "Message 5",
                       DateTime = DateTime.Now
                   });
+            _context.SaveChanges();
+
         }
 
         private void SeedFiles()
@@ -320,7 +327,7 @@ namespace eUni.DataAccess.eUniDbContext
             _context.Files.AddOrUpdate(
                   new File
                   {
-                      Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 1),
+                      Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1),
                       FileName = "File1.jpg",
                       FileType = FileType.jpg,
                       Path = "/student/iulia@euni.com/alabala.txt"
@@ -329,7 +336,7 @@ namespace eUni.DataAccess.eUniDbContext
             _context.Files.AddOrUpdate(
                   new File
                   {
-                      Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 1),
+                      Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1),
                       FileName = "File2.pdf",
                       FileType = FileType.pdf,
                       Path = "/admin/iulia@euni.com/alabala.txt"
@@ -338,11 +345,14 @@ namespace eUni.DataAccess.eUniDbContext
             _context.Files.AddOrUpdate(
                   new File
                   {
-                      StudentHomework = _context.StudentHomeworks.FirstOrDefault(x => x.DomainUserId == 1 && x.HomeworkId == 1),
+                      Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1),
+                      StudentHomework = _context.StudentHomeworks.Local.FirstOrDefault(x => x.DomainUserId == 1 && x.HomeworkId == 1),
                       FileName = "File2.pdf",
                       FileType = FileType.pdf,
                       Path = "path3"
                   });
+            _context.SaveChanges();
+
         }
 
         private void SeedWikiPages()
@@ -350,7 +360,7 @@ namespace eUni.DataAccess.eUniDbContext
             _context.WikiPages.AddOrUpdate(
                   new WikiPage
                   {
-                      Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 1),
+                      Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1),
                       Content = "<h2>This is h2 </h2>",
                       Description = "WikiPage 1"
                   });
@@ -358,7 +368,7 @@ namespace eUni.DataAccess.eUniDbContext
             _context.WikiPages.AddOrUpdate(
                   new WikiPage
                   {
-                      Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 1),
+                      Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1),
                       Content = "<h1>This is h1 </h1>",
                       Description = "WikiPage 2"
                   });
@@ -366,7 +376,7 @@ namespace eUni.DataAccess.eUniDbContext
             _context.WikiPages.AddOrUpdate(
                   new WikiPage
                   {
-                      Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 1),
+                      Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1),
                       Content = "Content",
                       Description = "WikiPage 3"
                   });
@@ -375,7 +385,7 @@ namespace eUni.DataAccess.eUniDbContext
             _context.WikiPages.AddOrUpdate(
                   new WikiPage
                   {
-                      Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 2),
+                      Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 2),
                       Content = "Content",
                       Description = "WikiPage 4"
                   });
@@ -383,10 +393,11 @@ namespace eUni.DataAccess.eUniDbContext
             _context.WikiPages.AddOrUpdate(
                   new WikiPage
                   {
-                      Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 2),
+                      Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 2),
                       Content = "Content",
                       Description = "WikiPage 5"
                   });
+            _context.SaveChanges();
 
         }
 
@@ -402,6 +413,7 @@ namespace eUni.DataAccess.eUniDbContext
             manager.Create(adminRole);
             manager.Create(teacherRole);
             manager.Create(studentRole);
+            _context.SaveChanges();
 
         }
 
