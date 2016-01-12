@@ -32,7 +32,7 @@ namespace eUni.DataAccess.eUniDbContext
             SeedAnswers();
             SeedTests();
         }
-
+            
         private void SeedTests()
         {
             var module1 = _context.Modules.FirstOrDefault(x => x.ModuleId == 1);
@@ -57,7 +57,7 @@ namespace eUni.DataAccess.eUniDbContext
                       Module = module1,
                       Questions = new List<Question> { question3, question4 }
                   });
-
+            _context.SaveChanges();
         }
 
         private void SeedStudentQuestions()
@@ -111,7 +111,7 @@ namespace eUni.DataAccess.eUniDbContext
                });
 
             //------------------------------------
-
+            _context.SaveChanges();
         }
 
         private void SeedAnswers()

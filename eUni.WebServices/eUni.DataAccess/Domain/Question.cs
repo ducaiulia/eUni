@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eUni.DataAccess.Domain
 {
@@ -15,6 +11,7 @@ namespace eUni.DataAccess.Domain
         public int Score { get; set; }
         public virtual Module Module { get; set; }
         public virtual List<Answer> Answers { get; set; }
+        public virtual List<Test> Tests { get; set; }
 
 
     }
