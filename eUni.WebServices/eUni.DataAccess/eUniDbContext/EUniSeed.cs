@@ -351,7 +351,7 @@ namespace eUni.DataAccess.eUniDbContext
                   new WikiPage
                   {
                       Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 1),
-                      Content = "Content",
+                      Content = "<h2>This is h2 </h2>",
                       Description = "WikiPage 1"
                   });
 
@@ -359,7 +359,7 @@ namespace eUni.DataAccess.eUniDbContext
                   new WikiPage
                   {
                       Module = _context.Modules.FirstOrDefault(x => x.ModuleId == 1),
-                      Content = "Content",
+                      Content = "<h1>This is h1 </h1>",
                       Description = "WikiPage 2"
                   });
 
