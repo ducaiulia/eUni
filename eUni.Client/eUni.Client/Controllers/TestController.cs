@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using EUni_Client.Models;
 using EUni_Client.Services;
 using Microsoft.Ajax.Utilities;
@@ -18,20 +19,18 @@ namespace EUni_Client.Controllers
         {
             var apiService = Session.GetApiService();
             var tests = await apiService.GetAsync<IList<TestViewModel>, int>("/Test/GetAllTestsByModule", "moduleId", moduleId);
-            
+
+            ViewBag.ModuleId = moduleId;
             return View(tests);
         }
 
-        public ActionResult CreateTest(int moduleId)
+        [HttpPost]
+        public async Task<ActionResult> Create(int moduleId, string name)
         {
-            return View(moduleId);
-        }
+            var apiService = Session.GetApiService();
+            var result = await apiService.PostAsyncWithReturn<string, object>("/Test/Add", new { Name = name, ModuleId = moduleId });
 
-        //public async Task<ActionResult> CreateTest(string testName, int moduleId)
-        //{
-        //    var apiService = Session.GetApiService();
-        //    var result = await apiService.PostAsyncWithReturn<string, object>("/Test/Add", new { Name = testName, CourseCode = moduleId });
-        //    return null;
-        //}
+            return RedirectToAction("Index", "Test", new RouteValueDictionary { { "moduleId", moduleId } });
+        }
     }
 }

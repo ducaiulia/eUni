@@ -104,6 +104,7 @@ namespace eUni.WebServices
         private static void TestDTOToViewModel()
         {
             Mapper.CreateMap<TestDTO, TestViewModel>()
+                 .ForMember(dest => dest.TestId, opt=> opt.MapFrom(src => src.TestId))
                  .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.ModuleId))
                  .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name)).ReverseMap();
         }

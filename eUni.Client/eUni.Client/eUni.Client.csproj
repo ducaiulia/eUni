@@ -203,6 +203,7 @@
     <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="Controllers\MangeController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
+    <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\WikiController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1079,6 +1080,7 @@
     <Content Include="Views\Test\Index.cshtml" />
     <None Include="Views\Module\CreateHomework.cshtml" />
     <Content Include="Views\Module\CreateModule.cshtml" />
+    <Content Include="Views\Questions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
