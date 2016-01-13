@@ -1,0 +1,17 @@
+﻿<h2>Test</h2>
+
+@using (Html.BeginForm("SubmitTest", "Test", FormMethod.Post))
+{
+
+    foreach (var question in Model)
+    {
+        <input name="testData" type="text" value="@question" />
+    }
+
+    <input type="submit" value="Submit" />
+
+}
+
+@*<script src="https://apis.google.com/js/platform.js" async defer></script>
+    <div class="g-hangout" data-render="createhangout"></div>*@
+

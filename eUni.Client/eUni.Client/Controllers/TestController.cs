@@ -32,5 +32,18 @@ namespace EUni_Client.Controllers
 
             return RedirectToAction("Index", "Test", new RouteValueDictionary { { "moduleId", moduleId } });
         }
+
+
+        public async Task<ActionResult> TakeTest(int testId)
+        {
+            var apiService = Session.GetApiService();
+            var tests = await apiService.GetAsync<IEnumerable<dynamic>, int>("/Test/GetAllQuestionsByTestId", "testId", testId);
+            return View(tests);
+        }
+
+        public async Task<RedirectToRouteResult> SubmitTest(IEnumerable<object> testData)
+        {
+            return RedirectToAction("Index");
+        }
     }
 }

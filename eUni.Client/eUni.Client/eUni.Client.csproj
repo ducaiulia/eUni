@@ -1081,6 +1081,7 @@
     <None Include="Views\Module\CreateHomework.cshtml" />
     <Content Include="Views\Module\CreateModule.cshtml" />
     <Content Include="Views\Questions\Index.cshtml" />
+    <None Include="Views\Test\TakeTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
