@@ -8,7 +8,8 @@
     {
         using (Html.BeginForm("Index", "Questions"))
         {
-            <input name="testId" type="text" value="@test.TestId" hidden />
+            <input name="TestId" type="text" value="@test.TestId" hidden />
+            <input name="ModuleId" type="text" value="@test.ModuleId" hidden />
             <input type="submit" class="btn-link" style="color: dodgerblue" value="@test.Name" />
         }
     }

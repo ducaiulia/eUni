@@ -92,14 +92,14 @@ namespace eUni.WebServices.Controllers
 
         [Route("AssignQuestionToTest")]
         [HttpPost]
-        public async Task<IHttpActionResult> AssignQuestionToTest(int? questionId, int? testId)
+        public async Task<IHttpActionResult> AssignQuestionToTest([FromBody]QuestionTestViewModel vm)
         {
-            if (questionId == null || testId == null)
+            if (vm.QuestionId == null || vm.TestId == null)
                 return BadRequest("Id null");
 
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
 
-            _questionProvider.AssignQuestionToTest(questionId.Value, testId.Value);
+            _questionProvider.AssignQuestionToTest(vm.QuestionId.Value, vm.TestId.Value);
 
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Assign question to test"));
 
