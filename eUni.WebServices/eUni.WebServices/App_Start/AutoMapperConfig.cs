@@ -95,6 +95,7 @@ namespace eUni.WebServices
         private static void QuestionDTOToViewModel()
         {
             Mapper.CreateMap<QuestionDTO, QuestionViewModel>()
+                 .ForMember(dest => dest.QuestionId, opt=>opt.MapFrom(src => src.QuestionId))
                  .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.ModuleId))
                  .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
                  .ForMember(dest => dest.TestId, opt => opt.MapFrom(src => src.TestId))

@@ -14,5 +14,7 @@ namespace eUni.BusinessLogic.IProviders
         void DeleteQuestionWithId(int id);
         QuestionDTO GetQuestionById(int id);
         List<QuestionDTO> GetByModule(int ModuleId, PaginationFilter filter);
+        List<QuestionDTO> GetAllByModuleId(int moduleId);
+        void AssignQuestionToTest(int questionId, int testId);
     }
 }
