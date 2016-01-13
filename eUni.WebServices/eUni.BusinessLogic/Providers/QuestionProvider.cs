@@ -53,6 +53,25 @@ namespace eUni.BusinessLogic.Providers
             return questionsDtos;
         }
 
+        public List<QuestionDTO> GetAllByModuleId(int moduleId)
+        {
+            var questions = _questionRepository.GetAll().Where(w => w.Module.ModuleId.Equals(moduleId));
+            return Mapper.Map<List<QuestionDTO>>(questions);
+        }
+
+        public void AssignQuestionToTest(int questionId, int testId)
+        {
+            var question = _questionRepository.Get(q => q.QuestionId.Equals(questionId));
+            var test = _testRepository.Get(t => t.TestId.Equals(testId));
+
+            if (question.Tests == null)
+                question.Tests = new List<Test> {test};
+            else
+                question.Tests.Add(test);
+
+            _questionRepository.SaveChanges();
+        }
+
         public void CreateQuestion(QuestionDTO dtoQuestion)
         {
             var question = Mapper.Map<Question>(dtoQuestion);
@@ -71,5 +90,7 @@ namespace eUni.BusinessLogic.Providers
             question.Text = dtoQuestion.Text;
             _questionRepository.SaveChanges();
         }
+
+
     }
 }

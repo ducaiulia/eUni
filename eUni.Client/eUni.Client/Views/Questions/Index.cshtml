@@ -1,1 +1,67 @@
-﻿<h2>title</h2>
+﻿@model EUni_Client.Models.QuestionResultsViewModel
+
+
+<h2>title</h2>
+
+@if (Model.TestQuestions == null || Model.TestQuestions.Count == 0)
+{
+    <p>No questions assigned to test.</p>
+}
+else
+{
+    <h3>Assigned questions</h3>
+
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>#Id</th>
+            <th>Text</th>
+            <th>Score</th>
+        </tr>
+        @foreach (var question in Model.TestQuestions)
+        {
+            <tr>
+                <td>@question.QuestionId</td>
+                <td>@question.Text</td>
+                <td>@question.Score</td>
+            </tr>
+        }
+    </table>
+    <h3>Module question</h3>
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>#Id</th>
+            <th>Text</th>
+            <th>Score</th>
+            <th></th>
+        </tr>
+        @{
+            var i = 1;
+
+            foreach (var question in Model.ModuleQuestions)
+             {
+                 <tr>
+                     <td>@question.QuestionId</td>
+                     <td>@question.Text</td>
+                     <td>@question.Score</td>
+                     <th><button class="btn btn-default" onclick="AddQuestion(@i, @question.QuestionId, @Model.TestId)" type="submit" id="@i">Add</button></th>
+                 </tr>
+                 i++;
+             }
+        }
+    </table>
+}
+
+<script src="~/Scripts/jquery-2.2.0.js"></script>
+<script>
+    function AddQuestion(btnId, questionId, testId) {
+        $('#'+btnId).prop('disabled', true);
+        $.ajax({
+            method: "POST",
+            url: "/Questions/AddQuestion",
+            data: {questionId: questionId, testId: testId},
+            success: function() {
+                window.location.reload();
+            }
+        });
+    };
+</script>

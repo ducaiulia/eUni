@@ -76,5 +76,34 @@ namespace eUni.WebServices.Controllers
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Question Updated "));
             return Content(HttpStatusCode.OK, "Updated successfully");
         }
+
+        [Route("GetAllByModuleId")]
+        public async Task<IHttpActionResult> GetAllByModuleId(int? moduleId)
+        {
+            if (moduleId == null)
+                return null;
+
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var questionDtos = _questionProvider.GetAllByModuleId(moduleId.Value);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Questions for Module"));
+            return Ok(Mapper.Map<List<QuestionViewModel>>(questionDtos));
+        }
+
+        [Route("AssignQuestionToTest")]
+        [HttpPost]
+        public async Task<IHttpActionResult> AssignQuestionToTest([FromBody]QuestionTestViewModel vm)
+        {
+            if (vm.QuestionId == null || vm.TestId == null)
+                return BadRequest("Id null");
+
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+
+            _questionProvider.AssignQuestionToTest(vm.QuestionId.Value, vm.TestId.Value);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Assign question to test"));
+
+            return Ok();
+        }
     }
 }
