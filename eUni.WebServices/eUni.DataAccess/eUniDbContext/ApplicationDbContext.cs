@@ -84,7 +84,8 @@ namespace eUni.DataAccess.eUniDbContext
 
             modelBuilder.Entity<Course>()
                 .HasMany(x => x.Students)
-                .WithOptional();
+                .WithMany(y => y.Courses);
+
         }
     }
 }

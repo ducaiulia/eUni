@@ -20,7 +20,7 @@ namespace eUni.BusinessLogic.AutoMapper
             Mapper.CreateMap<Course, CourseDTO>()
                 .ForMember(dest => dest.CourseId, opt => opt.MapFrom(src => src.CourseId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Teacher, opt=>opt.Ignore())
+                .ForMember(dest => dest.Teacher, opt=>opt.MapFrom(src => src.Teacher))
                 .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(src => src.CourseCode))
                 .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
                 .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate)).ReverseMap();

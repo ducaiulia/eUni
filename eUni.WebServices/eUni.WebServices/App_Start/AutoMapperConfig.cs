@@ -155,7 +155,11 @@ namespace eUni.WebServices
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
                 .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
-                .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(src => src.CourseCode)).ReverseMap();
+                .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(src => src.CourseCode))
+                .ForMember(dest => dest.TeacherId, opt => opt.MapFrom(src => src.Teacher.DomainUserId))
+                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Teacher.FirstName))
+                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Teacher.LastName))
+                .ReverseMap();
 
         }
 

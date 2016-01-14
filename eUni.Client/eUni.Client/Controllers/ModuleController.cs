@@ -51,7 +51,7 @@ namespace EUni_Client.Controllers
         }
 
         [HttpPost]
-        public async Task<RedirectToRouteResult> UploadFile(FileViewModel fileViewModel)
+        public async Task<RedirectToRouteResult> UploadHomework(FileViewModel fileViewModel)
         {
             dynamic module = JsonConvert.DeserializeObject(fileViewModel.Module);
             var file = fileViewModel.Files[0];
@@ -65,12 +65,16 @@ namespace EUni_Client.Controllers
             return RedirectToAction("Index", "Module", new RouteValueDictionary { { "Module", fileViewModel.Module } });
         }
 
-        public ActionResult Homework(string Module, string Course)
+        public async Task<ActionResult> Homework(string Module, string Course)
         {
-            ViewBag.Module = JsonConvert.DeserializeObject(Module);
+            dynamic module = ViewBag.Module = JsonConvert.DeserializeObject(Module);
             if (Course != null)
                 ViewBag.Course = JsonConvert.DeserializeObject(Course);
-            return View();
+
+            var apiService = Session.GetApiService();
+            var moduleId = (int)module.ModuleId;
+            var homeworks = await apiService.GetAsync<IEnumerable<object>, int>("/Homework/AllHomeworksByModuleId", "moduleId", moduleId);
+            return View(homeworks);
         }
         public async Task<RedirectToRouteResult> CreateCourse(HomeworkCreateViewModel homework)
         {
@@ -114,6 +118,38 @@ namespace EUni_Client.Controllers
             var result = await apiService.PostAsyncWithReturn<string, object>("/Module/Add", new {Name = vm.Name, CourseCode = vm.CourseCode});
             return RedirectToAction("Course", "Courses", new RouteValueDictionary() { {"c", vm.Course} });
         }
+
+
+        public async Task<ActionResult> CreateResource(string Module)
+        {
+            var m = JsonConvert.DeserializeObject(Module);
+            var apiService = Session.GetApiService();
+            var files =
+                await
+                    apiService.GetAsync<IEnumerable<dynamic>, int>("/File/DownloadLink", "moduleId",
+                        (int)(((dynamic)m).ModuleId));
+            ViewBag.Files = files;
+            ViewBag.Module = Module;
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<RedirectToRouteResult> UploadModuleResource(FileViewModel fileViewModel)
+        {
+            dynamic module = JsonConvert.DeserializeObject(fileViewModel.Module);
+            var file = fileViewModel.Files[0];
+            var bytes = file.InputStream.ToByteArray();
+            var apiService = Session.GetApiService();
+            var result = await apiService.PostAsyncWithReturn<object, object>("/File/UploadFile", new
+            {
+                Filename = file.FileName,
+                ContentFile = bytes,
+                module.ModuleId
+            });
+            return RedirectToAction("CreateResource", "Module", new RouteValueDictionary { { "Module", fileViewModel.Module } });
+        }
+
 
         public async Task<ActionResult> CreateQuestions(int moduleId)
         {

@@ -18,6 +18,12 @@
      <input type="submit" class="btn-link" style="color: dodgerblue" value="Wiki" />
 }
 
+@using (Html.BeginForm("CreateResource", "Module"))
+{
+    <input name="Module" value="@ViewBag.Module" style="display: none" />
+    <input type="submit" class="btn-link" style="color: dodgerblue" value="Resources" />
+}
+
 @using (Html.BeginForm("Homework", "Module"))
 {
     <input name="Module" value="@ViewBag.Module" style="display: none" />

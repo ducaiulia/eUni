@@ -150,15 +150,47 @@ namespace eUni.WebServices.Controllers
             return Content(HttpStatusCode.OK, allUsers);
         }
 
-        [Route("EnrollUserToCourse")]
-        public async Task<IHttpActionResult> EnrollUserToCourse(CourseViewModel course, UserViewModel user)
+        [Route("AllStudentsByCourse")]
+        public async Task<IHttpActionResult> GetAllStudentsByCourseId(int courseId)
         {
-            var result = _userProvider.EnrollUserToCourse(course.CourseCode, user.DomainUserId);
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+
+            List<DomainUserDTO> users = _userProvider.GetAllStudentsByCourseId(courseId);
+            var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all admins"));
+            return Content(HttpStatusCode.OK, allUsers);
+        }
+
+        [Route("AllStudentsByCourseWithPagination")]
+        public async Task<IHttpActionResult> GetAllStudentsByCourseWithPagination(int courseId, int? pageNumber, int? pageSize)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+
+            var filter = new PaginationFilter()
+            {
+                PageNumber = pageNumber ?? 1,
+                PageSize = pageSize ?? 20
+            };
+
+            List<DomainUserDTO> users = _userProvider.GetAllStudentsByCourseIdPagination(courseId, filter);
+            var allUsers = Mapper.Map<IEnumerable<UserViewModel>>(users);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get all admins"));
+            return Content(HttpStatusCode.OK, allUsers);
+        }
+
+        [Route("EnrollUserToCourse")]
+        public async Task<IHttpActionResult> EnrollUserToCourse(int courseId, int userId)
+        {
+            var result = _userProvider.EnrollUserToCourse(courseId, userId);
 
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Enroll user to course"));
 
             return Content(HttpStatusCode.OK, new ResultViewModel() { Succeeded = result.Succeeded, ErrorMessage = result.ErrorMessage });
         }
+
+
     }
 }
