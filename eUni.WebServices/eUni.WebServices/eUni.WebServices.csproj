@@ -285,6 +285,7 @@
     <Compile Include="Models\OutputModels\MessageOutModel.cs" />
     <Compile Include="Models\OutputModels\NamedEntityOutModel.cs" />
     <Compile Include="Models\OutputModels\WikiPageOutModel.cs" />
+    <Compile Include="Models\QuestionAnswersViewModel.cs" />
     <Compile Include="Models\QuestionTestViewModel.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\ResultViewModel.cs" />

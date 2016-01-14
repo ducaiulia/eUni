@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using eUni.BusinessLogic.IProviders;
 using eUni.BusinessLogic.Providers.DataTransferObjects;
@@ -21,7 +22,7 @@ namespace eUni.BusinessLogic.Providers
         public void CreateAnswer(AnswerDTO dtoAnswer)
         {
             var answer = Mapper.Map<Answer>(dtoAnswer);
-            var question = _questionRepository.Get(u => u.QuestionId == dtoAnswer.AnswerId);
+            var question = _questionRepository.Get(u => u.QuestionId == dtoAnswer.QuestionId);
             if (question == null)
             {
                 throw new Exception("Question was not found");
@@ -56,6 +57,12 @@ namespace eUni.BusinessLogic.Providers
             answer.Text = dtoAnswer.Text;
             answer.IsCorrect = dtoAnswer.IsCorrect;
             _answerRepository.SaveChanges();
+        }
+
+        public void CreateAnswers(IEnumerable<AnswerDTO> dtoAnswers)
+        {
+            foreach(var a in dtoAnswers)
+                CreateAnswer(a);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace eUni.BusinessLogic.IProviders
 {
     public interface IQuestionProvider
     {
-        void CreateQuestion(QuestionDTO dtoQuestion);
+        int CreateQuestion(QuestionDTO dtoQuestion);
         void UpdateQuestion(QuestionDTO dtoQuestion);
         void DeleteQuestionWithId(int id);
         QuestionDTO GetQuestionById(int id);

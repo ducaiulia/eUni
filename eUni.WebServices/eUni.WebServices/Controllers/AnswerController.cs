@@ -8,6 +8,7 @@ using System.Web.Http;
 using AutoMapper;
 using eUni.BusinessLogic.IProviders;
 using eUni.BusinessLogic.Providers.DataTransferObjects;
+using eUni.DataAccess.Domain;
 using eUni.WebServices.Helpers;
 using eUni.WebServices.Models;
 
@@ -61,6 +62,18 @@ namespace eUni.WebServices.Controllers
 
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Answer updated"));
             return Content(HttpStatusCode.OK, "Updated successfully");
+        }
+
+        [Route("CreateAnswersForQuestion")]
+        public async Task<IHttpActionResult> CreateAnswersForQuestion([FromBody]QuestionAnswersViewModel vm)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            vm.Answers.ToList().ForEach(f => f.QuestionId = vm.QuestionId);
+
+            _answerProvider.CreateAnswers(Mapper.Map<IEnumerable<AnswerDTO>>(vm.Answers));
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Answers assigned to question"));
+            return Ok();
         }
     }
 }
