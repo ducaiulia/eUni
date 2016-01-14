@@ -39,6 +39,12 @@
     <input name="Module" value="@ViewBag.Module" style="display: none" />
     <input type="submit" class="btn btn-default" value="Create Homework" />
 }
+
+@using (Html.BeginForm("CreateQuestions", "Module"))
+{
+    <input name="moduleId" value="@ViewBag.Module.ModuleId" style="display: none" />
+    <input type="submit" class="btn btn-default" value="Create Questions for Module" />
+}
 @*@Html.ActionLink("Create homework", "CreateHomework", "Module", new
 {
     Module = ViewBag.Module,

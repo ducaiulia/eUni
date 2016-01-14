@@ -114,6 +114,23 @@ namespace EUni_Client.Controllers
             var result = await apiService.PostAsyncWithReturn<string, object>("/Module/Add", new {Name = vm.Name, CourseCode = vm.CourseCode});
             return RedirectToAction("Course", "Courses", new RouteValueDictionary() { {"c", vm.Course} });
         }
+
+        public async Task<ActionResult> CreateQuestions(int moduleId)
+        {
+            var apiService = Session.GetApiService();
+            var moduleQuestions = await apiService.GetAsync<IList<QuestionViewModel>, int>("/Question/GetAllByModuleId", "moduleId", moduleId);
+            ViewBag.ModuleId = moduleId;
+
+            return View(moduleQuestions);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddQuestion(string text, int score, int moduleId)
+        {
+            var apiService = Session.GetApiService();
+            var result = await apiService.PostAsyncWithReturn<string, object>("/Question/Add", new { Text = text, Score = score, ModuleId = moduleId });
+            return RedirectToAction("CreateQuestions", "Module", new RouteValueDictionary() { { "moduleId", moduleId } });
+        }
     }
 
         public class FileViewModel

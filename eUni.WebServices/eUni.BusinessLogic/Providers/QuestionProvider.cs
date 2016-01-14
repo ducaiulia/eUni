@@ -76,11 +76,12 @@ namespace eUni.BusinessLogic.Providers
         {
             var question = Mapper.Map<Question>(dtoQuestion);
             question.Module = _moduleRepository.Get(u => u.ModuleId == dtoQuestion.ModuleId);
-            var test = _testRepository.Get(u => u.TestId == dtoQuestion.TestId);
-            test.Questions.Add(question);
-            _questionRepository.Add(question);
+            //var test = _testRepository.Get(u => u.TestId == dtoQuestion.TestId);
 
-            _testRepository.SaveChanges();
+            //test.Questions.Add(question);
+            _questionRepository.Add(question);
+            _questionRepository.SaveChanges();
+//            _testRepository.SaveChanges();
         }
 
         public void UpdateQuestion(QuestionDTO dtoQuestion)
