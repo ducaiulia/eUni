@@ -1,25 +1,24 @@
-﻿
+﻿<h2>@ViewBag.Homework.Text</h2>
 
-<h2>Create Module Resource</h2>
-
+<h2>Teacher section</h2>
 <table class="table table-striped table-hover">
     <tr>
         <th>#</th>
-        <th>File Name</th>
-        <th>Path</th>
+        <th>Student</th>
+        <th>File</th>
     </tr>
-    @{
+    @*@{
         var i = 0;
-        foreach (var file in ViewBag.Files)
+        foreach (var homework in ViewBag.Homeworks)
         {
             i++;
             <tr>
                 <td>@i</td>
                 <td>
-                    @file.Filename
+                    @homework.Filename
                 </td>
                 <td>
-                    <a href="@file.Path" class="btn btn-primary" style="width: 150px">
+                    <a href="@homework.Path" class="btn btn-primary" style="width: 150px">
                         <div class="glyphicon glyphicon-download col-md-1" style="margin: 5px 0 0 0">
                         </div>
                         <div style="font-family: Roboto; margin: 1px 0 0 0">Download</div>
@@ -27,31 +26,23 @@
                 </td>
             </tr>
         }
-    }
+    }*@
 </table>
 
-@using (Html.BeginForm("UploadModuleResource", "Module", null, FormMethod.Post, new { enctype = "multipart/form-data", id = "myForm" }))
+
+<h2>Student Section</h2>
+
+@using (Html.BeginForm("UploadHomework", "Homework", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-group">
         <div class="">
+            <input type="text" name="Homework" value="@ViewBag.Homework" style="display: none" />
             <input type="text" name="Module" value="@ViewBag.Module" style="display: none" />
             <input type="file" id="Avatar" name="Files" class="btn" />
             <br />
-            <input type="submit" value="Upload Resource" class="btn btn-default" disabled="" />
+            <input type="submit" value="Upload Homework" class="btn btn-default" />
         </div>
     </div>
 }
-
-@Scripts.Render("~/bundles/jquery")
-<script>
-    $('#myForm').submit(function () {
-        $('input:submit').prop('disabled', true);
-    });
-    $(function () {
-        $("input:file").change(function () {
-            $('input:submit').prop('disabled', false);
-        });
-    });
-</script>
