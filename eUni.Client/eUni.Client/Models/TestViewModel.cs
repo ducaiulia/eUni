@@ -10,5 +10,6 @@ namespace EUni_Client.Models
         public int TestId { get; set; }
         public string Name { get; set; }
         public int ModuleId { get; set; }
+        public List<QuestionViewModel> Questions { get; set; }
     }
 }

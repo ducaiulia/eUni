@@ -37,7 +37,9 @@ namespace EUni_Client.Controllers
         public async Task<ActionResult> TakeTest(int testId)
         {
             var apiService = Session.GetApiService();
-            var tests = await apiService.GetAsync<IEnumerable<dynamic>, int>("/Test/GetAllQuestionsByTestId", "testId", testId);
+            var tests = await apiService.GetAsync<TestViewModel, int>("/Test/GetAllQuestionsByTestId", "testId", testId);
+
+
             return View(tests);
         }
 

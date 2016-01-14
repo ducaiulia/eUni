@@ -1,4 +1,18 @@
-﻿<h2>Test</h2>
+﻿@model EUni_Client.Models.TestViewModel
+    
+<h2>@Model.Name</h2>
+
+
+@foreach (var question in Model.Questions)
+{
+    <h3>@question.Text</h3>
+    foreach (var answer in question.)
+    {
+        <p>@answer.</p>
+    }
+}
+
+
 
 @using (Html.BeginForm("SubmitTest", "Test", FormMethod.Post))
 {
