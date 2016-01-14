@@ -25,9 +25,10 @@ namespace eUni.WebServices.Controllers
             _userProvider = userProvider;
         }
 
-        public string Get(int id)
+        [Route("GetByUsername")]
+        public async Task<IHttpActionResult> GetByUsername(string username)
         {
-            return "value";
+            return Ok(Mapper.Map<UserViewModel>(_userProvider.GetByUserName(username)));
         }
 
         [Route("AllUsers")]

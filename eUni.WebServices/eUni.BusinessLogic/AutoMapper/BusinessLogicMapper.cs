@@ -82,7 +82,9 @@ namespace eUni.BusinessLogic.AutoMapper
                 .ForMember(dest => dest.QuestionId, opt => opt.MapFrom(src => src.QuestionId))
                 .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
                 .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.Module.ModuleId))
-                .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score)).ReverseMap();
+                .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score))
+                .ForMember(dest => dest.Answers, opt => opt.MapFrom(src => src.Answers))
+                .ReverseMap();
         }
 
         public static void TestMappings()
@@ -90,7 +92,9 @@ namespace eUni.BusinessLogic.AutoMapper
             Mapper.CreateMap<Test, TestDTO>()
                 .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.Module.ModuleId))
                 .ForMember(dest => dest.TestId, opt => opt.MapFrom(src => src.TestId))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name)).ReverseMap();
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Questions, opt => opt.MapFrom(src => src.Questions))
+                .ReverseMap();
         }
 
         public static void StudentHWMappings()
