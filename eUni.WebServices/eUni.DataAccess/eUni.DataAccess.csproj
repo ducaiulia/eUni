@@ -118,6 +118,10 @@
     <Compile Include="Migrations\201601121908199_Added_Many_To_Many_Tests_Questions.Designer.cs">
       <DependentUpon>201601121908199_Added_Many_To_Many_Tests_Questions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601141808531_Added_StudentCourse.cs" />
+    <Compile Include="Migrations\201601141808531_Added_StudentCourse.Designer.cs">
+      <DependentUpon>201601141808531_Added_StudentCourse.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AnswerRepository.cs" />
@@ -178,6 +182,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601121908199_Added_Many_To_Many_Tests_Questions.resx">
       <DependentUpon>201601121908199_Added_Many_To_Many_Tests_Questions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601141808531_Added_StudentCourse.resx">
+      <DependentUpon>201601141808531_Added_StudentCourse.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
