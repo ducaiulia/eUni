@@ -198,13 +198,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\ForumsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HomeworkController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="Controllers\MangeController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\VideoConferenceController.cs" />
     <Compile Include="Controllers\WikiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1073,6 +1076,8 @@
     <Content Include="Views\Courses\Course.cshtml" />
     <Content Include="Views\Courses\AssignTeacher.cshtml" />
     <Content Include="Views\Logs\Index.cshtml" />
+    <None Include="Views\Forums\Index.cshtml" />
+    <None Include="Views\Homework\Index.cshtml" />
     <None Include="Views\Mange\Index.cshtml" />
     <Content Include="Views\Module\Index.cshtml" />
     <Content Include="Views\Module\Content.cshtml" />
@@ -1086,6 +1091,7 @@
     <Content Include="Views\Module\CreateResource.cshtml" />
     <Content Include="Views\Module\CreateQuestions.cshtml" />
     <None Include="Views\Test\TakeTest.cshtml" />
+    <None Include="Views\VideoConference\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

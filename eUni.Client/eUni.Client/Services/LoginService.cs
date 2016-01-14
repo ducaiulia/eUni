@@ -62,7 +62,6 @@ namespace EUni_Client.Services
                 {
                     return UserRole.Admin;
                 }
-                //TODO
                 return UserRole.Student;
             }
         }

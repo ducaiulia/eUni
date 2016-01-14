@@ -17,9 +17,15 @@
             <tr>
                 <td>@i</td>
                 <td>
-                    <a href="@file.Path">@file.Filename</a>
+                    @file.Filename
                 </td>
-                <td>@file.Path</td>
+                <td>
+                    <a href="@file.Path" class="btn btn-primary" style="width: 150px">
+                        <div class="glyphicon glyphicon-download col-md-1" style="margin: 5px 0 0 0">
+                        </div>
+                        <div style="font-family: Roboto; margin: 1px 0 0 0">Download</div>
+                    </a>
+                </td>
             </tr>
         }
     }

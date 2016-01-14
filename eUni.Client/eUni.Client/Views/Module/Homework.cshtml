@@ -17,25 +17,16 @@
             i++;
             <tr>
                 <td>@i</td>
-                <td><a href="de_pus_action_link">@homework.Text</a></td>
+                <td>
+                    @using (Html.BeginForm("Index", "Homework"))
+                    {
+                        <input name="hw" value="@homework" hidden />
+                        <input name="module" value="@ViewBag.Module" hidden/>
+                        <input type="submit" class="btn-link" style="color: dodgerblue" value="@homework.Text">
+                    }
+                </td>
                 <td>@homework.Score</td>
             </tr>
         }
     }
 </table>
-
-<h2>Student Section</h2>
-
-@using (Html.BeginForm("UploadHomework", "Module", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-group">
-        <div class="">
-            <input type="text" name="Module" value="@ViewBag.Module" style="display: none"/>
-            <input type="file" id="Avatar" name="Files" class="btn"/>
-            <br/>
-            <input type="submit" value="Upload Homework" class="btn btn-default" />
-        </div>
-    </div>
-}
