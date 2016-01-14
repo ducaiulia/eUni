@@ -1,0 +1,45 @@
+﻿@model IList<EUni_Client.Models.QuestionViewModel>
+
+<br/><br/>
+
+<title>Create Questions</title>
+
+
+@if (Model == null || Model.Count == 0)
+{
+    <p>No questions for this module. Feel free to add.</p>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>#Id</th>
+            <th>Text</th>
+            <th>Score</th>
+        </tr>
+        @foreach (var question in Model)
+        {
+            <tr>
+                <td>@question.QuestionId</td>
+                <td>@question.Text</td>
+                <td>@question.Score</td>
+            </tr>
+        }
+    </table>
+}
+
+    @using (Ajax.BeginForm("AddQuestion", "Module", new AjaxOptions { HttpMethod = "POST"}))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <label>Question:</label>
+            <input class="form-control" name="text"/>
+        </div>
+        <div class="form-group">
+            <label>Score:</label>
+            <input class="form-control" name="score"/>
+        </div>
+        <input name="moduleId" value="@ViewBag.ModuleId" hidden/>
+        <button type="submit">Add</button>
+    }
+
