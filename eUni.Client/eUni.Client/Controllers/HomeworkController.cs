@@ -29,7 +29,7 @@ namespace EUni_Client.Controllers
             var file = fileViewModel.Files[0];
             var bytes = file.InputStream.ToByteArray();
             var apiService = Session.GetApiService();
-            var studentId = await apiService.GetAsync<int, string>("", );
+            var studentId = (await apiService.GetAsync<dynamic, string>("/User/GetByUsername", "username", apiService.Username)).DomainUserId;
             var result = await apiService.PostAsyncWithReturn<object, object>("/Homework/UploadHomeworkAnswer", new
             {
                 StudentId = studentId,

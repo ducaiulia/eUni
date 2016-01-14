@@ -19,13 +19,15 @@ namespace eUni.BusinessLogic.Providers
         private readonly IHomeworkRepository _homeworkRepo;
         private readonly IModuleRepository _moduleRepo;
         private readonly IFileRepository _fileRepo;
+        private readonly IUserRepository _userRepo;
         private readonly IStudentHomeworkRepository _studentHomeworkRepo;
-        public HomeworkProvider(IFileRepository fileRepo, IHomeworkRepository homeworkRepo, IModuleRepository moduleRepo, IStudentHomeworkRepository studentHomeworkRepo)
+        public HomeworkProvider(IFileRepository fileRepo, IHomeworkRepository homeworkRepo, IModuleRepository moduleRepo, IStudentHomeworkRepository studentHomeworkRepo, IUserRepository userRepo)
         {
             _homeworkRepo = homeworkRepo;
             _fileRepo = fileRepo;
             _moduleRepo = moduleRepo;
             _studentHomeworkRepo = studentHomeworkRepo;
+            _userRepo = userRepo;
         }
 
         public void CreateHomework(HomeworkDTO dtoHw)
@@ -104,10 +106,12 @@ namespace eUni.BusinessLogic.Providers
                 var stHW = item.First().StudentHomework;
                 upl.StudentId = stHW.DomainUserId;
                 upl.Grade = stHW.Grade;
-                upl.Paths = new List<string>();
+                upl.Paths = new List<FileDTO>();
+                var user = _userRepo.Get(u => u.DomainUserId == stHW.DomainUserId);
+                upl.FullUserName = user.LastName + " " + user.FirstName;
                 foreach (var file in item)
                 {
-                    upl.Paths.Add(await GetDownloadLink(file.Path));
+                    upl.Paths.Add(new FileDTO {Path = await GetDownloadLink(file.Path), FileName = file.FileName});
                 }
                 result.Add(upl);
             }

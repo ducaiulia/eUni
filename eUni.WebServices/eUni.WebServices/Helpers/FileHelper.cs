@@ -39,7 +39,7 @@ namespace eUni.WebServices.Helpers
                         {
                             await dbx.Files.UploadAsync(
                                 path,
-                                WriteMode.Add.Instance,
+                                WriteMode.Add.Instance.AsAdd,
                                 body: memoryStream);
                             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(username, "Upload File"));
                         }

@@ -12,6 +12,7 @@ using eUni.BusinessLogic.Providers.DataTransferObjects;
 using eUni.WebServices.Helpers;
 using eUni.WebServices.Models;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 
 namespace eUni.WebServices.Controllers
 {
@@ -28,7 +29,8 @@ namespace eUni.WebServices.Controllers
         [Route("GetByUsername")]
         public async Task<IHttpActionResult> GetByUsername(string username)
         {
-            return Ok(Mapper.Map<UserViewModel>(_userProvider.GetByUserName(username)));
+            var uname = JsonConvert.DeserializeObject<string>(username);
+            return Ok(Mapper.Map<UserViewModel>(_userProvider.GetByUserName(uname)));
         }
 
         [Route("AllUsers")]

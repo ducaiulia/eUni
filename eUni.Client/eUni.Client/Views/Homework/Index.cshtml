@@ -7,7 +7,7 @@
         <th>Student</th>
         <th>File</th>
     </tr>
-    @*@{
+    @{
         var i = 0;
         foreach (var homework in ViewBag.Homeworks)
         {
@@ -15,18 +15,21 @@
             <tr>
                 <td>@i</td>
                 <td>
-                    @homework.Filename
+                    @homework.FullUserName
                 </td>
                 <td>
-                    <a href="@homework.Path" class="btn btn-primary" style="width: 150px">
-                        <div class="glyphicon glyphicon-download col-md-1" style="margin: 5px 0 0 0">
-                        </div>
-                        <div style="font-family: Roboto; margin: 1px 0 0 0">Download</div>
-                    </a>
+                    @foreach (var file in homework.Paths)
+                    {
+                        <a href="@file.Path" class="btn btn-primary" style="width: 150px" data-toggle="tooltip" title="@file.FileName">
+                            <div class="glyphicon glyphicon-download col-md-1" style="margin: 5px 0 0 0">
+                            </div>
+                            <div style="font-family: Roboto; margin: 1px 0 0 0">Download</div>
+                        </a>
+                    }
                 </td>
             </tr>
         }
-    }*@
+    }
 </table>
 
 
