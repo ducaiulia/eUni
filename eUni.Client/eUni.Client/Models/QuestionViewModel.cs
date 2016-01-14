@@ -12,5 +12,6 @@ namespace EUni_Client.Models
         public int Score { get; set; }
         public int ModuleId { get; set; }
         public int TestId { get; set; }
+        public IList<AnswerViewModel> Answers { get; set; }
     }
 }

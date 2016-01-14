@@ -102,7 +102,7 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("GetAllQuestionsByTestId")]
-        public async Task<IHttpActionResult> GetAllQuestionsByTestId(int testId)
+        public async Task<IHttpActionResult> GetAllQuestionsByTestId(int? testId)
         {
             if (testId == null)
             {
@@ -110,7 +110,7 @@ namespace eUni.WebServices.Controllers
             }
 
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
-            var testDto = _testProvider.GetByTestId(testId);
+            var testDto = _testProvider.GetByTestId(testId.Value);
 
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Questions for Test"));
             return Content(HttpStatusCode.OK, testDto.Questions);
