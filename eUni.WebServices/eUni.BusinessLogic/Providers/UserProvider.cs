@@ -48,7 +48,7 @@ namespace eUni.BusinessLogic.Providers
             return Mapper.Map<DomainUserDTO>(user.DomainUser);
         }
 
-        public DomainUserDTO GetByName(string lastName,string firstName)
+        public DomainUserDTO GetByName(string lastName, string firstName)
         {
             var user = _userRepo.Get(u => u.FirstName.Trim().Equals(firstName) && u.LastName.Trim().Equals(lastName));
             return Mapper.Map<DomainUserDTO>(user);
@@ -59,10 +59,10 @@ namespace eUni.BusinessLogic.Providers
         /// </summary>
         /// <param name="courseCode">the course code to match the course.</param>
         /// <returns></returns>
-        public ResultActionDTO EnrollUserToCourse(string courseCode, int domainUserId)
+        public ResultActionDTO EnrollUserToCourse(int courseId, int userId)
         {
-            var course = _courseRepo.Get(u => u.CourseCode == courseCode);
-            var user = _userRepo.Get(x => x.DomainUserId == domainUserId);
+            var course = _courseRepo.Get(u => u.CourseId == courseId);
+            var user = _userRepo.Get(x => x.DomainUserId == userId);
             if (course == null)
             {
                 return new ResultActionDTO() { Succeeded = false, ErrorMessage = "Course not found!" };
@@ -188,6 +188,25 @@ namespace eUni.BusinessLogic.Providers
             }
 
             return adminUsers;
+        }
+
+        public List<DomainUserDTO> GetAllStudentsByCourseId(int courseId)
+        {
+            var students = _courseRepo.Get(x => x.CourseId == courseId).Students;
+            var studentsDto = Mapper.Map<List<DomainUserDTO>>(students);
+            return studentsDto;
+        }
+
+        public List<DomainUserDTO> GetAllStudentsByCourseIdPagination(int courseId, PaginationFilter filter)
+        {
+            var students = _courseRepo.Get(x => x.CourseId == courseId)
+                .Students
+                .Skip((filter.PageNumber - 1) * filter.PageSize)
+                .Take(filter.PageSize)
+                .ToList(); 
+
+            var studentsDto = Mapper.Map<List<DomainUserDTO>>(students);
+            return studentsDto;
         }
     }
 }

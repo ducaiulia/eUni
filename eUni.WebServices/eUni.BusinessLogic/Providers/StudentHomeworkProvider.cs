@@ -2,11 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using eUni.BusinessLogic.Providers.DataTransferObjects;
 using eUni.DataAccess.Repository;
-using AutoMapper;
 using eUni.DataAccess.Domain;
 
 namespace eUni.BusinessLogic.Providers

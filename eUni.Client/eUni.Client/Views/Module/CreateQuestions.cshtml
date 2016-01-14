@@ -28,18 +28,69 @@ else
     </table>
 }
 
-    @using (Ajax.BeginForm("AddQuestion", "Module", new AjaxOptions { HttpMethod = "POST"}))
+    @using (Ajax.BeginForm("AddQuestion", "Module", new AjaxOptions { HttpMethod = "POST"}, new {id="myForm"}))
     {
         @Html.AntiForgeryToken()
         <div class="form-group">
             <label>Question:</label>
-            <input class="form-control" name="text"/>
+            <input class="form-control" name="text" required=""/>
         </div>
         <div class="form-group">
             <label>Score:</label>
-            <input class="form-control" name="score"/>
+            <input type="number" class="form-control" name="score" required/>
         </div>
         <input name="moduleId" value="@ViewBag.ModuleId" hidden/>
-        <button type="submit">Add</button>
+
+        <label>Answers:</label>
+        <div class="multi-field-wrapper">
+            <div class="multi-fields">
+                <div class="multi-field form-group">
+                    <input type="text" name="answers" required>
+                    <input type="checkbox" name="isCorrect" onclick="toggle(this)" value="false"/>
+                    <button type="button" class="remove-field btn btn-danger">Remove</button>
+                    <br/>
+                </div>
+            </div>
+            <button type="button" class="add-field">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button>
+        </div>
+        <br/>
+
+        <button type="submit" class="btn btn-default" id="submitBtn">Submit</button>
     }
+
+<script src="~/Scripts/jquery-2.2.0.js"></script>
+<script>
+    $("#myForm").submit(function (event) {
+        var temp = $('input:checkbox');
+        temp.each(function () {
+            $(this).prop('checked', true);
+        });
+        $("#submitBtn").prop("disabled", true);
+    });
+    
+
+    $('.multi-field-wrapper').each(function () {
+        var $wrapper = $('.multi-fields', this);
+        $(".add-field", $(this)).click(function (e) {
+            $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
+        });
+        $('.multi-field .remove-field', $wrapper).click(function () {
+            if ($('.multi-field', $wrapper).length > 1)
+                $(this).parent('.multi-field').remove();
+        });
+    });
+
+    function toggle(button) {
+        var temp = $('input:checkbox');
+        temp.each(function() {
+            $(this).val(false);
+            $(this).prop('checked', false);
+        });
+
+        $(button).val(true);
+        $(button).prop('checked', true);
+    }
+</script>
 

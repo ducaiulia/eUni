@@ -30,10 +30,10 @@ namespace eUni.WebServices.Controllers
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
             QuestionDTO dtoQuestion = Mapper.Map<QuestionDTO>(question);
-            _questionProvider.CreateQuestion(dtoQuestion);
+            var questionId = _questionProvider.CreateQuestion(dtoQuestion);
 
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Question created"));
-            return Content(HttpStatusCode.OK, "Created successfully");
+            return Content(HttpStatusCode.OK, questionId);
         }
 
         [Route("Remove")]

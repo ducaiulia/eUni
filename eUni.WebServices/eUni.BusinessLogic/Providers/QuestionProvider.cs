@@ -72,7 +72,7 @@ namespace eUni.BusinessLogic.Providers
             _questionRepository.SaveChanges();
         }
 
-        public void CreateQuestion(QuestionDTO dtoQuestion)
+        public int CreateQuestion(QuestionDTO dtoQuestion)
         {
             var question = Mapper.Map<Question>(dtoQuestion);
             question.Module = _moduleRepository.Get(u => u.ModuleId == dtoQuestion.ModuleId);
@@ -82,6 +82,7 @@ namespace eUni.BusinessLogic.Providers
             _questionRepository.Add(question);
             _questionRepository.SaveChanges();
 //            _testRepository.SaveChanges();
+            return question.QuestionId;
         }
 
         public void UpdateQuestion(QuestionDTO dtoQuestion)

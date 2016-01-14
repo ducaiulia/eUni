@@ -147,10 +147,20 @@ namespace EUni_Client.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddQuestion(string text, int score, int moduleId)
+        public async Task<ActionResult> AddQuestion(string text, int score, int moduleId, IList<string> answers, IList<string> isCorrect)
         {
             var apiService = Session.GetApiService();
-            var result = await apiService.PostAsyncWithReturn<string, object>("/Question/Add", new { Text = text, Score = score, ModuleId = moduleId });
+            var questionId = await apiService.PostAsyncWithReturn<int, object>("/Question/Add", new { Text = text, Score = score, ModuleId = moduleId });
+
+            var answersVm = new List<AnswerViewModel>();
+
+            for (int i = 0; i < answers.Count(); i++)
+            {
+                answersVm.Add(new AnswerViewModel {QuestionId = questionId, Text = answers[i], IsCorrect = bool.Parse(isCorrect[i])});
+            }
+
+            await apiService.PostAsync("/Answer/CreateAnswersForQuestion", new { QuestionId = questionId, Answers = answersVm});
+
             return RedirectToAction("CreateQuestions", "Module", new RouteValueDictionary() { { "moduleId", moduleId } });
         }
     }

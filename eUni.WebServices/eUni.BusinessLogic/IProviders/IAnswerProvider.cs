@@ -1,4 +1,5 @@
-﻿using eUni.BusinessLogic.Providers.DataTransferObjects;
+﻿using System.Collections.Generic;
+using eUni.BusinessLogic.Providers.DataTransferObjects;
 
 namespace eUni.BusinessLogic.IProviders
 {
@@ -8,5 +9,6 @@ namespace eUni.BusinessLogic.IProviders
         void DeleteAnswerWithId(int answerId);
         bool IsCorrectAnswerWithId(int answerId);
         void UpdateAnswer(AnswerDTO dtoAnswer);
+        void CreateAnswers(IEnumerable<AnswerDTO> dtoAnswers);
     }
 }
