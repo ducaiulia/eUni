@@ -29,10 +29,10 @@ namespace EUni_Client.Controllers
             var file = fileViewModel.Files[0];
             var bytes = file.InputStream.ToByteArray();
             var apiService = Session.GetApiService();
+            var studentId = await apiService.GetAsync<int, string>("", );
             var result = await apiService.PostAsyncWithReturn<object, object>("/Homework/UploadHomeworkAnswer", new
             {
-                //TODO
-                StudentId = apiService.Username,
+                StudentId = studentId,
                 Filename = file.FileName,
                 ContentFile = bytes,
                 homeworkId = homework.HomeworkId
