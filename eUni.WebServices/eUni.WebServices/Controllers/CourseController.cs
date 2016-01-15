@@ -71,7 +71,7 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("AssignTeacher")]
-        [@Authorize("teacher")]
+        [@Authorize("admin")]
         public async Task<IHttpActionResult> AssignTeacher(string lastName, string firstName, string courseCode)
         {
             CourseDTO course = _courseProvider.GetByCourseCode(courseCode);
