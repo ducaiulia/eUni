@@ -16,13 +16,13 @@ namespace EUni_Client.Controllers
         {
             var apiService = Session.GetApiService();
 
-            var testQuestions =  await apiService.GetAsync<IList<QuestionViewModel>, int>("/Test/GetAllQuestionsByTestId", "testId", vm.TestId);
+            var testQuestions =  await apiService.GetAsync<TestViewModel, int>("/Test/GetAllQuestionsByTestId", "testId", vm.TestId);
 
             var moduleQuestions = await apiService.GetAsync<IList<QuestionViewModel>, int>("/Question/GetAllByModuleId", "moduleId", vm.ModuleId);
 
-            var unassigned = moduleQuestions.Where(q => !testQuestions.Any(t => t.QuestionId.Equals(q.QuestionId)));
+            var unassigned = moduleQuestions.Where(q => !testQuestions.Questions.Any(t => t.QuestionId.Equals(q.QuestionId)));
 
-            return View(new QuestionResultsViewModel {TestId = vm.TestId, ModuleQuestions = unassigned.ToList(), TestQuestions = testQuestions});
+            return View(new QuestionResultsViewModel {TestId = vm.TestId, ModuleQuestions = unassigned.ToList(), TestQuestions = testQuestions.Questions});
         }
 
         [HttpPost]
