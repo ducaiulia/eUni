@@ -36,6 +36,16 @@ namespace eUni.WebServices.Controllers
             return Content(HttpStatusCode.OK, coursesViewModels);
         }
 
+        [Route("GetAllCoursesByStudId")]
+        public async Task<IHttpActionResult> GetAllCoursesByStudId(int studId)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var coursesDTO = _courseProvider.GetAllByStudentId(studId);
+            var coursesViewModels = Mapper.Map<List<CourseViewModel>>(coursesDTO);
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Courses by studId "));
+            return Content(HttpStatusCode.OK, coursesViewModels);
+        }
+
         [Route("Add")]
         public async Task<IHttpActionResult> Add(CourseViewModel course)
         {
