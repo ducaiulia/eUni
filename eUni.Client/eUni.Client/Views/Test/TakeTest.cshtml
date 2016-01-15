@@ -1,4 +1,5 @@
-﻿@model EUni_Client.Models.TestViewModel
+﻿@using Newtonsoft.Json
+@model EUni_Client.Models.TestViewModel
     
 <h2>@Model.Name</h2>
 
@@ -6,23 +7,78 @@
 @foreach (var question in Model.Questions)
 {
     <h3>@question.Text</h3>
-    foreach (var answer in question.)
-    {
-        <p>@answer.</p>
-    }
+    <label for="score_@question.QuestionId">Score:</label>
+    <p id="score_@question.QuestionId">@question.Score</p>
+    <div id="@question.QuestionId">
+        @foreach (var answer in question.Answers)
+        {
+            <div>
+                <input type="radio" name="[@question.QuestionId]answer" id="[@question.QuestionId]answer" value="@(JsonConvert.SerializeObject(answer))" />
+                <label for="[@question.QuestionId]answer">@answer.Text</label>
+            </div>
+        }
+    </div>
+    <button type="button" class="btn btn-success" onclick="CheckAnswer(@question.QuestionId)" id="btn_@question.QuestionId">Submit Answer</button>
 }
 
+    <input hidden id="finalScore" name="finalScore"/>
+    <button type="submit" class="btn btn-success" onclick="SubmitTest(@ViewBag.StudentId, @ViewBag.TestId)">Submit Test</button>
 
+<div class="bs-example">
+    <!-- Button HTML (to Trigger Modal) -->
+    <a href="#myModal" class="btn btn-lg btn-primary" data-toggle="modal">Launch Demo Modal</a>
 
-@using (Html.BeginForm("SubmitTest", "Test", FormMethod.Post))
-{
+    <!-- Modal HTML -->
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Do you want to save changes you made to document before closing?</p>
+                    <p class="text-warning"><small>If you don't save, your changes will be lost.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    foreach (var question in Model)
-    {
-        <input name="testData" type="text" value="@question" />
-    }
+<script src="~/Scripts/jquery-2.2.0.js"></script>
+<script>
+    var finalScore = 0;
 
-    <input type="submit" value="Submit" />
+    function CheckAnswer(id) {
+        var data = $("#" + id + " div").children(":input:checked").val();
+        var isCorrect = JSON.parse(data)["IsCorrect"];
+        $("#" + id + " div").children(":input").prop("disabled", true);
+        $("#btn_" + id).prop('disabled', true);
 
-}
+        var score = $("#score_" + id).text();
 
+        if (isCorrect === true) {
+            finalScore = +finalScore + +score;
+        }
+
+        $("#finalScore").val(finalScore);
+        console.log(finalScore);
+    };
+
+    function SubmitTest(studentId, testId) {
+        var grade = $("#finalScore").val();
+
+        $.ajax({
+            method: "POST",
+            url: "/Test/SubmitFinalGrade",
+            data: { studentId: studentId, finalScore: grade, testId: testId },
+            success: function() {
+                console.log("SUCCES");
+            }
+        });
+    };
+</script>

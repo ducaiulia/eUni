@@ -37,15 +37,26 @@ namespace EUni_Client.Controllers
         public async Task<ActionResult> TakeTest(int testId)
         {
             var apiService = Session.GetApiService();
-            var tests = await apiService.GetAsync<TestViewModel, int>("/Test/GetAllQuestionsByTestId", "testId", testId);
 
+            var studentId = (await apiService.GetAsync<dynamic, string>("/User/GetByUsername", "username", apiService.Username)).DomainUserId;
+            ViewBag.StudentId = studentId;
+            ViewBag.TestId = testId;
+            var test = await apiService.GetAsync<TestViewModel, int>("/Test/GetAllQuestionsByTestId", "testId", testId);
 
-            return View(tests);
+            return View(test);
         }
 
         public async Task<RedirectToRouteResult> SubmitTest(IEnumerable<object> testData)
         {
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task SubmitFinalGrade(int studentId, int finalScore, int testId)
+        {
+            var apiService = Session.GetApiService();
+
+            var result = await apiService.PostAsyncWithReturn<string, object>("/Test/UpdateGrade", new { StudentId = studentId, TestId = testId, Grade = finalScore });
         }
     }
 }
