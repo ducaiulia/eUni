@@ -42,6 +42,8 @@ namespace eUni.BusinessLogic.Providers
         {
             var entry = _studentTestRepository.Get(
                     s => s.DomainUserId.Equals(studentId) && s.TestId.Equals(testId));
+            if (entry == null)
+                return 0;
             return entry.Grade;
         }
     }

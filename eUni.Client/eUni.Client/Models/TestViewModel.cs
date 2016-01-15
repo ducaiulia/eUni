@@ -11,5 +11,6 @@ namespace EUni_Client.Models
         public string Name { get; set; }
         public int ModuleId { get; set; }
         public List<QuestionViewModel> Questions { get; set; }
+        public int Grade { get; set; }
     }
 }

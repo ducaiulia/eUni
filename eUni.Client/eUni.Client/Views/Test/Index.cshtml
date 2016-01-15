@@ -47,10 +47,19 @@ else
     {
         foreach (var test in Model)
         {
-            using (Html.BeginForm("TakeTest", "Test"))
+            if (test.Grade != 0)
             {
                 <input name="testId" type="text" value="@test.TestId" hidden />
-                <input type="submit" class="btn-link" style="color: dodgerblue" value="@test.Name" />
+                <input type="submit" class="btn-link" style="color: dodgerblue" value="@test.Name"/>
+                <p class="success">@test.Grade</p>
+            }
+            else
+            {
+                using (Html.BeginForm("TakeTest", "Test"))
+                {
+                    <input name="testId" type="text" value="@test.TestId" hidden />
+                    <input type="submit" class="btn-link" style="color: dodgerblue" value="@test.Name" />
+                }
             }
         }
     }

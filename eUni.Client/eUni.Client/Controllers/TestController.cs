@@ -20,6 +20,12 @@ namespace EUni_Client.Controllers
             var apiService = Session.GetApiService();
             var tests = await apiService.GetAsync<IList<TestViewModel>, int>("/Test/GetAllTestsByModule", "moduleId", moduleId);
 
+            foreach (var test in tests)
+            {
+                var g = await apiService.GetAsync<int?, object>("/Test/GetGradeForStudent", new Dictionary<string, object> {{"studentId", apiService.UserId}, {"testId", test.TestId}});
+                test.Grade = g.Value;
+            }
+
             ViewBag.ModuleId = moduleId;
             return View(tests);
         }
