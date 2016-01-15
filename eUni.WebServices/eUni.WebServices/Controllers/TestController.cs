@@ -53,7 +53,6 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("UpdateGrade")]
-        [@Authorize("teacher")]
         public async Task<IHttpActionResult> UpdateGrade(StudentTestDTO studentTest)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -63,6 +62,16 @@ namespace eUni.WebServices.Controllers
 
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Grade updated"));
             return Content(HttpStatusCode.OK, "Updated successfully");
+        }
+
+        [Route("GetGradeForStudent")]
+        public async Task<IHttpActionResult> GetGradeForStudent(int studentId, int testId)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            int grade = _studentTestProvider.GetGradeForStudentWithIdTestId(studentId, testId);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Got grade"));
+            return Content(HttpStatusCode.OK, grade);
         }
 
         [Route("GetAllTestsByModule")]
@@ -116,7 +125,7 @@ namespace eUni.WebServices.Controllers
             var testDto = _testProvider.GetByTestId(testId.Value);
 
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Questions for Test"));
-            return Content(HttpStatusCode.OK, testDto.Questions);
+            return Content(HttpStatusCode.OK, testDto);
         }
 
         [Route("GetAllQuestionsByTestIdWithPagination")]

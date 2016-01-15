@@ -37,5 +37,12 @@ namespace eUni.BusinessLogic.Providers
                 _studentTestRepository.SaveChanges();
             }
         }
+
+        public int GetGradeForStudentWithIdTestId(int studentId, int testId)
+        {
+            var entry = _studentTestRepository.Get(
+                    s => s.DomainUserId.Equals(studentId) && s.TestId.Equals(testId));
+            return entry.Grade;
+        }
     }
 }

@@ -32,6 +32,8 @@
                     <th>#</th>
                     <th>Student</th>
                     <th>File</th>
+                    <th>Grade</th>
+                    <th>------</th>
                 </tr>
                 @{
                     var i = 0;
@@ -53,6 +55,12 @@
                                     </a>
                                 }
                             </td>
+                            <td>
+                                <input id="@i" value="@homework.Grade">
+                            </td>
+                            <td>
+                                <button class="btn btn-default" onclick="UpdateGrade(@i,@homework.StudentId,@ViewBag.Homework.HomeworkId, @homework.Grade)">Update Grade</button>
+                            </td>
                         </tr>
                     }
                 }
@@ -65,3 +73,17 @@
                         }
                     }
 
+<script src="~/Scripts/jquery-2.2.0.js"></script>
+<script>
+    function UpdateGrade(i,studId, homeworkId, grade) {
+        var gradee = $("#"+i).val();
+        $.ajax({
+            method: "POST",
+            url: "/Homework/UpdateGrade",
+            data: {studId: studId, homeworkId:homeworkId, grade: gradee },
+            success: function() {
+                window.location.reload();
+            }
+        });
+    };
+</script>

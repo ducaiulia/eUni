@@ -26,13 +26,13 @@ namespace eUni.DataAccess.eUniDbContext
             SeedModules();
             SeedWikiPages();
             SeedMesages();
+            SeedFiles();
             SeedHomeworks();
             SeedQuestions();
             SeedStudentQuestions();
-            SeedFiles();
             SeedTests();
         }
-            
+
         private void SeedTests()
         {
             var module1 = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1);
@@ -223,13 +223,20 @@ namespace eUni.DataAccess.eUniDbContext
                       Text = "Homework 1",
                       Score = 100
                   });
-
+            //------------------------------------------------
+            var file3 = _context.Files.Local.SingleOrDefault(x => x.Id == 3);
+            var file4 = _context.Files.Local.SingleOrDefault(x => x.Id == 4);
+            var file5 = _context.Files.Local.SingleOrDefault(x => x.Id == 5);
+            var file6 = _context.Files.Local.SingleOrDefault(x => x.Id == 6);
+            var file7 = _context.Files.Local.SingleOrDefault(x => x.Id == 7);
+            var file8 = _context.Files.Local.SingleOrDefault(x => x.Id == 8);
             _context.StudentHomeworks.AddOrUpdate(
                   new StudentHomework
                   {
                       DomainUserId = 1,
                       HomeworkId = 1,
-                      Grade = 5
+                      Grade = 5,
+                      Files = new List<File> { file3, file4 }
                   });
 
             _context.StudentHomeworks.AddOrUpdate(
@@ -237,7 +244,8 @@ namespace eUni.DataAccess.eUniDbContext
                   {
                       DomainUserId = 1,
                       HomeworkId = 2,
-                      Grade = 7
+                      Grade = 7,
+                      Files = new List<File> { file5 }
                   });
 
             _context.StudentHomeworks.AddOrUpdate(
@@ -245,7 +253,8 @@ namespace eUni.DataAccess.eUniDbContext
                   {
                       DomainUserId = 1,
                       HomeworkId = 3,
-                      Grade = 10
+                      Grade = 10,
+                      Files = new List<File> { file6 }
                   });
             //------------------------------------------------
             _context.StudentHomeworks.AddOrUpdate(
@@ -253,7 +262,8 @@ namespace eUni.DataAccess.eUniDbContext
                   {
                       DomainUserId = 2,
                       HomeworkId = 1,
-                      Grade = 10
+                      Grade = 10,
+                      Files = new List<File> { file7 }
                   });
 
             _context.StudentHomeworks.AddOrUpdate(
@@ -261,7 +271,8 @@ namespace eUni.DataAccess.eUniDbContext
                   {
                       DomainUserId = 2,
                       HomeworkId = 2,
-                      Grade = 9
+                      Grade = 9,
+                      Files = new List<File> { file8 }
                   });
 
             _context.StudentHomeworks.AddOrUpdate(
@@ -269,7 +280,8 @@ namespace eUni.DataAccess.eUniDbContext
                   {
                       DomainUserId = 2,
                       HomeworkId = 3,
-                      Grade = 8
+                      Grade = 8,
+                      //Files = new List<File> { file4 }
                   });
 
             _context.SaveChanges();
@@ -343,6 +355,66 @@ namespace eUni.DataAccess.eUniDbContext
                   });
             _context.SaveChanges();
 
+            //for students homeworks
+            _context.Files.AddOrUpdate(
+                  new File
+                  {
+                      Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1),
+                      FileName = "File2.pdf",
+                      FileType = FileType.txt,
+                      Path = "/admin/iulia@euni.com/alabala.txt"
+                  });
+            _context.SaveChanges();
+
+            _context.Files.AddOrUpdate(
+                  new File
+                  {
+                      Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1),
+                      FileName = "File2.pdf",
+                      FileType = FileType.txt,
+                      Path = "/admin/iulia@euni.com/alabala.txt"
+                  });
+            _context.SaveChanges();
+
+            _context.Files.AddOrUpdate(
+                  new File
+                  {
+                      Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1),
+                      FileName = "File2.pdf",
+                      FileType = FileType.txt,
+                      Path = "/admin/iulia@euni.com/alabala.txt"
+                  });
+            _context.SaveChanges();
+
+            _context.Files.AddOrUpdate(
+                  new File
+                  {
+                      Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1),
+                      FileName = "File2.pdf",
+                      FileType = FileType.txt,
+                      Path = "/admin/iulia@euni.com/alabala.txt"
+                  });
+            _context.SaveChanges();
+
+            _context.Files.AddOrUpdate(
+                  new File
+                  {
+                      Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1),
+                      FileName = "File2.pdf",
+                      FileType = FileType.txt,
+                      Path = "/admin/iulia@euni.com/alabala.txt"
+                  });
+            _context.SaveChanges();
+
+            _context.Files.AddOrUpdate(
+                  new File
+                  {
+                      Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1),
+                      FileName = "File2.pdf",
+                      FileType = FileType.txt,
+                      Path = "/admin/iulia@euni.com/alabala.txt"
+                  });
+            _context.SaveChanges();
         }
 
         private void SeedWikiPages()
@@ -555,24 +627,21 @@ namespace eUni.DataAccess.eUniDbContext
                   {
                       Name = "Module1",
                       Course = course1
-                  }
-                  );
+                  });
 
             _context.Modules.AddOrUpdate(
                   new Module
                   {
                       Name = "Module2",
                       Course = course1
-                  }
-                  );
+                  });
 
             _context.Modules.AddOrUpdate(
                   new Module
                   {
                       Name = "Module3",
                       Course = course1
-                  }
-                  );
+                  });
 
 
             var course2 = _context.Courses.FirstOrDefault(x => x.CourseId == 2);
@@ -581,24 +650,21 @@ namespace eUni.DataAccess.eUniDbContext
                   {
                       Name = "Module1",
                       Course = course2
-                  }
-                  );
+                  });
 
             _context.Modules.AddOrUpdate(
                   new Module
                   {
                       Name = "Module2",
                       Course = course2
-                  }
-                  );
+                  });
 
             _context.Modules.AddOrUpdate(
                   new Module
                   {
                       Name = "Module3",
                       Course = course2
-                  }
-                  );
+                  });
 
             _context.SaveChanges();
         }
