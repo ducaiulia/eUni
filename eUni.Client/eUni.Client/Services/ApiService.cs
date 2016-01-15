@@ -14,11 +14,13 @@ namespace EUni_Client.Services
     {
         #region Constructor
 
-        public ApiService(string token, string username, UserRole userRole)
+        public ApiService(string token, string username, UserRole userRole, string fullName, int userId)
         {
             authToken = token;
             Username = username;
             UserRole = userRole;
+            FullName = fullName;
+            UserId = userId;
         }
 
         #endregion
@@ -212,6 +214,9 @@ namespace EUni_Client.Services
 
         public UserRole UserRole { get; private set; }
         public string Username { get; private set; }
+
+        public string FullName { get; private set; }
+        public int UserId { get; private set; }
 
         #endregion Properties
 

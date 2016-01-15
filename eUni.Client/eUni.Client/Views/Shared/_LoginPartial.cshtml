@@ -7,7 +7,7 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @Html.ActionLink(((ApiService)Session[ServiceNames.ApiService]).Username, "Index", "Mange", routeValues: null, htmlAttributes: new { title = "Manage" })
+            @Html.ActionLink("Welcome, " + ((ApiService)Session[ServiceNames.ApiService]).FullName, "Index", "Mange", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
