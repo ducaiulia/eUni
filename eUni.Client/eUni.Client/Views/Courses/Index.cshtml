@@ -22,6 +22,11 @@
                         <input name="c" value="@course" style="display: none" />
                         <input type="submit" class="btn-link" style="color: dodgerblue" value="@(((string) course.Name))" />
                     }
+                    @using (Html.BeginForm("EnrollToCourse", "Courses"))
+                    {
+                        <input name="courseId" value="@course.CourseId" style="display: none" />
+                        <input type="submit" class="btn btn-primary" style="" value="Enroll" />
+                    }
                 </td>
                 <td>@course.CourseCode</td>
                 <td>@(((string)course.StartDate).Replace("00:00:00", ""))</td>
@@ -41,6 +46,7 @@
         switch (role)
         {
             case UserRole.Student:
+                Html.RenderPartial("_StudentViewCourses");
                 break;
             case UserRole.Teacher:
                 Html.RenderPartial("_TeacherCreateCourse");

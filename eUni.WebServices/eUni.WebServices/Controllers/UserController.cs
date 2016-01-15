@@ -34,7 +34,6 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("AllUsers")]
-        [@Authorize("admin")]
         public async Task<IHttpActionResult> GetAllUsers()
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -187,6 +186,7 @@ namespace eUni.WebServices.Controllers
 
         [Route("EnrollUserToCourse")]
         [@Authorize("student")]
+        [HttpGet]
         public async Task<IHttpActionResult> EnrollUserToCourse(int courseId, int userId)
         {
             var result = _userProvider.EnrollUserToCourse(courseId, userId);
