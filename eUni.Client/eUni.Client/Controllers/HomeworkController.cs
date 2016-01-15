@@ -40,6 +40,25 @@ namespace EUni_Client.Controllers
             return RedirectToAction("Homework", "Module", new RouteValueDictionary { { "Module", fileViewModel.Module } });
         }
 
+        [HttpPost]
+        public async Task<RedirectToRouteResult> UpdateGrade(HomeworkGradeViewModel gradeViewModel)
+        {
+            var apiService = Session.GetApiService();
+            var result = await apiService.PostAsyncWithReturn<object, object>("/Homework/AssignGradeToHomework", new
+            {
+                StudentId = gradeViewModel.StudId,
+                HomeworkId = gradeViewModel.HomeworkId,
+                Grade = gradeViewModel.Grade
+            });
+            return RedirectToAction("Index");
+        }
+
+        public class HomeworkGradeViewModel
+        {
+            public string StudId { get; set; }
+            public string HomeworkId { get; set; }
+            public int Grade { get; set; }
+        }
         public class HomweorkFileViewModel
         {
             public string Homework { get; set; }
