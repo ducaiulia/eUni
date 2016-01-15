@@ -50,15 +50,16 @@ namespace EUni_Client.Services
                 }
 
                 var role = await result.Content.ReadAsStringAsync();
-                if (role.Equals("Student", StringComparison.OrdinalIgnoreCase))
+                role = role.Replace("\"", String.Empty);
+                if (role.Equals("Student", StringComparison.InvariantCultureIgnoreCase))
                 {
                     return UserRole.Student;
                 }
-                if (role.Equals("Teacher", StringComparison.OrdinalIgnoreCase))
+                if (role.Equals("Teacher", StringComparison.InvariantCultureIgnoreCase))
                 {
                     return UserRole.Teacher;
                 }
-                if (role.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+                if (role.Equals("Admin", StringComparison.InvariantCultureIgnoreCase))
                 {
                     return UserRole.Admin;
                 }
