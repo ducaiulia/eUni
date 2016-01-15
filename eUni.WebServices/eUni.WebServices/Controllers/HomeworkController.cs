@@ -125,8 +125,8 @@ namespace eUni.WebServices.Controllers
         [Route("AssignGradeToHomework")]
         public async Task<IHttpActionResult> AssignGradeToHomework(GradeToHomeworkViewModel model)
         {
-            //string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
-            //Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get Uploaded homeworks by homeworkId"));
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get Uploaded homeworks by homeworkId"));
 
             _homeworkProvider.SetGradeUploadedHW(Mapper.Map<GradeToHomeworkDTO>(model));
 
