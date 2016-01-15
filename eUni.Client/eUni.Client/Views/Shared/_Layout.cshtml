@@ -1,5 +1,5 @@
 ﻿@using EUni_Client.Services
-@if (Session[ServiceNames.ApiService] == null && (!Request.Url.AbsolutePath.Equals("/") && !Request.Url.AbsolutePath.Equals("/Login") && !Request.Url.AbsolutePath.Equals("/Login/Register")))
+@if (Session[ServiceNames.ApiService] == null && (!Request.Url.AbsolutePath.Equals("/") && !Request.Url.AbsolutePath.Equals("/Login") && !Request.Url.AbsolutePath.Equals("/Login/Register") && !Request.Url.AbsolutePath.Equals("/Home/About")))
 {
     Response.Redirect("~/");
 }
