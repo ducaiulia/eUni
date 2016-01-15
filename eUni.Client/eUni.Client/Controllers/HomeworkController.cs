@@ -50,13 +50,15 @@ namespace EUni_Client.Controllers
                 HomeworkId = gradeViewModel.HomeworkId,
                 Grade = gradeViewModel.Grade
             });
-            return RedirectToAction("Index");
+            return RedirectToAction("Index" ,"Homework", new RouteValueDictionary { {"hw", gradeViewModel.Homework}, { "module", gradeViewModel.Module} });
         }
 
         public class HomeworkGradeViewModel
         {
             public string StudId { get; set; }
             public string HomeworkId { get; set; }
+            public string Homework { get; set; }
+            public string Module { get; set; }
             public int Grade { get; set; }
         }
         public class HomweorkFileViewModel

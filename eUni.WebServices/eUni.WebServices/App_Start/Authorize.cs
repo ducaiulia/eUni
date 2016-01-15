@@ -34,12 +34,12 @@ namespace eUni.WebServices
             if(role.IsNullOrWhiteSpace() || !role.Equals(Role))
                 actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, "Not allowed.");
 
-            string resDate = TokenHelper.GetFromToken(token, "datetime");
+            //string resDate = TokenHelper.GetFromToken(token, "datetime");
 
-            DateTime date = DateTime.Parse(TokenHelper.GetFromToken(token, "datetime"));
+            //DateTime date = DateTime.Parse(TokenHelper.GetFromToken(token, "datetime"));
 
-            if ((DateTime.Now - date).Hours > 2)
-                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, "Not allowed. Token Expired.");
+            //if ((DateTime.Now - date).Hours > 2)
+            //    actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, "Not allowed. Token Expired.");
             
             //User is Authorized, complete execution
             return Task.FromResult<object>(null);
