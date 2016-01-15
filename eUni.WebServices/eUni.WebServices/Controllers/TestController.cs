@@ -65,6 +65,16 @@ namespace eUni.WebServices.Controllers
             return Content(HttpStatusCode.OK, "Updated successfully");
         }
 
+        [Route("GetGradeForStudent")]
+        public async Task<IHttpActionResult> GetGradeForStudent(int studentId, int testId)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            int grade = _studentTestProvider.GetGradeForStudentWithIdTestId(studentId, testId);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Got grade"));
+            return Content(HttpStatusCode.OK, grade);
+        }
+
         [Route("GetAllTestsByModule")]
         public async Task<IHttpActionResult> GetAllByModule(int? moduleId)
         {
