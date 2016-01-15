@@ -32,6 +32,7 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("Add")]
+        [@Authorize("teacher")]
         public async Task<IHttpActionResult> Add(HomeworkViewModel hw)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -44,6 +45,8 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("UploadHomeworkAnswer")]
+        [@Authorize("student")]
+
         public async Task<IHttpActionResult> UploadHomeworkAnswer(StudentHomeworkViewModel hw)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -69,6 +72,7 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("Update")]
+        [@Authorize("teacher")]
         public async Task<IHttpActionResult> Update(HomeworkViewModel hw)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -107,6 +111,7 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("HomeworkByModuleIdStudentId")]
+        [@Authorize("teacher")]
         public async Task<IHttpActionResult> GetHomeworksByModuleIdAndStudentId(int? moduleId, int? studentId)
         {
             if (moduleId == null || studentId == null)
@@ -123,6 +128,7 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("AssignGradeToHomework")]
+        [@Authorize("teacher")]
         public async Task<IHttpActionResult> AssignGradeToHomework(GradeToHomeworkViewModel model)
         {
             //string token = Request.Headers.GetValues("Authorization").FirstOrDefault();

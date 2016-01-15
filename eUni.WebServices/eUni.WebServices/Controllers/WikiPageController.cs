@@ -39,6 +39,8 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("Add")]
+        [@Authorize("teacher")]
+        [@Authorize("admin")]
         public async Task<IHttpActionResult> Add(WikiPageViewModel wikiPageViewModel)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -56,6 +58,7 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("Remove")]
+        [@Authorize("teacher")]
         public async Task<IHttpActionResult> Remove(int wikiId)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
