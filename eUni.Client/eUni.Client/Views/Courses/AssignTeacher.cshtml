@@ -5,19 +5,33 @@
 <form>
     <div class="form-group">
         <label>Teacher:</label>
-        <select name="" class="form-control" style="margin-left: 17px;" required>
+        <select name="" class="form-control" style="margin-left: 17px;" id="teacher" required>
             @foreach (var teacher in ViewBag.Teachers)
             {
-                <option>@teacher.LastName @teacher.FirstName @teacher.DomainUserId</option>
+                <option value="@teacher.FirstName @teacher.LastName">@teacher.LastName @teacher.FirstName @teacher.DomainUserId</option>
             }
         </select>
         <label>Course:</label>
-        <select name="CourseCode"class="form-control" style="margin-left: 17px;" required>
+        <select name="CourseCode"class="form-control" style="margin-left: 17px;" id="course" required>
             @foreach (var course in ViewBag.Courses)
             {
-                <option>@course.Name @course.CourseCode</option>
+                <option value="@course.CourseCode">@course.Name @course.CourseCode</option>
             }
         </select>
     </div>
-    <button type="submit" class="btn btn-default">Assign</button>
+    <button type="submit" class="btn btn-default" onclick="Assign()">Assign</button>
 </form>
+
+<script src="~/Scripts/jquery-2.2.0.js"></script>
+<script>
+    function Assign() {
+        var fullname = $("#teacher option:selected").val();
+        var code = $("#course option:selected").val();
+
+        $.ajax({
+            method: "POST",
+            url: "/Courses/PostAssignTeacher",
+            data: {fullname: fullname, courseCode: code}
+    });
+    }
+</script>

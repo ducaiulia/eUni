@@ -81,6 +81,16 @@ namespace EUni_Client.Controllers
             ViewBag.Teachers = Teachers;
             return View();
         }
+
+        [HttpPost]
+        public async Task<RedirectToRouteResult> PostAssignTeacher(string fullname, string courseCode)
+        {
+            var split = fullname.Split(' ');
+            var apiService = Session.GetApiService();
+            var result = await apiService.PostAsyncWithReturn<string, object>("/Course/AssignTeacher", new {lastName = split[1], firstName = split[0], courseCode = courseCode});
+
+            return RedirectToAction("Index", "Courses");
+        }
     }
 
     public class CreateCourseViewModel

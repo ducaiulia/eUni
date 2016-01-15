@@ -554,6 +554,22 @@ namespace eUni.DataAccess.eUniDbContext
             manager.Create(user4);
             manager.AddToRole(user4.Id, "Teacher");
 
+            var user7 = new ApplicationUser
+            {
+                UserName = "adrian@euni.com",
+                PasswordHash = password,
+                DomainUser = new DomainUser
+                {
+                    FirstName = "Adrian",
+                    LastName = "Achim",
+                    MatriculationNumber = "AdAc01",
+                    Email = "adrian@euni.com",
+                }
+            };
+
+            manager.Create(user7);
+            manager.AddToRole(user7.Id, "Teacher");
+
             var user5 = new ApplicationUser
             {
                 UserName = "iulia@euni.com",
