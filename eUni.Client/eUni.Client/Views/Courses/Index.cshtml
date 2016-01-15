@@ -1,41 +1,6 @@
 ﻿@using EUni_Client.Services
 ﻿<h2>Courses</h2>
 <br>
-<table class="table table-striped table-hover">
-    <tr>
-        <th>#</th>
-        <th>Course</th>
-        <th>Code</th>
-        <th>Start Date</th>
-        <th>End Date</th>
-    </tr>
-    @{
-        var i = 0;
-        foreach (var course in ViewBag.Courses)
-        {
-            i++;
-            <tr>
-                <td>@i</td>
-                <td>
-                    @using (Html.BeginForm("Course", "Courses"))
-                    {
-                        <input name="c" value="@course" style="display: none" />
-                        <input type="submit" class="btn-link" style="color: dodgerblue" value="@(((string) course.Name))" />
-                    }
-                    @using (Html.BeginForm("EnrollToCourse", "Courses"))
-                    {
-                        <input name="courseId" value="@course.CourseId" style="display: none" />
-                        <input type="submit" class="btn btn-primary" style="" value="Enroll" />
-                    }
-                </td>
-                <td>@course.CourseCode</td>
-                <td>@(((string)course.StartDate).Replace("00:00:00", ""))</td>
-                <td>@(((string)course.EndDate).Replace("00:00:00", ""))</td>
-            </tr>
-        }
-    }
-</table>
-
 
 
 <br>

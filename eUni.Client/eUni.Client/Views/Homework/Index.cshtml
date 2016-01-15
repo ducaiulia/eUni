@@ -11,9 +11,9 @@
             using (Html.BeginForm("UploadHomework", "Homework", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
-                <br/>
+                <br />
                 <h5>@ViewBag.Homework.Text</h5>
-                <br/>
+                <br />
 
                 <div class="form-group">
                     <div class="">
@@ -55,12 +55,19 @@
                                     </a>
                                 }
                             </td>
-                            <td>
-                                <input id="@i" value="@homework.Grade">
-                            </td>
-                            <td>
-                                <button class="btn btn-default" onclick="UpdateGrade(@i,@homework.StudentId,@ViewBag.Homework.HomeworkId, @homework.Grade)">Update Grade</button>
-                            </td>
+                            @using (Html.BeginForm("UpdateGrade", "Homework", null, FormMethod.Post))
+                            {
+                                <td>
+                                    <input name="StudId" value="@homework.StudentId" hidden>
+                                    <input name="HomeworkId" value="@ViewBag.Homework.HomeworkId" hidden="">
+                                    <input name="Homework" value="@ViewBag.Homework" hidden="">
+                                    <input name="Module" value="@ViewBag.Module" hidden="">
+                                    <input name="Grade" value="@homework.Grade">
+                                </td>
+                                <td>
+                                    <input type="submit" class="btn btn-default" value="Update Grade" />
+                                </td>
+                            }
                         </tr>
                     }
                 }
@@ -75,15 +82,15 @@
 
 <script src="~/Scripts/jquery-2.2.0.js"></script>
 <script>
-    function UpdateGrade(i,studId, homeworkId, grade) {
-        var gradee = $("#"+i).val();
-        $.ajax({
-            method: "POST",
-            url: "/Homework/UpdateGrade",
-            data: {studId: studId, homeworkId:homeworkId, grade: gradee },
-            success: function() {
-                window.location.reload();
-            }
-        });
-    };
+    //function UpdateGrade(i,studId, homeworkId, grade) {
+    //    var gradee = $("#"+i).val();
+    //    $.ajax({
+    //        method: "POST",
+    //        url: "/Homework/UpdateGrade",
+    //        data: {studId: studId, homeworkId:homeworkId, grade: gradee },
+    //        success: function() {
+    //            window.location.reload();
+    //        }
+    //    });
+    //};
 </script>

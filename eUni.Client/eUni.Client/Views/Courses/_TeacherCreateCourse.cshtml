@@ -1,4 +1,37 @@
-﻿@using (Html.BeginForm("Create", "Courses"))
+﻿<h4>All courses: </h4>
+
+<table class="table table-striped table-hover">
+    <tr>
+        <th>#</th>
+        <th>Course</th>
+        <th>Code</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+    </tr>
+    @{
+        var i = 0;
+        foreach (var course in ViewBag.Courses)
+        {
+            i++;
+            <tr>
+                <td>@i</td>
+                <td>
+                    @using (Html.BeginForm("Course", "Courses"))
+                    {
+                        <input name="c" value="@course" style="display: none" />
+                        <input type="submit" class="btn-link" style="color: dodgerblue" value="@(((string) course.Name))" />
+                    }
+                </td>
+                <td>@course.CourseCode</td>
+                <td>@(((string)course.StartDate).Replace("00:00:00", ""))</td>
+                <td>@(((string)course.EndDate).Replace("00:00:00", ""))</td>
+            </tr>
+        }
+    }
+</table>
+
+
+@using (Html.BeginForm("Create", "Courses"))
 {
     <input name="Courses" value="@ViewBag.Courses" style="display: none" />
         <input type="submit" class="btn btn-default" style="margin-right: 20px" value="Create course" />
