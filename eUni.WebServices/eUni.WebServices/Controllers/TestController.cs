@@ -30,6 +30,7 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("Add")]
+        [@Authorize("teacher")]
         public async Task<IHttpActionResult> Add(TestViewModel test)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -41,6 +42,7 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("Remove")]
+        [@Authorize("teacher")]
         public async Task<IHttpActionResult> Remove(int testId)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -113,7 +115,7 @@ namespace eUni.WebServices.Controllers
             var testDto = _testProvider.GetByTestId(testId.Value);
 
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Questions for Test"));
-            return Content(HttpStatusCode.OK, testDto.Questions);
+            return Content(HttpStatusCode.OK, testDto);
         }
 
         [Route("GetAllQuestionsByTestIdWithPagination")]

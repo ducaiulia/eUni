@@ -1080,6 +1080,7 @@
     <Content Include="Views\Courses\_TeacherCreateCourse.cshtml" />
     <Content Include="Views\Courses\_AdminAssignTeacher.cshtml" />
     <Content Include="Views\Courses\_TeacherCreateModule.cshtml" />
+    <Content Include="Views\Courses\_StudentViewCourses.cshtml" />
     <None Include="Views\Forums\Index.cshtml" />
     <None Include="Views\Homework\Index.cshtml" />
     <None Include="Views\Mange\Index.cshtml" />

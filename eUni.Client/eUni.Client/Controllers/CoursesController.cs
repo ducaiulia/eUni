@@ -15,7 +15,13 @@ namespace EUni_Client.Controllers
         public async Task<ActionResult> Index()
         {
             var ApiService = Session[ServiceNames.ApiService] as ApiService;
+            var UserId = Session.GetApiService().UserId;
             var Courses = await ApiService.GetAsync<IEnumerable<dynamic>>("/Course/GetAllCourses");
+            var Students = await ApiService.GetAsync<IEnumerable<dynamic>>("/User/AllUsers");
+            var StudentCourses = await ApiService.GetAsync<IEnumerable<dynamic>, int>("/Course/GetAllCoursesByStudId", "studId",UserId);
+            ViewBag.UserId = UserId;
+            ViewBag.Students = Students;
+            ViewBag.StudentCourses = StudentCourses;
             ViewBag.Courses = Courses;
             return View();
         }
@@ -35,6 +41,15 @@ namespace EUni_Client.Controllers
             //ViewBag.Courses = Courses;
             return View();
         }
+
+        public async Task<RedirectToRouteResult> EnrollToCourse(int courseId)
+        {
+            var apiService = Session.GetApiService();
+            var userId = apiService.UserId;
+            await apiService.GetAsync<object, object>("/User/EnrollUserToCourse", new Dictionary<string, object> { {"courseId", courseId}, {"userId", userId} });
+            return RedirectToAction("Index", "Courses");
+        }
+
         public async Task<ActionResult> Course(string c)
         {
             var course = JsonConvert.DeserializeObject(c);

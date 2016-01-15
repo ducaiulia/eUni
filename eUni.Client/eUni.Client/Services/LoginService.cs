@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
+using System.Web;
 using Newtonsoft.Json;
 
 namespace EUni_Client.Services
@@ -28,9 +29,34 @@ namespace EUni_Client.Services
                 var token = await result.Content.ReadAsStringAsync();
                 token = token.Substring(1, token.Length - 2);
                 var role = await GetRole(token);
-                return new ApiService(token, email, role);
+                var user = await GetFullName(email);
+                return new ApiService(token, email, role, user.Item1, user.Item2);
             }
         }
+
+
+        private static async Task<Tuple<string, int>> GetFullName(string username)
+        {
+            using (var client = new HttpClient())
+            {
+                var builder = new UriBuilder(RequestBuilder.Build("/User/GetByUsername"));
+                var query = HttpUtility.ParseQueryString(builder.Query);
+                query["username"] = JsonConvert.SerializeObject(username);
+                builder.Query = query.ToString();
+                var url = builder.ToString();
+                var result = await client.GetAsync(url);
+
+                if (!result.IsSuccessStatusCode)
+                {
+                    throw new ApiException(result.StatusCode, result.Content.ToString());
+                }
+
+                dynamic res = JsonConvert.DeserializeObject(await result.Content.ReadAsStringAsync());
+                int id = res.DomainUserId;
+                string fullName = res.FirstName + " " + res.LastName;
+                return new Tuple<string, int>(fullName, id);
+            }
+        } 
 
         private static async Task<UserRole> GetRole(string token)
         {
@@ -67,7 +93,7 @@ namespace EUni_Client.Services
             }
         }
 
-        public static async Task<bool> Register(string email, string password)
+        public static async Task<bool> Register(string email, string password, string firstName, string lastName)
         {
             using (var client = new HttpClient())
             {
@@ -76,7 +102,9 @@ namespace EUni_Client.Services
                     {
                         new KeyValuePair<string, string>("Email", email),
                         new KeyValuePair<string, string>("Password", password),
-                        new KeyValuePair<string, string>("ConfirmPassword", password)
+                        new KeyValuePair<string, string>("ConfirmPassword", password),
+                        new KeyValuePair<string, string>("FirstName", firstName),
+                        new KeyValuePair<string, string>("LastName", lastName)
                     }));
 
                 if (!result.IsSuccessStatusCode)

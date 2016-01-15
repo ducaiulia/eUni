@@ -45,6 +45,7 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("Add")]
+        [@Authorize("teacher")]
         public async Task<IHttpActionResult> Add(ModuleViewModel mod)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -57,6 +58,7 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("Remove")]
+        [@Authorize("teacher")]
         public async Task<IHttpActionResult> Remove(int moduleId)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();

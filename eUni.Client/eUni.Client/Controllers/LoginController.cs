@@ -48,7 +48,7 @@ namespace EUni_Client.Controllers
         {
             try
             {
-                var response = await LoginService.Register(registerViewModel.Email, registerViewModel.ConfirmPassword);
+                var response = await LoginService.Register(registerViewModel.Email, registerViewModel.ConfirmPassword, registerViewModel.FirstName, registerViewModel.LastName);
                 return RedirectToAction("Index");
             }
             catch (ApiException)
@@ -57,6 +57,22 @@ namespace EUni_Client.Controllers
                 return RedirectToAction("Register");
             }
         }
+
+        public async Task<RedirectToRouteResult> ManageUser(ChangePasswordViewModel changePasswordViewModel)
+        {
+            try
+            {
+                var apiService = Session.GetApiService();
+                var response = await apiService.PostAsyncWithReturn("/Account/ChangePassword", changePasswordViewModel);
+                return RedirectToAction("Index", "Home");
+            }
+            catch (ApiException)
+            {
+                TempData["ErrorMessage"] = "The user already exists!";
+                return RedirectToAction("Index", "Mange");
+            }
+        }
+
 
         public ActionResult ResetPassword()
         {
