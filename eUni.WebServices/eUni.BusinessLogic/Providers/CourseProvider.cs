@@ -54,5 +54,12 @@ namespace eUni.BusinessLogic.Providers
             var coursesDto = Mapper.Map<List<CourseDTO>>(courses);
             return coursesDto;
         }
+
+        public List<CourseDTO> GetAllByStudentId(int studId)
+        {
+            var courses = _courseRepo.GetAll().Where(x=>x.Students.Any(s=>s.DomainUserId==studId));
+            var coursesDto = Mapper.Map<List<CourseDTO>>(courses);
+            return coursesDto;
+        }
     }
 }

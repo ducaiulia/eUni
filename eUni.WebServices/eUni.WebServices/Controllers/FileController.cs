@@ -26,6 +26,7 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("GetAllFilesByModule")]
+        [@Authorize("student")]
         public async Task<IHttpActionResult> GetAllByModule(int? moduleId)
         {
 
@@ -102,6 +103,7 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("GetFilesByHomeworkIdStudentId")]
+        [@Authorize("teacher")]
         public async Task<IHttpActionResult> GetFilesByHomeworkIdStudentId(int? homeworkId, int? studentId)
         {
             if (homeworkId == null || studentId == null)

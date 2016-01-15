@@ -341,16 +341,6 @@ namespace eUni.DataAccess.eUniDbContext
                       FileType = FileType.pdf,
                       Path = "/admin/iulia@euni.com/alabala.txt"
                   });
-
-            _context.Files.AddOrUpdate(
-                  new File
-                  {
-                      Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1),
-                      StudentHomework = _context.StudentHomeworks.Local.FirstOrDefault(x => x.DomainUserId == 1 && x.HomeworkId == 1),
-                      FileName = "File2.pdf",
-                      FileType = FileType.pdf,
-                      Path = "path3"
-                  });
             _context.SaveChanges();
 
         }

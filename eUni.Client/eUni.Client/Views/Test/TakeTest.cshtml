@@ -22,27 +22,24 @@
 }
 
     <input hidden id="finalScore" name="finalScore"/>
-    <button type="submit" class="btn btn-success" onclick="SubmitTest(@ViewBag.StudentId, @ViewBag.TestId)">Submit Test</button>
+    <a href="#myModal" data-toggle="modal" id="testBtn" class="btn btn-warning" onclick="SubmitTest(@ViewBag.StudentId, @ViewBag.TestId)">Submit Test</a>
+    @*<a href="#myModal" class="btn btn-lg btn-primary" data-toggle="modal">Launch Demo Modal</a>*@
 
 <div class="bs-example">
     <!-- Button HTML (to Trigger Modal) -->
-    <a href="#myModal" class="btn btn-lg btn-primary" data-toggle="modal">Launch Demo Modal</a>
-
+    
     <!-- Modal HTML -->
     <div id="myModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Confirmation</h4>
+                    <h4 class="modal-title">You're test is submited.</h4>
                 </div>
-                <div class="modal-body">
-                    <p>Do you want to save changes you made to document before closing?</p>
-                    <p class="text-warning"><small>If you don't save, your changes will be lost.</small></p>
+                <div class="modal-body" id="updateDiv">
+                    <p class="text-warning">Maximum grade: @ViewBag.TotalScore</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    @Html.ActionLink("Done", "Redirect", "Test", new RouteValueDictionary() { { "moduleId", Model.ModuleId}}, new Dictionary<string,object>{{"class", "btn btn-primary"} })"
                 </div>
             </div>
         </div>
@@ -64,20 +61,24 @@
         if (isCorrect === true) {
             finalScore = +finalScore + +score;
         }
-
         $("#finalScore").val(finalScore);
         console.log(finalScore);
     };
 
     function SubmitTest(studentId, testId) {
         var grade = $("#finalScore").val();
+        $("#testBtn").val("disabled", true);
+        
+        var newParagraph = document.createElement('p');
+        newParagraph.textContent = "Your grade: " + finalScore;
+        document.getElementById("updateDiv").appendChild(newParagraph);
 
         $.ajax({
             method: "POST",
             url: "/Test/SubmitFinalGrade",
             data: { studentId: studentId, finalScore: grade, testId: testId },
             success: function() {
-                console.log("SUCCES");
+                console.log("SUCCESS"); 
             }
         });
     };

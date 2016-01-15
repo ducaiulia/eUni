@@ -25,6 +25,7 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("Add")]
+        [@Authorize("teacher")]
         public async Task<IHttpActionResult> Add(AnswerViewModel answer)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -36,6 +37,7 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("Remove")]
+        [@Authorize("teacher")]
         public async Task<IHttpActionResult> Remove(int answerId)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -46,6 +48,7 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("IsCorrect")]
+        [@Authorize("student")]
         public async Task<IHttpActionResult> IsCorrect(int answerId)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -55,6 +58,7 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("Update")]
+        [@Authorize("teacher")]
         public async Task<IHttpActionResult> Update(AnswerDTO answerDto)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -65,6 +69,7 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("CreateAnswersForQuestion")]
+        [@Authorize("teacher")]
         public async Task<IHttpActionResult> CreateAnswersForQuestion([FromBody]QuestionAnswersViewModel vm)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();

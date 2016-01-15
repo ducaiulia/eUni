@@ -25,7 +25,7 @@ namespace eUni.WebServices.Controllers
 
             var res = _logProvider.GetAllLogs(false, new PaginationFilter());
 
-            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Homework created"));
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Logs"));
             return Ok(res);
         }
 

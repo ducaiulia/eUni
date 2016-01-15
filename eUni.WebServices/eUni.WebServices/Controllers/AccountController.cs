@@ -78,7 +78,12 @@ namespace eUni.WebServices.Controllers
             {
                 UserName = model.Email,
                 Email = model.Email,
-                DomainUser = new DomainUser()
+                DomainUser = new DomainUser
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email
+                }
             };
 
 

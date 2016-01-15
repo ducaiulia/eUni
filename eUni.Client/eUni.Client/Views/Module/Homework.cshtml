@@ -1,4 +1,5 @@
-﻿
+﻿@using EUni_Client.Services
+
 <h3>@ViewBag.Module.Name Homework</h3>
 <br>
 
@@ -20,7 +21,7 @@
                 <td>
                     @using (Html.BeginForm("Index", "Homework"))
                     {
-                        <input name="hw" value="@homework" hidden />
+                        <input name="hw" value="@homework" hidden/>
                         <input name="module" value="@ViewBag.Module" hidden/>
                         <input type="submit" class="btn-link" style="color: dodgerblue" value="@homework.Text">
                     }
@@ -30,3 +31,24 @@
         }
     }
 </table>
+
+@if (Session[ServiceNames.ApiService] != null)
+{
+    var role = Session.GetApiService().UserRole;
+    switch (role)
+    {
+        case UserRole.Student:
+            break;
+        case UserRole.Teacher:
+            using (Html.BeginForm("CreateHomework", "Module"))
+            {
+                <input name="Module" value="@ViewBag.Module" style="display: none" />
+                <input type="submit" class="btn btn-default" value="Create Homework" />
+            }
+            break;
+        case UserRole.Admin:
+            break;
+        default:
+            throw new ArgumentOutOfRangeException();
+    }
+}

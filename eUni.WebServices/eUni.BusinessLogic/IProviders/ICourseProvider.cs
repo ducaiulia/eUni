@@ -14,5 +14,6 @@ namespace eUni.BusinessLogic.IProviders
         CourseDTO GetByCourseCode(string courseCode);
         void UpdateCourse(CourseDTO course);
         List<CourseDTO> GetAll();
+        List<CourseDTO> GetAllByStudentId(int studId);
     }
 }

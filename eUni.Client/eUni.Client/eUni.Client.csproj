@@ -1077,6 +1077,9 @@
     <Content Include="Views\Courses\Course.cshtml" />
     <Content Include="Views\Courses\AssignTeacher.cshtml" />
     <Content Include="Views\Logs\Index.cshtml" />
+    <Content Include="Views\Courses\_TeacherCreateCourse.cshtml" />
+    <Content Include="Views\Courses\_AdminAssignTeacher.cshtml" />
+    <Content Include="Views\Courses\_TeacherCreateModule.cshtml" />
     <None Include="Views\Forums\Index.cshtml" />
     <None Include="Views\Homework\Index.cshtml" />
     <None Include="Views\Mange\Index.cshtml" />
@@ -1091,6 +1094,9 @@
     <Content Include="Views\Questions\Index.cshtml" />
     <Content Include="Views\Module\CreateResource.cshtml" />
     <Content Include="Views\Module\CreateQuestions.cshtml" />
+    <Content Include="Views\Shared\_StudentHeader.cshtml" />
+    <Content Include="Views\Shared\_TeacherHeader.cshtml" />
+    <Content Include="Views\Shared\_AdminHeader.cshtml" />
     <None Include="Views\Test\TakeTest.cshtml" />
     <None Include="Views\VideoConference\Index.cshtml" />
   </ItemGroup>

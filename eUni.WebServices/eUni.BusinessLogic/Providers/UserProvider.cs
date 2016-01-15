@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using eUni.BusinessLogic.IProviders;
@@ -7,7 +6,6 @@ using eUni.BusinessLogic.Providers.DataTransferObjects;
 using eUni.DataAccess.Domain;
 using eUni.DataAccess.eUniDbContext;
 using eUni.DataAccess.Repository;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace eUni.BusinessLogic.Providers
