@@ -46,7 +46,6 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("AllUsersWithPagination")]
-        [@Authorize("admin")]
         public async Task<IHttpActionResult> GetAllUsersWithPagination(int? pageNumber, int? pageSize)
         {
             var filter = new PaginationFilter()
@@ -185,7 +184,6 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("EnrollUserToCourse")]
-        [@Authorize("student")]
         [HttpGet]
         public async Task<IHttpActionResult> EnrollUserToCourse(int courseId, int userId)
         {

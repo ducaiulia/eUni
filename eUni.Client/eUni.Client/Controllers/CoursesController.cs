@@ -16,9 +16,19 @@ namespace EUni_Client.Controllers
         {
             var ApiService = Session[ServiceNames.ApiService] as ApiService;
             var UserId = Session.GetApiService().UserId;
-            var Courses = await ApiService.GetAsync<IEnumerable<dynamic>>("/Course/GetAllCourses");
-            var Students = await ApiService.GetAsync<IEnumerable<dynamic>>("/User/AllUsers");
-            var StudentCourses = await ApiService.GetAsync<IEnumerable<dynamic>, int>("/Course/GetAllCoursesByStudId", "studId",UserId);
+            var Courses = await ApiService.GetAsync<IList<dynamic>>("/Course/GetAllCourses");
+            var Students = await ApiService.GetAsync<IList<dynamic>>("/User/AllUsers");
+            var StudentCourses = await ApiService.GetAsync<IList<dynamic>, int>("/Course/GetAllCoursesByStudId", "studId", UserId);
+            var UnenrolledCourses = new List<object>();
+            UnenrolledCourses = Courses.Where(c => StudentCourses.All(sc => sc.CourseId != c.CourseId)).ToList();
+            //foreach (var studcourse in StudentCourses)
+            //{
+            //    if (course.CourseID != studcourse.CourseId)
+            //    {
+            //        UnenrolledCourses.Add(course);
+            //    }
+            //}   
+            ViewBag.UnenrolledCourses = UnenrolledCourses;
             ViewBag.UserId = UserId;
             ViewBag.Students = Students;
             ViewBag.StudentCourses = StudentCourses;
@@ -46,7 +56,7 @@ namespace EUni_Client.Controllers
         {
             var apiService = Session.GetApiService();
             var userId = apiService.UserId;
-            await apiService.GetAsync<object, object>("/User/EnrollUserToCourse", new Dictionary<string, object> { {"courseId", courseId}, {"userId", userId} });
+            await apiService.GetAsync<object, object>("/User/EnrollUserToCourse", new Dictionary<string, object> { { "courseId", courseId }, { "userId", userId } });
             return RedirectToAction("Index", "Courses");
         }
 

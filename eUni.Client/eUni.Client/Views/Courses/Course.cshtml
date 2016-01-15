@@ -1,4 +1,5 @@
-﻿
+﻿@using EUni_Client.Services
+
 @{
     if (ViewBag.Modules.Count != 0)
     {
@@ -10,9 +11,9 @@
                 <li>
                     @using (Html.BeginForm("Index", "Module"))
                     {
-                        <input name="Module" value="@module" style="display: none"/>
-                        <input name="Course" value="@ViewBag.Course" style="display: none"/>
-                        <input type="submit" class="btn-link" style="color: dodgerblue" value="@(((string) module.Name))"/>
+                        <input name="Module" value="@module" style="display: none" />
+                        <input name="Course" value="@ViewBag.Course" style="display: none" />
+                        <input type="submit" class="btn-link" style="color: dodgerblue" value="@(((string) module.Name))" />
                     }
                 </li>
             }
@@ -20,8 +21,27 @@
     }
     else
     {
+        <br/>
         <h4>No Modules for this course</h4>
     }
+
+    if (Session[ServiceNames.ApiService] != null)
+    {
+        var role = Session.GetApiService().UserRole;
+        switch (role)
+        {
+            case UserRole.Student:
+                break;
+            case UserRole.Teacher:
+                Html.RenderPartial("_TeacherCreateModule");
+                break;
+            case UserRole.Admin:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
 
 
 }
