@@ -64,12 +64,12 @@ namespace EUni_Client.Controllers
             {
                 var apiService = Session.GetApiService();
                 var response = await apiService.PostAsyncWithReturn("/Account/ChangePassword", changePasswordViewModel);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             catch (ApiException)
             {
                 TempData["ErrorMessage"] = "The user already exists!";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Mange");
             }
         }
 

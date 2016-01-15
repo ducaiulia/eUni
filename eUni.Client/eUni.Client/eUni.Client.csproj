@@ -207,6 +207,7 @@
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\VideoConferenceController.cs" />
     <Compile Include="Controllers\WikiController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1080,6 +1081,7 @@
     <Content Include="Views\Courses\_TeacherCreateCourse.cshtml" />
     <Content Include="Views\Courses\_AdminAssignTeacher.cshtml" />
     <Content Include="Views\Courses\_TeacherCreateModule.cshtml" />
+    <Content Include="Views\Courses\_StudentViewCourses.cshtml" />
     <None Include="Views\Forums\Index.cshtml" />
     <None Include="Views\Homework\Index.cshtml" />
     <None Include="Views\Mange\Index.cshtml" />
@@ -1098,6 +1100,7 @@
     <Content Include="Views\Shared\_TeacherHeader.cshtml" />
     <Content Include="Views\Shared\_AdminHeader.cshtml" />
     <None Include="Views\Test\TakeTest.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
     <None Include="Views\VideoConference\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

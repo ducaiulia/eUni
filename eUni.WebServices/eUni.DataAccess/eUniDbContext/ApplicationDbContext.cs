@@ -53,12 +53,14 @@ namespace eUni.DataAccess.eUniDbContext
                     q.DomainUserId,
                     q.TestId
                 });
+
             modelBuilder.Entity<StudentQuestion>().HasKey(q =>
                 new
                 {
                     q.DomainUserId,
                     q.QuestionId
                 });
+
             modelBuilder.Entity<StudentHomework>().HasKey(q =>
                 new
                 {
@@ -69,7 +71,8 @@ namespace eUni.DataAccess.eUniDbContext
             // Relationships
             modelBuilder.Entity<ApplicationUser>()
                 .HasOptional(au => au.DomainUser)
-                .WithRequired(x => x.ApplicationUser);
+                .WithRequired(x => x.ApplicationUser)
+                .WillCascadeOnDelete();
 
             modelBuilder.Entity<StudentTest>()
                 .HasRequired(t => t.Test)
@@ -80,7 +83,6 @@ namespace eUni.DataAccess.eUniDbContext
                 .HasRequired(t => t.DomainUser)
                 .WithMany()
                 .HasForeignKey(t => t.DomainUserId);
-
 
             modelBuilder.Entity<Course>()
                 .HasMany(x => x.Students)

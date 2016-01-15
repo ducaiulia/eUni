@@ -53,7 +53,6 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("UpdateGrade")]
-        [@Authorize("teacher")]
         public async Task<IHttpActionResult> UpdateGrade(StudentTestDTO studentTest)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -126,7 +125,7 @@ namespace eUni.WebServices.Controllers
             var testDto = _testProvider.GetByTestId(testId.Value);
 
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Get All Questions for Test"));
-            return Content(HttpStatusCode.OK, testDto.Questions);
+            return Content(HttpStatusCode.OK, testDto);
         }
 
         [Route("GetAllQuestionsByTestIdWithPagination")]
