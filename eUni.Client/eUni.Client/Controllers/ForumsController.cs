@@ -7,7 +7,7 @@ namespace EUni_Client.Controllers
         // GET: Forums
         public RedirectResult Index()
         {
-            return Redirect("http://forums.euni.com:8080");
+            return Redirect("http://forums.euni.com");
         }
     }
 }
