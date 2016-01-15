@@ -30,7 +30,6 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("Add")]
-        [@Authorize("teacher")]
         public async Task<IHttpActionResult> Add(TestViewModel test)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -42,7 +41,6 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("Remove")]
-        [@Authorize("teacher")]
         public async Task<IHttpActionResult> Remove(int testId)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -62,6 +60,16 @@ namespace eUni.WebServices.Controllers
 
             Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Grade updated"));
             return Content(HttpStatusCode.OK, "Updated successfully");
+        }
+
+        [Route("GetGradeForStudent")]
+        public async Task<IHttpActionResult> GetGradeForStudent(int studentId, int testId)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            int grade = _studentTestProvider.GetGradeForStudentWithIdTestId(studentId, testId);
+
+            Logger.Logger.Instance.LogAction(LoggerHelper.GetActionString(TokenHelper.GetFromToken(token, "username"), "Got grade"));
+            return Content(HttpStatusCode.OK, grade);
         }
 
         [Route("GetAllTestsByModule")]

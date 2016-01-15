@@ -47,7 +47,6 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("Add")]
-        [@Authorize("teacher")]
         public async Task<IHttpActionResult> Add(CourseViewModel course)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -60,7 +59,6 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("Remove")]
-        [@Authorize("teacher")]
         public async Task<IHttpActionResult> Remove(int courseId)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -71,7 +69,6 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("AssignTeacher")]
-        [@Authorize("admin")]
         public async Task<IHttpActionResult> AssignTeacher(string lastName, string firstName, string courseCode)
         {
             CourseDTO course = _courseProvider.GetByCourseCode(courseCode);

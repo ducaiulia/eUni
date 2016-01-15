@@ -26,7 +26,6 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("Add")]
-        [@Authorize("teacher")]
         public async Task<IHttpActionResult> Add(QuestionViewModel question)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -38,7 +37,6 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("Remove")]
-        [@Authorize("teacher")]
         public async Task<IHttpActionResult> Remove(int questionId)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -70,7 +68,6 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("Update")]
-        [@Authorize("teacher")]
         public async Task<IHttpActionResult> Update(QuestionDTO questionDto)
         {
             string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
@@ -94,7 +91,6 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("AssignQuestionToTest")]
-        [@Authorize("teacher")]
         [HttpPost]
         public async Task<IHttpActionResult> AssignQuestionToTest([FromBody]QuestionTestViewModel vm)
         {
