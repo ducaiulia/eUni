@@ -29,8 +29,8 @@ namespace eUni.DataAccess.eUniDbContext
             SeedFiles();
             SeedHomeworks();
             SeedQuestions();
-            SeedStudentQuestions();
             SeedTests();
+            SeedStudentQuestions();
         }
 
         private void SeedTests()
@@ -45,7 +45,7 @@ namespace eUni.DataAccess.eUniDbContext
             _context.Tests.AddOrUpdate(
                   new Test
                   {
-                      Name = "Test1",
+                      Name = "Compiler Introduction Test",
                       Module = module1,
                       Questions = new List<Question> { question1, question2 }
                   });
@@ -53,7 +53,7 @@ namespace eUni.DataAccess.eUniDbContext
             _context.Tests.AddOrUpdate(
                   new Test
                   {
-                      Name = "Test2",
+                      Name = "Compiler Parser Test",
                       Module = module1,
                       Questions = new List<Question> { question3, question4 }
                   });
@@ -127,21 +127,48 @@ namespace eUni.DataAccess.eUniDbContext
                   new Answer
                   {
                       IsCorrect = false,
-                      Text = "Descendent Recursive "
+                      Text = "Descendent Recursive"
                   });
 
             _context.Answers.AddOrUpdate(
                   new Answer
                   {
                       IsCorrect = true,
-                      Text = "Answer Correct "
+                      Text = "Yes"
                   });
 
             _context.Answers.AddOrUpdate(
                   new Answer
                   {
                       IsCorrect = false,
-                      Text = "Answer Incorrect "
+                      Text = "No"
+                  });
+
+            _context.Answers.AddOrUpdate(
+                  new Answer
+                  {
+                      IsCorrect = false,
+                      Text = "During syntax analysis"
+                  });
+
+            _context.Answers.AddOrUpdate(
+                  new Answer
+                  {
+                      IsCorrect = true,
+                      Text = "	During syntax directed translation"
+                  });
+            _context.Answers.AddOrUpdate(
+                  new Answer
+                  {
+                      IsCorrect = false,
+                      Text = "12 ms"
+                  });
+
+            _context.Answers.AddOrUpdate(
+                  new Answer
+                  {
+                      IsCorrect = true,
+                      Text = "0.32 ms"
                   });
 
             _context.SaveChanges();
@@ -155,6 +182,10 @@ namespace eUni.DataAccess.eUniDbContext
             var answer2 = _context.Answers.Local.FirstOrDefault(x => x.AnswerId == 2);
             var answer3 = _context.Answers.Local.FirstOrDefault(x => x.AnswerId == 3);
             var answer4 = _context.Answers.Local.FirstOrDefault(x => x.AnswerId == 4);
+            var answer5 = _context.Answers.Local.FirstOrDefault(x => x.AnswerId == 5);
+            var answer6 = _context.Answers.Local.FirstOrDefault(x => x.AnswerId == 6);
+            var answer7 = _context.Answers.Local.FirstOrDefault(x => x.AnswerId == 7);
+            var answer8 = _context.Answers.Local.FirstOrDefault(x => x.AnswerId == 8);
 
             _context.Questions.AddOrUpdate(
                   new Question
@@ -169,16 +200,16 @@ namespace eUni.DataAccess.eUniDbContext
                   new Question
                   {
                       Module = module1,
-                      Text = "Question1 ? ",
+                      Text = "What is the average running time of a parsing algorithm?",
                       Score = 50,
-                      Answers = new List<Answer> { answer3, answer4 }
+                      Answers = new List<Answer> { answer7, answer8 }
                   });
 
             _context.Questions.AddOrUpdate(
                   new Question
                   {
                       Module = module1,
-                      Text = "Question2 ? ",
+                      Text = "Are compilers important? ",
                       Score = 70,
                       Answers = new List<Answer> { answer3, answer4 }
                   });
@@ -187,9 +218,9 @@ namespace eUni.DataAccess.eUniDbContext
                   new Question
                   {
                       Module = module1,
-                      Text = "Question3 ? ",
+                      Text = "When is the type checking usually done? ? ",
                       Score = 35,
-                      Answers = new List<Answer> { answer3, answer4 }
+                      Answers = new List<Answer> { answer5, answer6 }
                   });
             _context.SaveChanges();
 
@@ -204,7 +235,7 @@ namespace eUni.DataAccess.eUniDbContext
                   new Homework
                   {
                       Module = module1,
-                      Text = "Homework 1",
+                      Text = "Parsing Algorithms ",
                       Score = 100
                   });
 
@@ -212,7 +243,7 @@ namespace eUni.DataAccess.eUniDbContext
                   new Homework
                   {
                       Module = module1,
-                      Text = "Homework 2",
+                      Text = "Lexical Analysis",
                       Score = 100
                   });
 
@@ -220,7 +251,7 @@ namespace eUni.DataAccess.eUniDbContext
                   new Homework
                   {
                       Module = module2,
-                      Text = "Homework 1",
+                      Text = "High Level Programming",
                       Score = 100
                   });
             //------------------------------------------------
@@ -327,7 +358,7 @@ namespace eUni.DataAccess.eUniDbContext
                   {
                       From = _context.DomainUsers.Local.FirstOrDefault(x => x.DomainUserId == 1),
                       To = _context.DomainUsers.Local.FirstOrDefault(x => x.DomainUserId == 3),
-                      Text = "Message 5",
+                      Text = "Hello.",
                       DateTime = DateTime.Now
                   });
             _context.SaveChanges();
@@ -423,24 +454,24 @@ namespace eUni.DataAccess.eUniDbContext
                   new WikiPage
                   {
                       Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1),
-                      Content = "<h2>This is h2 </h2>",
-                      Description = "WikiPage 1"
+                      Content = "<h2>Compiler Design Introduction</h2><p>This course covers the design and implementation of compiler and runtime systems for high-level languages, and examines the interaction between language design, compiler design, and runtime organization. Topics covered include lexical and syntactic analysis, handling of user-defined types and type-checking, context analysis, code generation and optimization, and memory management and runtime organization.</p>",
+                      Description = "Compiler Design Introduction"
                   });
 
             _context.WikiPages.AddOrUpdate(
                   new WikiPage
                   {
                       Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1),
-                      Content = "<h1>This is h1 </h1>",
-                      Description = "WikiPage 2"
+                      Content = "<h1>Parsing Algorithms</h1><p>In computer science, an LALR parser[a] or Look-Ahead LR parser is a simplified version of a canonical LR parser, to parse (separate and analyze) a text according to a set of production rules specified by a formal grammar for a computer language. (LR means left-to-right, rightmost derivation.)",
+                      Description = "Parsing Algorithms"
                   });
 
             _context.WikiPages.AddOrUpdate(
                   new WikiPage
                   {
                       Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 1),
-                      Content = "Content",
-                      Description = "WikiPage 3"
+                      Content = "<h2>Lexical Analysis<h2><p>Lexical analysis is the first phase of a compiler. It takes the modified source code from language preprocessors that are written in the form of sentences. The lexical analyzer breaks these syntaxes into a series of tokens, by removing any whitespace or comments in the source code.</p> <p>If the lexical analyzer finds a token invalid, it generates an error. The lexical analyzer works closely with the syntax analyzer. It reads character streams from the source code, checks for legal tokens, and passes the data to the syntax analyzer when it demands.</p>",
+                      Description = "Lexical Analysis"
                   });
 
 
@@ -448,16 +479,16 @@ namespace eUni.DataAccess.eUniDbContext
                   new WikiPage
                   {
                       Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 2),
-                      Content = "Content",
-                      Description = "WikiPage 4"
+                      Content = "<h1>High Level Programming</h1> <p>Lexemes are said to be a sequence of characters (alphanumeric) in a token. There are some predefined rules for every lexeme to be identified as a valid token. These rules are defined by grammar rules, by means of a pattern. A pattern explains what can be a token, and these patterns are defined by means of regular expressions.</p>",
+                      Description = "High Level Programming"
                   });
 
             _context.WikiPages.AddOrUpdate(
                   new WikiPage
                   {
                       Module = _context.Modules.Local.FirstOrDefault(x => x.ModuleId == 2),
-                      Content = "Content",
-                      Description = "WikiPage 5"
+                      Content = "<h1>High Level Algorithms</h1> <p>While scanning both lexemes till ‘int’, the lexical analyzer cannot determine whether it is a keyword int or the initials of identifier int value.</p> <p>The Longest Match Rule states that the lexeme scanned should be determined based on the longest match among all the tokens available.</p>",
+                      Description = "High Level Algorithms"
                   });
             _context.SaveChanges();
 
@@ -641,21 +672,21 @@ namespace eUni.DataAccess.eUniDbContext
             _context.Modules.AddOrUpdate(
                   new Module
                   {
-                      Name = "Module1",
+                      Name = "Compiler Design Introductory Skills",
                       Course = course1
                   });
 
             _context.Modules.AddOrUpdate(
                   new Module
                   {
-                      Name = "Module2",
+                      Name = "Compiler Design Intermediate Exercices",
                       Course = course1
                   });
 
             _context.Modules.AddOrUpdate(
                   new Module
                   {
-                      Name = "Module3",
+                      Name = "Compiler Design Advanced Algorithms",
                       Course = course1
                   });
 
@@ -664,21 +695,21 @@ namespace eUni.DataAccess.eUniDbContext
             _context.Modules.AddOrUpdate(
                   new Module
                   {
-                      Name = "Module1",
+                      Name = "Html Easy",
                       Course = course2
                   });
 
             _context.Modules.AddOrUpdate(
                   new Module
                   {
-                      Name = "Module2",
+                      Name = "Java Script",
                       Course = course2
                   });
 
             _context.Modules.AddOrUpdate(
                   new Module
                   {
-                      Name = "Module3",
+                      Name = "Angular JS",
                       Course = course2
                   });
 
