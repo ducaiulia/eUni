@@ -3,16 +3,20 @@
 <h3>@ViewBag.Module.Name Content</h3>
 <br>
 
-<table class="table table-striped table-hover">
-    <tr>
-        <th>#</th>
-        <th>File Name</th>
-        <th>Path</th>
-    </tr>
-    @{
-        var i = 0;
-        foreach (var file in ViewBag.Files)
-        {
+
+@{
+    var i = 0;
+    <h5>Resources</h5>
+    if (ViewBag.Files.Count > 0)
+    {
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>#</th>
+                <th>File Name</th>
+                <th>Path</th>
+            </tr>
+            @foreach (var file in ViewBag.Files)
+            {
             i++;
             <tr>
                 <td>@i</td>
@@ -27,22 +31,23 @@
                     </a>
                 </td>
             </tr>
-        }
+            }
+        </table>
+
     }
-</table>
+    else
+    {
+        <h5>No content to show!</h5>
+    }
+}
 <br>
 <br>
-<ol>
+
     @{
-        //var i = 0;
+        <h5>Content</h5>
         foreach (var page in ViewBag.WikiPages)
         {
             <li>@Html.Raw(page.Content)</li>
         }
     }
-</ol>
-
-
-
-
 

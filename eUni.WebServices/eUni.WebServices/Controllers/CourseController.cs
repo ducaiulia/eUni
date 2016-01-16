@@ -69,8 +69,12 @@ namespace eUni.WebServices.Controllers
         }
 
         [Route("AssignTeacher")]
+        [HttpGet]
         public async Task<IHttpActionResult> AssignTeacher(string lastName, string firstName, string courseCode)
         {
+            lastName = lastName.Replace("\"", string.Empty);
+            firstName = firstName.Replace("\"", string.Empty);
+            courseCode = courseCode.Replace("\"", string.Empty);
             CourseDTO course = _courseProvider.GetByCourseCode(courseCode);
             course.Teacher = _userProvider.GetByName(lastName, firstName);
             _courseProvider.UpdateCourse(course);

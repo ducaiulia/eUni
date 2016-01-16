@@ -87,7 +87,8 @@ namespace EUni_Client.Controllers
         {
             var split = fullname.Split(' ');
             var apiService = Session.GetApiService();
-            var result = await apiService.PostAsyncWithReturn<string, object>("/Course/AssignTeacher", new {lastName = split[1], firstName = split[0], courseCode = courseCode});
+            var result = await apiService.GetAsync<object, object>("/Course/AssignTeacher", new Dictionary<string, object>
+            { {"lastName", split[1]}, {"firstName", split[0]}, {"courseCode", courseCode}});
 
             return RedirectToAction("Index", "Courses");
         }
